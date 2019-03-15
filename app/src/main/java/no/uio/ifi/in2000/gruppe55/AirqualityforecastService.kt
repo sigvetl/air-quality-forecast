@@ -1,58 +1,138 @@
 package no.uio.ifi.in2000.gruppe55
 
 import com.google.gson.annotations.SerializedName
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import kotlinx.coroutines.Deferred
 import okhttp3.ResponseBody
-import retrofit2.Call
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
+object Airqualityforecast {
+    private const val url = "https://in2000-apiproxy.ifi.uio.no/"
+    private val retrofit = Retrofit.Builder()
+        .baseUrl(url)
+        .addCallAdapterFactory(CoroutineCallAdapterFactory())
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+    private val service = retrofit.create(AirqualityforecastService::class.java)
+
+    suspend fun main(
+        areaclass: String? = null,
+        lat: Double? = null,
+        lon: Double? = null,
+        reftime: String? = null,
+        show: String? = null,
+        station: String? = null
+    ): AirQualityLocationModel {
+        return service.main(
+            areaclass,
+            lat,
+            lon,
+            reftime,
+            show,
+            station
+        ).await()
+    }
+
+    suspend fun aqiDescription(): AQIDescriptionModel {
+        return service.aqiDescription().await()
+    }
+
+    suspend fun areaclasses(): Array<AreaClassModel> {
+        return service.areaclasses().await()
+    }
+
+    suspend fun areas(areaclass: String? = null): Array<LocationModel> {
+        return service.areas(areaclass).await()
+    }
+
+    suspend fun healthz(): ResponseBody {
+        return service.healthz().await()
+    }
+
+    suspend fun met(
+        reftime: String? = null,
+        station: String
+    ): AirQualityLocationModel {
+        return service.met(
+            reftime,
+            station
+        ).await()
+    }
+
+    suspend fun metDescription(): MeteoDescriptionModel {
+        return service.metDescription().await()
+    }
+
+    suspend fun reftimes(): Array<RefTimeModel> {
+        return service.reftimes().await()
+    }
+
+    suspend fun stations(): Array<StationModel> {
+        return service.stations().await()
+    }
+
+    suspend fun values(): ResponseBody {
+        return service.values().await()
+    }
+}
+
 interface AirqualityforecastService {
     @GET("weatherapi/airqualityforecast/0.1/")
-    fun call(
-        @Query("areaclass") areaclass: String? = null,
-        @Query("lat") lat: Double? = null,
-        @Query("lon") lon: Double? = null,
-        @Query("reftime") reftime: String? = null,
-        @Query("show") show: String? = null,
-        @Query("station") station: String? = null
-    ): Call<AirQualityLocationModel>
+    fun main(
+        @Query("areaclass")
+        areaclass: String? = null,
+        @Query("lat")
+        lat: Double? = null,
+        @Query("lon")
+        lon: Double? = null,
+        @Query("reftime")
+        reftime: String? = null,
+        @Query("show")
+        show: String? = null,
+        @Query("station")
+        station: String? = null
+    ): Deferred<AirQualityLocationModel>
 
     @GET("weatherapi/airqualityforecast/0.1/aqi_description")
-    fun aqiDescription(): Call<AQIDescriptionModel>
+    fun aqiDescription(): Deferred<AQIDescriptionModel>
 
     @GET("weatherapi/airqualityforecast/0.1/areaclasses")
-    fun areaclasses(): Call<Array<AreaClassModel>>
+    fun areaclasses(): Deferred<Array<AreaClassModel>>
 
     @GET("weatherapi/airqualityforecast/0.1/areas")
     fun areas(
-        @Query("areaclass") areaclass: String? = null
-    ): Call<Array<LocationModel>>
+        @Query("areaclass")
+        areaclass: String? = null
+    ): Deferred<Array<LocationModel>>
 
     @GET("weatherapi/airqualityforecast/0.1/healthz")
-    fun healthz(): Call<ResponseBody>
+    fun healthz(): Deferred<ResponseBody>
 
     @GET("weatherapi/airqualityforecast/0.1/met")
     fun met(
-        @Query("reftime") reftime: String? = null,
-        @Query("station") station: String
-    ): Call<AirQualityLocationModel>
+        @Query("reftime")
+        reftime: String? = null,
+        @Query("station")
+        station: String
+    ): Deferred<AirQualityLocationModel>
 
     @GET("weatherapi/airqualityforecast/0.1/met_description")
-    fun metDescription(): Call<MeteoDescriptionModel>
+    fun metDescription(): Deferred<MeteoDescriptionModel>
 
     @GET("weatherapi/airqualityforecast/0.1/reftimes")
-    fun reftimes(): Call<Array<RefTimeModel>>
+    fun reftimes(): Deferred<Array<RefTimeModel>>
 
     @GET("weatherapi/airqualityforecast/0.1/stations")
-    fun stations(): Call<Array<StationModel>>
+    fun stations(): Deferred<Array<StationModel>>
 
     @GET("weatherapi/airqualityforecast/0.1/values")
-    fun values(): Call<ResponseBody>
+    fun values(): Deferred<ResponseBody>
 }
 
-data class AQIDescriptionModel(
-    val variables: AQIVariableIntervalModel?
-)
+data class AQIDescriptionModel(val variables: AQIVariableIntervalModel?)
 
 data class AQIFractionModel(
     @SerializedName("nameNO")
@@ -122,9 +202,7 @@ data class AQIVariableModel(
     val units: String?
 )
 
-data class AirQualityDataModel(
-    val time: Array<AirQualityTimeDataModel>?
-)
+data class AirQualityDataModel(val time: Array<AirQualityTimeDataModel>?)
 
 data class AirQualityLocationModel(
     val data: AirQualityDataModel?,
@@ -233,9 +311,7 @@ data class MetaModel(
     val superlocation: LocationModel?
 )
 
-data class MeteoDescriptionModel(
-    val variables: MeteoVariablesModel?
-)
+data class MeteoDescriptionModel(val variables: MeteoVariablesModel?)
 
 data class MeteoVariableModel(
     @SerializedName("nameNO")
@@ -282,9 +358,7 @@ data class MeteoVariablesModel(
     val windSpeed: MeteoVariableModel?
 )
 
-data class RefTimeModel(
-    val reftimes: Array<String>?
-)
+data class RefTimeModel(val reftimes: Array<String>?)
 
 data class SimpleLocationModel(
     val areacode: String?,
