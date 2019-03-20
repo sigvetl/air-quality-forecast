@@ -40,11 +40,11 @@ object Airqualityforecast {
         return service.aqiDescription().await()
     }
 
-    suspend fun areaclasses(): Array<AreaClassModel> {
+    suspend fun areaclasses(): List<AreaClassModel> {
         return service.areaclasses().await()
     }
 
-    suspend fun areas(areaclass: String? = null): Array<LocationModel> {
+    suspend fun areas(areaclass: String? = null): List<LocationModel> {
         return service.areas(areaclass).await()
     }
 
@@ -66,11 +66,11 @@ object Airqualityforecast {
         return service.metDescription().await()
     }
 
-    suspend fun reftimes(): Array<RefTimeModel> {
+    suspend fun reftimes(): List<RefTimeModel> {
         return service.reftimes().await()
     }
 
-    suspend fun stations(): Array<StationModel> {
+    suspend fun stations(): List<StationModel> {
         return service.stations().await()
     }
 
@@ -100,13 +100,13 @@ interface AirqualityforecastService {
     fun aqiDescription(): Deferred<AQIDescriptionModel>
 
     @GET("weatherapi/airqualityforecast/0.1/areaclasses")
-    fun areaclasses(): Deferred<Array<AreaClassModel>>
+    fun areaclasses(): Deferred<List<AreaClassModel>>
 
     @GET("weatherapi/airqualityforecast/0.1/areas")
     fun areas(
         @Query("areaclass")
         areaclass: String? = null
-    ): Deferred<Array<LocationModel>>
+    ): Deferred<List<LocationModel>>
 
     @GET("weatherapi/airqualityforecast/0.1/healthz")
     fun healthz(): Deferred<ResponseBody>
@@ -123,10 +123,10 @@ interface AirqualityforecastService {
     fun metDescription(): Deferred<MeteoDescriptionModel>
 
     @GET("weatherapi/airqualityforecast/0.1/reftimes")
-    fun reftimes(): Deferred<Array<RefTimeModel>>
+    fun reftimes(): Deferred<List<RefTimeModel>>
 
     @GET("weatherapi/airqualityforecast/0.1/stations")
-    fun stations(): Deferred<Array<StationModel>>
+    fun stations(): Deferred<List<StationModel>>
 
     @GET("weatherapi/airqualityforecast/0.1/values")
     fun values(): Deferred<ResponseBody>
@@ -156,15 +156,15 @@ data class AQIIntervalModel(
 
 data class AQIResultModel(
     @SerializedName("no2_concentration")
-    val no2Concentration: Array<AQIValueModel>?,
+    val no2Concentration: List<AQIValueModel>?,
     @SerializedName("o3_concentration")
-    val o3Concentration: Array<AQIValueModel>?,
+    val o3Concentration: List<AQIValueModel>?,
     @SerializedName("pm10_concentration")
-    val pm10Concentration: Array<AQIValueModel>?,
+    val pm10Concentration: List<AQIValueModel>?,
     @SerializedName("pm25_concentration")
-    val pm25Concentration: Array<AQIValueModel>?,
+    val pm25Concentration: List<AQIValueModel>?,
     @SerializedName("so2_concentration")
-    val so2Concentration: Array<AQIValueModel>?
+    val so2Concentration: List<AQIValueModel>?
 )
 
 data class AQIValueModel(
@@ -191,18 +191,18 @@ data class AQIVariableIntervalModel(
 data class AQIVariableModel(
     @SerializedName("aqi_formula")
     val aqiFormula: String?,
-    val aqis: Array<AQIIntervalModel>?,
+    val aqis: List<AQIIntervalModel>?,
     @SerializedName("aqis_daily_mean")
-    val aqisDailyMean: Array<AQIIntervalModel>?,
+    val aqisDailyMean: List<AQIIntervalModel>?,
     @SerializedName("legend_range")
-    val legendRange: Array<Double>?,
+    val legendRange: List<Double>?,
     @SerializedName("nameNO")
     val nameno: String?,
-    val sources: Array<AQIFractionModel>?,
+    val sources: List<AQIFractionModel>?,
     val units: String?
 )
 
-data class AirQualityDataModel(val time: Array<AirQualityTimeDataModel>?)
+data class AirQualityDataModel(val time: List<AirQualityTimeDataModel>?)
 
 data class AirQualityLocationModel(
     val data: AirQualityDataModel?,
@@ -210,8 +210,8 @@ data class AirQualityLocationModel(
 )
 
 data class AirQualitySourceModel(
-    val sources: Array<String>?,
-    val variables: Array<String>?
+    val sources: List<String>?,
+    val variables: List<String>?
 )
 
 data class AirQualityTimeDataModel(
@@ -307,7 +307,7 @@ data class LocationModel(
 data class MetaModel(
     val location: LocationModel?,
     val reftime: String?,
-    val sublocations: Array<LocationModel>?,
+    val sublocations: List<LocationModel>?,
     val superlocation: LocationModel?
 )
 
@@ -358,7 +358,7 @@ data class MeteoVariablesModel(
     val windSpeed: MeteoVariableModel?
 )
 
-data class RefTimeModel(val reftimes: Array<String>?)
+data class RefTimeModel(val reftimes: List<String>?)
 
 data class SimpleLocationModel(
     val areacode: String?,
