@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import okhttp3.ResponseBody
 
 /**
- * AirqualityforecastInterface provides an abstract interface that represents
+ * [AirqualityforecastInterface] provides an abstract interface that represents
  * [Airqualityforecast](https://in2000-apiproxy.ifi.uio.no/weatherapi/airqualityforecast/0.1/documentation).
  *
  * Each of the routes from the API definition of Airqualityforecast is replicated in a relatively similar form; there is
@@ -14,6 +14,12 @@ import okhttp3.ResponseBody
  * admit easy testing and extensibility.
  */
 interface AirqualityforecastInterface {
+    /**
+     * [main] represents the route
+     * [/](https://in2000-apiproxy.ifi.uio.no/weatherapi/airqualityforecast/0.1/documentation#%2F). Since a blank
+     * identifier is not a valid name--and said route is essentially the most important and useful one--the name of the
+     * route becomes "main".
+     */
     suspend fun main(
         areaclass: String? = null,
         lat: Double? = null,
@@ -23,25 +29,59 @@ interface AirqualityforecastInterface {
         station: String? = null
     ): AirQualityLocationModel
 
+    /**
+     * [aqiDescription] represents the route
+     * [/aqi_description](https://in2000-apiproxy.ifi.uio.no/weatherapi/airqualityforecast/0.1/documentation#%2Faqi_description).
+     */
     suspend fun aqiDescription(): AQIDescriptionModel
 
+    /**
+     * [areaclasses] represents a route which is not listed in the official documentation, but should still be valid.
+     */
     suspend fun areaclasses(): List<AreaClassModel>
 
+    /**
+     * [areas] represents the route
+     * [/areas](https://in2000-apiproxy.ifi.uio.no/weatherapi/airqualityforecast/0.1/documentation#%2Fareas).
+     */
     suspend fun areas(areaclass: String? = null): List<LocationModel>
 
+    /**
+     * [healthz] represents a route which is not listed in the official documentation, but should still be valid.
+     * Specifially, [healthz] should yield whether Airqualityforecast is currently usable remotely.
+     */
     suspend fun healthz(): ResponseBody
 
+    /**
+     * [met] represents the route
+     * [/met](https://in2000-apiproxy.ifi.uio.no/weatherapi/airqualityforecast/0.1/documentation#%2Fmet).
+     */
     suspend fun met(
         reftime: String? = null,
         station: String
     ): AirQualityLocationModel
 
+    /**
+     * [metDescription] represents the route
+     * [/met_description](https://in2000-apiproxy.ifi.uio.no/weatherapi/airqualityforecast/0.1/documentation#%2Fmet_description).
+     */
     suspend fun metDescription(): MeteoDescriptionModel
 
+    /**
+     * [reftimes] represents the route
+     * [/reftimes](https://in2000-apiproxy.ifi.uio.no/weatherapi/airqualityforecast/0.1/documentation#%2Freftimes).
+     */
     suspend fun reftimes(): List<RefTimeModel>
 
+    /**
+     * [stations] represents the route
+     * [/stations](https://in2000-apiproxy.ifi.uio.no/weatherapi/airqualityforecast/0.1/documentation#%2Fstations).
+     */
     suspend fun stations(): List<StationModel>
 
+    /**
+     * [values] represents a route which is not listed in the official documentation, but should still be valid.
+     */
     suspend fun values(): ResponseBody
 }
 
