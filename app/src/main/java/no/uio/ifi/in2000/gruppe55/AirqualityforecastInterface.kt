@@ -3,6 +3,16 @@ package no.uio.ifi.in2000.gruppe55
 import com.google.gson.annotations.SerializedName
 import okhttp3.ResponseBody
 
+/**
+ * AirqualityforecastInterface provides an abstract interface that represents
+ * [Airqualityforecast](https://in2000-apiproxy.ifi.uio.no/weatherapi/airqualityforecast/0.1/documentation).
+ *
+ * Each of the routes from the API definition of Airqualityforecast is replicated in a relatively similar form; there is
+ * no magic or other tricks. To get more thorough documentation, consider checking the API of Airqualityforecast.
+ *
+ * To keep methods general, consider accepting any `(airqualityforecast : [AirqualityforecastInterface]` in order to
+ * admit easy testing and extensibility.
+ */
 interface AirqualityforecastInterface {
     suspend fun main(
         areaclass: String? = null,
