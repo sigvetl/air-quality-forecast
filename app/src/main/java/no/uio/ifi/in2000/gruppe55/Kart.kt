@@ -35,17 +35,21 @@ class Kart : AppCompatActivity(), OnMapReadyCallback {
      */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        
-        //Liste til å holde på retrofit-objektene
-        var storbyer = arrayListOf(LatLng(59.91, 10.758), LatLng(60.39, 5.32), LatLng(63.43, 10.395),
-            LatLng(58.97, 5.733), LatLng(69.649, 18.955), LatLng(59.744, 10.204), LatLng(58.16, 8.018)
-        )
-        val center = LatLng(64.0, 11.0)
-        //Iterere over objektene og opprette markers med koordinater, navn, verdier etc
-        for (e in storbyer){
-            mMap.addMarker(MarkerOptions().position(e))
+
+        launch {
+            val stasjoner = Airqualityforecast.stations()
+            //Iterere over objektene og opprette markers med koordinater, navn, verdier etc
+            runOnUiThread {
+                for (stasjon in stasjoner) {
+                    if (stasjon.longitude != null && stasjon.latitude != null && stasjon.name != null) {
+                        val latLng = LatLng(stasjon.latitude, stasjon.longitude)
+                        mMap.addMarker(MarkerOptions().position(latLng).title(stasjon.name))
+                    }
+                }
+            }
         }
-        //mMap.addMarker(MarkerOptions().position(oslo).title("Oslo"))
+
+        val center = LatLng(64.0, 11.0)
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(center , 5.0f))
         val uiSettings = mMap.uiSettings
         uiSettings.setZoomControlsEnabled(true)
