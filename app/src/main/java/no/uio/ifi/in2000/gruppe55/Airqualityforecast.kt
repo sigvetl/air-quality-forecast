@@ -8,6 +8,15 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
+/**
+ * [Airqualityforecast] is the obvious, concrete implementation of [AirqualityforecastInterface]. Specifically, it
+ * connects remotely to the given API proxy and performs all marshalling of data that is necessary.
+ *
+ * Since there is no real benefit to ever having more than one description of how to connect to the API proxy,
+ * [Airqualityforecast] is a singleton and can therefore be trivially used. That property may be potentially useful
+ * during development, but consider accepting any `(airqualityforecast : [AirqualityforecastInterface])` as a parameter
+ * instead.
+ */
 object Airqualityforecast : AirqualityforecastInterface {
     private const val url = "https://in2000-apiproxy.ifi.uio.no/"
     private val retrofit = Retrofit.Builder()
