@@ -13,6 +13,7 @@ import android.widget.Toast
 
 class ListAdapter(val context: Context, val elements: List<Element>): RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
         fun setData(element: Element?, pos: Int) {
             itemView.txvName.text = element!!.name
             itemView.txvDesc.text = element!!.desc
@@ -20,11 +21,10 @@ class ListAdapter(val context: Context, val elements: List<Element>): RecyclerVi
     }
 
 
-    private val mOnClickListener = MyOnClickListener()
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): MyViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.element, p0, false)
-        view.setOnClickListener(mOnClickListener)
+        //view.setOnClickListener(mOnClickListener)
         return MyViewHolder(view)
     }
 
