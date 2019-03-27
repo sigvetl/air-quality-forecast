@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:orientation="vertical"
+              android:layout_height="match_parent">
+
+    <TextView
+            android:text="List"
+            android:textSize="32sp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView2"
+            android:background="@android:color/holo_green_light"
+            android:textColor="#EEEEEE"
+            android:layout_gravity="top|fill"/>
+
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/my_recycler_view"
+            android:layout_width="300dp"
+            android:layout_height="600dp"
+            android:layout_gravity="center"
+            android:scrollbars="vertical"/>
+
+    <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_gravity="bottom|end"
+            app:srcCompat="@android:drawable/ic_menu_add"
+            android:layout_margin="16dp"
+            android:id="@+id/fab"
+            app:fabSize="normal"
+            android:layout_weight="5"/>
+
+</LinearLayout>
+
+
+
