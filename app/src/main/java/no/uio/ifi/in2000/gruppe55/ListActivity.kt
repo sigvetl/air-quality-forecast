@@ -33,17 +33,18 @@ class ListActivity : AppCompatActivity() {
         my_recycler_view.adapter = adapter
 
 
-        fun moreInfo(view: View){
-            val intent = Intent(applicationContext, ListActivity::class.java)
-            startActivity(intent)
+        }
+    fun moreInfo(view: View){
+        val intent = Intent(applicationContext, ListActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun changeStar(view: View){
+        if(view.an_element_star.drawable.constantState == getDrawable(R.drawable.star_full).constantState){
+            view.an_element_star.setImageResource(R.drawable.star_shell)
+        }else{
+            view.an_element_star.setImageResource(R.drawable.star_full)
         }
 
-        fun changeStar(view: View){
-            if(view.an_element_star.drawable.constantState == getDrawable(R.drawable.star_full).constantState){
-                view.an_element_star.setImageResource(R.drawable.star_shell)
-            }else{
-                view.an_element_star.setImageResource(R.drawable.star_full)
-            }
-        }
     }
 }
