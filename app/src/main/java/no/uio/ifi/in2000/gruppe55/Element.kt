@@ -1,6 +1,6 @@
 package no.uio.ifi.in2000.gruppe55
 
-class Element(var name: String, var desc: String)
+class Element(var name: String?, var desc: String?)
 
 object Supplier{
     val elements = arrayListOf<Element>(

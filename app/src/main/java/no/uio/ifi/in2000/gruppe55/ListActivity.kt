@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.edit_text_layout.*
 import com.google.gson.GsonBuilder
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.internal.schedulers.IoScheduler
+import kotlinx.coroutines.launch
 import no.uio.ifi.in2000.gruppe55.Supplier.elements
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -40,17 +41,11 @@ class ListActivity : AppCompatActivity() {
         val adapter = ListAdapter(this, Supplier.elements)
         my_recycler_view.adapter = adapter
 
-        val retrofit = Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .baseUrl("https://in2000-apiproxy.ifi.uio.no/weatherapi/").build()
-
-        val stationsApi = retrofit.create(WeatherInterface::class.java)
-
-        var response = stationsApi.getAllStations()
-
-        response.observeOn(AndroidSchedulers.mainThread()).subscribeOn(IoScheduler()).subscribe {
-            for(i in (0 .. (elements.size-1)))
-                Supplier.elements.add(Element(it[i].name, it[i].eoi))
+        launch {
+            val stations = Airqualityforecast.stations()
+            for (station in stations) {
+                Supplier.elements.add(Element(station.name, station.name))
+            }
         }
 
         fun onClick(view: View) {
