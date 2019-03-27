@@ -39,17 +39,32 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         launch {
             val stations = Airqualityforecast.stations()
             //Iterere over objektene og opprette markers med koordinater, navn, verdier etc
-            runOnUiThread {
-                for (station in stations) {
-                    if (station.longitude != null && station.latitude != null && station.name != null) {
-                        val latLng = LatLng(station.latitude, station.longitude)
-                        mMap.addMarker(MarkerOptions().position(latLng).title(station.name).snippet(station.eoi))
+            for (station in stations) {
+                if (station.longitude != null && station.latitude != null && station.name != null) {
+                    val latLng = LatLng(station.latitude, station.longitude)
+                    val stationdata = Airqualityforecast.main(station = station.eoi)
+                    val timeList = stationdata.data?.time
+                    runOnUiThread {
+                        if (timeList != null){
+                            val aqi = "Current AQI: "
+                            for (timestamp in timeList){
+                                if (timestamp.from == "2019-03-27T13:00:00Z"){
+                                    val aqiValue = timestamp.variables?.aqi?.value.toString()
+                                    val value = aqi+aqiValue
+                                    mMap.addMarker(MarkerOptions().position(latLng).title(station.name).snippet(value))
+                                }
+                            }
+
+                        }
                     }
+
                 }
             }
         }
-
+        //landssentrert
         val center = LatLng(64.0, 11.0)
+        //Oslo-sentrert, zoom level 11 +
+        //val center2 = LatLng(59.91, 10.75)
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(center , 5.0f))
         val uiSettings = mMap.uiSettings
         uiSettings.setZoomControlsEnabled(true)
