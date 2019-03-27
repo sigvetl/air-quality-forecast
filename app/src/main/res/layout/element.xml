@@ -14,8 +14,9 @@
             android:layout_height="160dp"
             android:layout_gravity="center"
             card_view:cardCornerRadius="8dp"
-            app:cardBackgroundColor="#bbbbbb"
-    >
+            android:onClick="moreInfo"
+            app:cardBackgroundColor="#bbbbbb">
+
         <TextView
                 android:id="@+id/an_element_text"
                 android:layout_width="match_parent"
