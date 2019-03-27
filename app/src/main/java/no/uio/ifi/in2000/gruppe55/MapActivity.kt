@@ -11,7 +11,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.coroutines.launch
 
-class Kart : AppCompatActivity(), OnMapReadyCallback {
+class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
 
@@ -37,13 +37,13 @@ class Kart : AppCompatActivity(), OnMapReadyCallback {
         mMap = googleMap
 
         launch {
-            val stasjoner = Airqualityforecast.stations()
+            val stations = Airqualityforecast.stations()
             //Iterere over objektene og opprette markers med koordinater, navn, verdier etc
             runOnUiThread {
-                for (stasjon in stasjoner) {
-                    if (stasjon.longitude != null && stasjon.latitude != null && stasjon.name != null) {
-                        val latLng = LatLng(stasjon.latitude, stasjon.longitude)
-                        mMap.addMarker(MarkerOptions().position(latLng).title(stasjon.name))
+                for (station in stations) {
+                    if (station.longitude != null && station.latitude != null && station.name != null) {
+                        val latLng = LatLng(station.latitude, station.longitude)
+                        mMap.addMarker(MarkerOptions().position(latLng).title(station.name).snippet(station.eoi))
                     }
                 }
             }
