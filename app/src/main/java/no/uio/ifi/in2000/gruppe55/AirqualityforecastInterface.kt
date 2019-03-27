@@ -19,6 +19,22 @@ interface AirqualityforecastInterface {
      * [/](https://in2000-apiproxy.ifi.uio.no/weatherapi/airqualityforecast/0.1/documentation#%2F). Since a blank
      * identifier is not a valid name--and said route is essentially the most important and useful one--the name of the
      * route becomes "main".
+     *
+     * Note that [main] heavily uses Kotlin's
+     * [named and default argument syntax](https://kotlinlang.org/docs/reference/functions.html#function-usage) to
+     * provide a simple and convenient interface. In other words, rather than writing
+     *
+     * ```kotlin
+     * val values = Airqualityforecast.main(null, null, null, null, null, station)
+     * ```
+     *
+     * write
+     *
+     * ```kotlin
+     * val values = Airqualityforecast.main(station = station)
+     * ```
+     *
+     * keeping the code simple and compositional.
      */
     suspend fun main(
         areaclass: String? = null,
