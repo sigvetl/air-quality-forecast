@@ -19,20 +19,23 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
 
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
         <meta-data
                 android:name="com.google.android.geo.API_KEY"
                 android:value="AIzaSyAIddD4fTOhSvBeiF2a398o4XSWvIQ8ubQ"/>
-
         <activity
                 android:name=".MapActivity"
                 android:label="@string/title_activity_kart">
         </activity>
-        <activity android:name=".ListActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+        <activity
+                android:name=".ListActivity">
         </activity>
     </application>
 
