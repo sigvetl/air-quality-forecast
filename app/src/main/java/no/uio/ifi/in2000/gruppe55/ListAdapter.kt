@@ -12,7 +12,7 @@ import android.widget.Toast
 
 
 
-class ListAdapter(val context: Context, val elements: List<Element>): RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
+class ListAdapter(val context: Context?, val elements: List<Element>): RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
     //Fargepalett:
     //1. Farger: Lilla: #8e3c97, Rød: #ea3e35, Oransje: #f68614, Gul: #dfc420.
     //2. Gråtoner: 5: 333333, 4: 555555, 3: 777777, 2: 999999, 1: bbbbbb.

@@ -10,8 +10,9 @@
 
     <fragment
         android:id="@+id/main_fragment"
-        android:name="com.bumptech.glide.manager.SupportRequestManagerFragment"
+        android:name="no.uio.ifi.in2000.gruppe55.ListFragment"
         android:layout_width="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/bottom_nav"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
