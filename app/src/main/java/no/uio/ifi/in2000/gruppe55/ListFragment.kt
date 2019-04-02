@@ -5,17 +5,17 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import kotlinx.android.synthetic.main.activity_list.*
+import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.android.synthetic.main.element.view.*
 import kotlinx.coroutines.launch
 
-class ListActivity : AppCompatActivity() {
+class ListFragment : AppCompatActivity() {
 
     private lateinit var linearLayoutManager: LinearLayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_list)
+        setContentView(R.layout.fragment_list)
         linearLayoutManager = LinearLayoutManager(this)
 
         val layoutManager = LinearLayoutManager(this)
@@ -35,7 +35,7 @@ class ListActivity : AppCompatActivity() {
 
         }
     fun moreInfo(view: View){
-        val intent = Intent(applicationContext, ListActivity::class.java)
+        val intent = Intent(applicationContext, ListFragment::class.java)
         startActivity(intent)
     }
 
