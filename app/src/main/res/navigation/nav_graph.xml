@@ -8,16 +8,16 @@
     <fragment
         android:id="@+id/bottom_menu_list"
         android:name="no.uio.ifi.in2000.gruppe55.ListFragment"
-        android:label="fragment_list"
+        android:label="List"
         tools:layout="@layout/fragment_list" />
     <fragment
         android:id="@+id/bottom_menu_home"
         android:name="no.uio.ifi.in2000.gruppe55.BlankFragment"
-        android:label="fragment_blank"
+        android:label="Blank1"
         tools:layout="@layout/fragment_blank" />
     <fragment
         android:id="@+id/bottom_menu_map"
         android:name="no.uio.ifi.in2000.gruppe55.BlankFragment2"
-        android:label="fragment_blank2"
+        android:label="Blank2"
         tools:layout="@layout/fragment_blank2" />
 </navigation>
