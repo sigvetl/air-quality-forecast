@@ -4,10 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.CardView
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.android.synthetic.main.element.view.*
 import kotlinx.coroutines.launch
@@ -40,28 +42,7 @@ class ListFragment : Fragment() {
         my_recycler_view.adapter = adapter
     }
 
-    /*override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.fragment_list)
-        linearLayoutManager = LinearLayoutManager(this)
-
-        val layoutManager = LinearLayoutManager(this)
-        layoutManager.orientation = LinearLayoutManager.VERTICAL
-        my_recycler_view.layoutManager = layoutManager
-
-        launch {
-            val stations = Airqualityforecast.stations()
-            for (station in stations) {
-                eListe.elementer.add(Element(station.name, station.height))
-            }
-        }
-
-        val adapter = ListAdapter(this, eListe.elementer)
-        my_recycler_view.adapter = adapter
-
-
-    }*/
-
+    //Old functions versions in Activity-version
     /*fun moreInfo(view: View){
         val intent = Intent(applicationContext, ListFragment::class.java)
         startActivity(intent)
