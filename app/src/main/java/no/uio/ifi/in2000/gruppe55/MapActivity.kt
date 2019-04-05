@@ -61,6 +61,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
             }
         }
+
         //landssentrert
         val center = LatLng(64.0, 11.0)
         //Oslo-sentrert, zoom level 11 +
