@@ -17,9 +17,9 @@
         tools:layout="@layout/fragment_blank" />
     <fragment
         android:id="@+id/mapFragment"
-        android:name="no.uio.ifi.in2000.gruppe55.BlankFragment2"
-        android:label="Blank2"
-        tools:layout="@layout/fragment_blank2" />
+        android:name="no.uio.ifi.in2000.gruppe55.MapFragment"
+        android:label="Map"
+        tools:layout="@layout/fragment_map" />
 
     <action
         android:id="@+id/bottom_menu_one"

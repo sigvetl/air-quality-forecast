@@ -1,17 +1,12 @@
 package no.uio.ifi.in2000.gruppe55
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.CardView
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_list.*
-import kotlinx.android.synthetic.main.element.view.*
 import kotlinx.coroutines.launch
 
 class ListFragment : Fragment() {

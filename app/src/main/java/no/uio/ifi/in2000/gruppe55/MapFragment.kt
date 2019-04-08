@@ -1,7 +1,10 @@
 package no.uio.ifi.in2000.gruppe55
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -11,17 +14,18 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.coroutines.launch
 
-class MapActivity : AppCompatActivity(), OnMapReadyCallback {
+class MapFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_kart)
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val rootView = inflater.inflate(R.layout.fragment_map, container, false)
+
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        return rootView
     }
 
     /**
@@ -33,6 +37,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
+
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
@@ -44,11 +49,11 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                     val latLng = LatLng(station.latitude, station.longitude)
                     val stationdata = Airqualityforecast.main(station = station.eoi)
                     val timeList = stationdata.data?.time
-                    runOnUiThread {
+                    activity?.runOnUiThread {
                         if (timeList != null){
                             val aqi = "Current AQI: "
                             for (timestamp in timeList){
-                                if (timestamp.from == "2019-03-27T13:00:00Z"){
+                                if (timestamp.from == "2019-04-09T13:00:00Z"){
                                     val aqiValue = timestamp.variables?.aqi?.value.toString()
                                     val value = aqi+aqiValue
                                     mMap.addMarker(MarkerOptions().position(latLng).title(station.name).snippet(value))
