@@ -48,13 +48,12 @@
         />
         <ImageView
                 android:id="@+id/element_star"
-                android:src="@drawable/star_shell"
                 android:layout_gravity="end"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:onClick="changeStar"
+                android:alpha="0"
         />
 
     </android.support.v7.widget.CardView>
