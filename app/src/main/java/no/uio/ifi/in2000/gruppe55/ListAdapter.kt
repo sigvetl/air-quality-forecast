@@ -1,6 +1,7 @@
 package no.uio.ifi.in2000.gruppe55
 import android.content.Context
 import android.graphics.Color
+import android.support.v7.content.res.AppCompatResources.getDrawable
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +13,7 @@ import android.widget.Toast
 
 
 
-class ListAdapter(val context: Context, val elements: List<Element>): RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
+class ListAdapter(val context: Context?, val elements: List<Element>): RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
     //Fargepalett:
     //1. Farger: Lilla: #8e3c97, Rød: #ea3e35, Oransje: #f68614, Gul: #dfc420.
     //2. Gråtoner: 5: 333333, 4: 555555, 3: 777777, 2: 999999, 1: bbbbbb.
@@ -111,7 +112,22 @@ class ListAdapter(val context: Context, val elements: List<Element>): RecyclerVi
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): MyViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.element, p0, false)
-        //view.setOnClickListener(mOnClickListener)
+
+        view.an_element_star.setOnClickListener {
+            if (context != null) {
+                if (view.an_element_star.drawable.constantState ==
+                    getDrawable(context, R.drawable.star_full)?.constantState) {
+                    view.an_element_star.setImageResource(R.drawable.star_shell)
+                } else {
+                    view.an_element_star.setImageResource(R.drawable.star_full)
+                }
+            }
+        }
+
+        view.an_element.setOnClickListener {
+
+        }
+
         return MyViewHolder(view)
     }
 
@@ -123,5 +139,6 @@ class ListAdapter(val context: Context, val elements: List<Element>): RecyclerVi
     override fun onBindViewHolder(p0: ListAdapter.MyViewHolder, p1: Int) {
         val element = elements[p1]
         p0.setData(element, p1)
+
     }
 }
