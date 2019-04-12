@@ -1,5 +1,6 @@
 package no.uio.ifi.in2000.gruppe55
 
+import android.arch.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -7,11 +8,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_list.*
-import kotlinx.coroutines.launch
 
 class ListFragment : Fragment() {
 
     private lateinit var linearLayoutManager: LinearLayoutManager
+
+    private val airqualityforecastModel by lazy {
+        ViewModelProvider.NewInstanceFactory().create(AirqualityforecastModel::class.java)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_list, container, false)
@@ -26,15 +30,19 @@ class ListFragment : Fragment() {
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         my_recycler_view.layoutManager = layoutManager
 
-        launch {
-            val stations = Airqualityforecast.stations()
-            for (station in stations) {
-                eListe.elementer.add(Element(station.name, station.height))
-            }
-        }
-
         val adapter = ListAdapter(context, eListe.elementer)
         my_recycler_view.adapter = adapter
+
+        airqualityforecastModel.stationList.observe(
+            { this.lifecycle },
+            { stations ->
+                eListe.elementer.clear()
+                for (station in stations ?: ArrayList()) {
+                    eListe.elementer.add(Element(station.name, station.height))
+                }
+                adapter.notifyDataSetChanged()
+            }
+        )
     }
 
     //Old functions versions in Activity-version
