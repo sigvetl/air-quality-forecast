@@ -13,23 +13,13 @@ import android.support.v7.widget.Toolbar
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import no.uio.ifi.in2000.gruppe55.viewmodel.airqualityforecastModel
 
 class AirqualityforecastJobService : JobService() {
-    private var fetchJob: Job? = null
-
     override fun onStartJob(params: JobParameters?): Boolean {
-        fetchJob = launch {
-            airqualityforecastModel.loadStations()
-            jobFinished(params, false)
-        }
-        return false
+        return true
     }
 
     override fun onStopJob(params: JobParameters?): Boolean {
-        fetchJob?.cancel()
         return false
     }
 }
