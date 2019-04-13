@@ -7,8 +7,7 @@ import android.arch.lifecycle.ViewModel
 class AirqualityforecastModel : ViewModel() {
     private val mutableStationList: MutableLiveData<List<StationModel>> by lazy {
         val data = MutableLiveData<List<StationModel>>()
-        data.value =
-            ArrayList<StationModel>() +
+        data.value = arrayListOf(
             StationModel(
                 height = 0.3,
                 name = "Porsgrunn",
@@ -18,7 +17,7 @@ class AirqualityforecastModel : ViewModel() {
                 kommune = null,
                 latitude = null,
                 longitude = null
-            ) +
+            ),
             StationModel(
                 height = 1.4,
                 name = "Bergen",
@@ -28,7 +27,7 @@ class AirqualityforecastModel : ViewModel() {
                 kommune = null,
                 latitude = null,
                 longitude = null
-            ) +
+            ),
             StationModel(
                 height = 2.2,
                 name = "Trondheim",
@@ -38,7 +37,7 @@ class AirqualityforecastModel : ViewModel() {
                 kommune = null,
                 latitude = null,
                 longitude = null
-            ) +
+            ),
             StationModel(
                 height = 3.4,
                 name = "Oslo",
@@ -48,7 +47,7 @@ class AirqualityforecastModel : ViewModel() {
                 kommune = null,
                 latitude = null,
                 longitude = null
-            ) +
+            ),
             StationModel(
                 height = 5.3,
                 name = "Skien",
@@ -59,6 +58,7 @@ class AirqualityforecastModel : ViewModel() {
                 latitude = null,
                 longitude = null
             )
+        )
         data
     }
 
