@@ -55,6 +55,7 @@ class MainActivity : AppCompatActivity() {
         val componentName = ComponentName(this, AirqualityforecastJobService ::class.java)
         val jobInfo = JobInfo.Builder(0, componentName)
             .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+            .setPeriodic(15 * 1000 * 60)
             .build()
 
         jobScheduler.schedule(jobInfo)
