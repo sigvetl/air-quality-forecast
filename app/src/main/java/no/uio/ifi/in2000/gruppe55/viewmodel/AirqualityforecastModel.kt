@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
+import kotlinx.coroutines.launch
 import no.uio.ifi.in2000.gruppe55.AirQualityLocationModel
 import no.uio.ifi.in2000.gruppe55.Airqualityforecast
 import no.uio.ifi.in2000.gruppe55.StationModel
@@ -34,13 +35,14 @@ class AirqualityforecastModel : ViewModel() {
         mutableStations.postValue(stationMap)
 
         // Lazily update each station's AQI values as they are available.
-        for (station in stationList) {
-            val locationModel = Airqualityforecast.main(
-                lat = station.latitude,
-                lon = station.longitude
-            )
-            stationMap[station] = locationModel
-            mutableStations.postValue(stationMap)
-        }
+        stationList.map { station ->
+            // TODO (julianho): The asynchronous coroutines are executed in global scope, whereas they should be
+            // executed in a nested scope of the suspensions coroutine.
+            launch {
+                val location = Airqualityforecast.main(lat = station.latitude, lon = station.longitude)
+                stationMap[station] = location
+                mutableStations.postValue(stationMap)
+            }
+        }.forEach { job -> job.join() }
     }
 }
