@@ -31,21 +31,16 @@ class ListFragment : Fragment() {
 
         airqualityforecastModel.stations.observe(
             { this.lifecycle },
-            { stations ->
+            { stationMap ->
                 eListe.elementer.clear()
-                adapter.notifyDataSetChanged()
-                for (station in stations ?: ArrayList()) {
-                    // TODO (julianho): Somehow merge into previous observe.
-                    airqualityforecastModel.location(station).observe(
-                        { this.lifecycle },
-                        { location ->
-                            val aqi = location?.data?.time?.first()?.variables?.aqi?.value
-                            val position = eListe.elementer.size
-                            eListe.elementer.add(Element(station.name, aqi))
-                            adapter.notifyItemInserted(position)
-                        }
-                    )
+
+                for ((station, location) in stationMap ?: HashMap()) {
+                    // TODO (julianho): Extract variables from the current time, not the first in the day.
+                    val aqi = location?.data?.time?.first()?.variables?.aqi?.value
+                    eListe.elementer.add(Element(station.name, aqi))
                 }
+
+                adapter.notifyDataSetChanged()
             }
         )
     }
