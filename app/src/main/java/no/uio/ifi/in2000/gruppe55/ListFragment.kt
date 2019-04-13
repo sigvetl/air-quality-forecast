@@ -1,6 +1,5 @@
 package no.uio.ifi.in2000.gruppe55
 
-import android.arch.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
