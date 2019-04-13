@@ -12,62 +12,7 @@ val airqualityforecastModel: AirqualityforecastModel by lazy {
 
 class AirqualityforecastModel : ViewModel() {
     private val mutableStations: MutableLiveData<List<StationModel>> by lazy {
-        val data = MutableLiveData<List<StationModel>>()
-        data.postValue(
-            arrayListOf(
-                StationModel(
-                    height = 0.3,
-                    name = "Porsgrunn",
-                    delomrade = null,
-                    eoi = null,
-                    grunnkrets = null,
-                    kommune = null,
-                    latitude = null,
-                    longitude = null
-                ),
-                StationModel(
-                    height = 1.4,
-                    name = "Bergen",
-                    delomrade = null,
-                    eoi = null,
-                    grunnkrets = null,
-                    kommune = null,
-                    latitude = null,
-                    longitude = null
-                ),
-                StationModel(
-                    height = 2.2,
-                    name = "Trondheim",
-                    delomrade = null,
-                    eoi = null,
-                    grunnkrets = null,
-                    kommune = null,
-                    latitude = null,
-                    longitude = null
-                ),
-                StationModel(
-                    height = 3.4,
-                    name = "Oslo",
-                    delomrade = null,
-                    eoi = null,
-                    grunnkrets = null,
-                    kommune = null,
-                    latitude = null,
-                    longitude = null
-                ),
-                StationModel(
-                    height = 5.3,
-                    name = "Skien",
-                    delomrade = null,
-                    eoi = null,
-                    grunnkrets = null,
-                    kommune = null,
-                    latitude = null,
-                    longitude = null
-                )
-            )
-        )
-        data
+        MutableLiveData<List<StationModel>>()
     }
 
     val stations: LiveData<List<StationModel>>
