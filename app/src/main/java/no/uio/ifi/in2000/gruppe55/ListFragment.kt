@@ -13,10 +13,6 @@ class ListFragment : Fragment() {
 
     private lateinit var linearLayoutManager: LinearLayoutManager
 
-    private val airqualityforecastModel by lazy {
-        ViewModelProvider.NewInstanceFactory().create(AirqualityforecastModel::class.java)
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_list, container, false)
     }
