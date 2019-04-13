@@ -44,7 +44,7 @@ class AirqualityforecastModel : ViewModel() {
                 lat = station.latitude,
                 lon = station.longitude
             )
-            stationMap [station] = locationModel
+            stationMap[station] = locationModel
             mutableStations.postValue(stationMap)
         }
     }
