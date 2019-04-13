@@ -33,10 +33,19 @@ class ListFragment : Fragment() {
             { this.lifecycle },
             { stations ->
                 eListe.elementer.clear()
-                for (station in stations ?: ArrayList()) {
-                    eListe.elementer.add(Element(station.name, station.height))
-                }
                 adapter.notifyDataSetChanged()
+                for (station in stations ?: ArrayList()) {
+                    // TODO (julianho): Somehow merge into previous observe.
+                    airqualityforecastModel.location(station).observe(
+                        { this.lifecycle },
+                        { location ->
+                            val aqi = location?.data?.time?.first()?.variables?.aqi?.value
+                            val position = eListe.elementer.size
+                            eListe.elementer.add(Element(station.name, aqi))
+                            adapter.notifyItemInserted(position)
+                        }
+                    )
+                }
             }
         )
     }
