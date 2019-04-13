@@ -28,7 +28,7 @@ class ListFragment : Fragment() {
         val adapter = ListAdapter(context, eListe.elementer)
         my_recycler_view.adapter = adapter
 
-        airqualityforecastModel.stationList.observe(
+        airqualityforecastModel.stations.observe(
             { this.lifecycle },
             { stations ->
                 eListe.elementer.clear()

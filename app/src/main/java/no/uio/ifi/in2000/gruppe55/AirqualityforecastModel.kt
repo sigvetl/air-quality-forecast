@@ -11,7 +11,7 @@ val airqualityforecastModel: AirqualityforecastModel by lazy {
 }
 
 class AirqualityforecastModel : ViewModel() {
-    val mutableStationList: MutableLiveData<List<StationModel>> by lazy {
+    private val mutableStations: MutableLiveData<List<StationModel>> by lazy {
         val data = MutableLiveData<List<StationModel>>()
         data.postValue(
             arrayListOf(
@@ -70,6 +70,11 @@ class AirqualityforecastModel : ViewModel() {
         data
     }
 
-    val stationList: LiveData<List<StationModel>>
-        get() = mutableStationList
+    val stations: LiveData<List<StationModel>>
+        get() = mutableStations
+
+    suspend fun loadStations() {
+        val stations = Airqualityforecast.stations()
+        mutableStations.postValue(stations)
+    }
 }
