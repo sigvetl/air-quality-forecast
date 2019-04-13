@@ -15,6 +15,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import no.uio.ifi.in2000.gruppe55.viewmodel.airqualityforecastModel
 
 class AirqualityforecastJobService : JobService() {
     private var fetchJob: Job? = null
