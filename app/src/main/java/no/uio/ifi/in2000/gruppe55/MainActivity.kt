@@ -21,6 +21,8 @@ class AirqualityforecastJobService : JobService() {
 
     override fun onStartJob(params: JobParameters?): Boolean {
         fetchJob = launch {
+            val stations = Airqualityforecast.stations()
+            airqualityforecastModel.mutableStationList.postValue(stations)
             jobFinished(params, false)
         }
         return false
@@ -28,7 +30,7 @@ class AirqualityforecastJobService : JobService() {
 
     override fun onStopJob(params: JobParameters?): Boolean {
         fetchJob?.cancel()
-        return true
+        return false
     }
 }
 
