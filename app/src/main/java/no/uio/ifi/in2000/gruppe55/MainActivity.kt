@@ -13,13 +13,23 @@ import android.support.v7.widget.Toolbar
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import no.uio.ifi.in2000.gruppe55.viewmodel.airqualityforecastModel
 
 class AirqualityforecastJobService : JobService() {
+    private var fetchJob: Job? = null
+
     override fun onStartJob(params: JobParameters?): Boolean {
-        return true
+        fetchJob = launch {
+            airqualityforecastModel.loadStations()
+            jobFinished(params, false)
+        }
+        return false
     }
 
     override fun onStopJob(params: JobParameters?): Boolean {
+        fetchJob?.cancel()
         return false
     }
 }
@@ -42,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         //link navigation controller with the bottom navigation menu
         findViewById<BottomNavigationView>(R.id.bottom_nav).setupWithNavController(navController)
 
-        val componentName = ComponentName(this, AirqualityforecastJobService ::class.java)
+        val componentName = ComponentName(this, AirqualityforecastJobService::class.java)
         val jobInfo = JobInfo.Builder(0, componentName)
             .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
             .setPeriodic(15 * 1000 * 60)
