@@ -14,6 +14,7 @@ import no.uio.ifi.in2000.gruppe55.viewmodel.DailyForecastModel
 class ListFragment : Fragment() {
 
     // List of viewmodels relevant to this fragment.
+
     private lateinit var viewModelProvider: ViewModelProvider
     private lateinit var dailyForecastModel: DailyForecastModel
 
@@ -36,6 +37,7 @@ class ListFragment : Fragment() {
         my_recycler_view.adapter = adapter
 
         // Extract all the relevant viewmodels from the fragment's context.
+
         // TODO: Consider *when* in the Fragment's lifecycle that view models should be extracted.
         viewModelProvider = ViewModelProvider(
             activity?.viewModelStore ?: ViewModelStore(),
@@ -43,23 +45,22 @@ class ListFragment : Fragment() {
         )
         dailyForecastModel = viewModelProvider.get(DailyForecastModel::class.java)
 
-        dailyForecastModel.stations.observe(
-            { this.lifecycle },
-            { stationMap ->
-                eListe.elementer.clear()
+        // Keep list adapter view in sync with measurements from the list of stations.
 
-                // TODO (julianho): Comparator should handle null gracefully.
-                val comparator: Comparator<StationModel> = Comparator { s, t -> s.name!!.compareTo(t.name!!) }
+        dailyForecastModel.stations.observe({ this.lifecycle }) { stationMap ->
+            eListe.elementer.clear()
 
-                for ((station, location) in (stationMap ?: hashMapOf()).toSortedMap(comparator)) {
-                    // TODO (julianho): Extract variables from the current time, not the first in the day.
-                    val aqi = location?.variables?.aqi?.value
-                    eListe.elementer.add(Element(station.name, aqi))
-                }
+            // TODO (julianho): Comparator should handle null gracefully.
+            val comparator: Comparator<StationModel> = Comparator { s, t -> s.name!!.compareTo(t.name!!) }
 
-                adapter.notifyDataSetChanged()
+            for ((station, location) in (stationMap ?: hashMapOf()).toSortedMap(comparator)) {
+                // TODO (julianho): Extract variables from the current time, not the first in the day.
+                val aqi = location?.variables?.aqi?.value
+                eListe.elementer.add(Element(station.name, aqi))
             }
-        )
+
+            adapter.notifyDataSetChanged()
+        }
     }
 
     //Old functions versions in Activity-version
