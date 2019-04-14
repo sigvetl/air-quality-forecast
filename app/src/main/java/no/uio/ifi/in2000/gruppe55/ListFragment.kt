@@ -1,5 +1,7 @@
 package no.uio.ifi.in2000.gruppe55
 
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelStore
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -7,9 +9,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_list.*
-import no.uio.ifi.in2000.gruppe55.viewmodel.dailyForecastModel
+import no.uio.ifi.in2000.gruppe55.viewmodel.DailyForecastModel
 
 class ListFragment : Fragment() {
+
+    // List of viewmodels relevant to this fragment.
+    private lateinit var viewModelProvider: ViewModelProvider
+    private lateinit var dailyForecastModel: DailyForecastModel
 
     private lateinit var linearLayoutManager: LinearLayoutManager
 
@@ -28,6 +34,14 @@ class ListFragment : Fragment() {
 
         val adapter = ListAdapter(context, eListe.elementer)
         my_recycler_view.adapter = adapter
+
+        // Extract all the relevant viewmodels from the fragment's context.
+        // TODO: Consider *when* in the Fragment's lifecycle that view models should be extracted.
+        viewModelProvider = ViewModelProvider(
+            activity?.viewModelStore ?: ViewModelStore(),
+            ViewModelProvider.NewInstanceFactory()
+        )
+        dailyForecastModel = viewModelProvider.get(DailyForecastModel::class.java)
 
         dailyForecastModel.stations.observe(
             { this.lifecycle },
