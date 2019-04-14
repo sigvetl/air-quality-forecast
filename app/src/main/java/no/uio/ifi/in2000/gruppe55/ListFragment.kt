@@ -53,7 +53,7 @@ class ListFragment : Fragment() {
 
                 for ((station, location) in (stationMap ?: hashMapOf()).toSortedMap(comparator)) {
                     // TODO (julianho): Extract variables from the current time, not the first in the day.
-                    val aqi = location?.data?.time?.first()?.variables?.aqi?.value
+                    val aqi = location?.variables?.aqi?.value
                     eListe.elementer.add(Element(station.name, aqi))
                 }
 
