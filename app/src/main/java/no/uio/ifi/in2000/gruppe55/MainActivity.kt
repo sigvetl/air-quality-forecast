@@ -26,6 +26,7 @@ private lateinit var globalViewModelStore: ViewModelStore
 class AirqualityforecastJobService : JobService() {
 
     // List of viewmodels relevant to this job.
+
     private lateinit var viewModelProvider: ViewModelProvider
     private lateinit var dailyForecastModel: DailyForecastModel
 

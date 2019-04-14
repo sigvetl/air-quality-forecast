@@ -54,7 +54,6 @@ class ListFragment : Fragment() {
             val comparator: Comparator<StationModel> = Comparator { s, t -> s.name!!.compareTo(t.name!!) }
 
             for ((station, location) in (stationMap ?: hashMapOf()).toSortedMap(comparator)) {
-                // TODO (julianho): Extract variables from the current time, not the first in the day.
                 val aqi = location?.variables?.aqi?.value
                 eListe.elementer.add(Element(station.name, aqi))
             }
