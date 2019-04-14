@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_list.*
-import no.uio.ifi.in2000.gruppe55.viewmodel.airqualityforecastModel
+import no.uio.ifi.in2000.gruppe55.viewmodel.dailyForecastModel
 
 class ListFragment : Fragment() {
 
@@ -29,7 +29,7 @@ class ListFragment : Fragment() {
         val adapter = ListAdapter(context, eListe.elementer)
         my_recycler_view.adapter = adapter
 
-        airqualityforecastModel.stations.observe(
+        dailyForecastModel.stations.observe(
             { this.lifecycle },
             { stationMap ->
                 eListe.elementer.clear()

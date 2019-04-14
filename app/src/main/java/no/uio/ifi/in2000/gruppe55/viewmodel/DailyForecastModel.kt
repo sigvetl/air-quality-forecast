@@ -10,11 +10,11 @@ import no.uio.ifi.in2000.gruppe55.Airqualityforecast
 import no.uio.ifi.in2000.gruppe55.StationModel
 
 // TODO (julianho): Replace ad-hoc singleton with *anything* more principled and idiomatic.
-val airqualityforecastModel: AirqualityforecastModel by lazy {
-    ViewModelProvider.NewInstanceFactory().create(AirqualityforecastModel::class.java)
+val dailyForecastModel: DailyForecastModel by lazy {
+    ViewModelProvider.NewInstanceFactory().create(DailyForecastModel::class.java)
 }
 
-class AirqualityforecastModel : ViewModel() {
+class DailyForecastModel : ViewModel() {
     // TODO (julianho): Observations currently have no way to only pick-up partial updates (such as insertions),
     // possibly impacting performance. If performance becomes a concern, consider how to implement such updates.
     private val mutableStations: MutableLiveData<HashMap<StationModel, AirQualityLocationModel?>> by lazy {
