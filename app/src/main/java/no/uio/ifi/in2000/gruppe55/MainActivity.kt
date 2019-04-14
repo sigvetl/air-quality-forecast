@@ -62,6 +62,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // Make sure the global view model store for job services is always up to date.
+
         globalViewModelStore = viewModelStore
 
         val navController = findNavController(this, R.id.nav_host_fragment)
@@ -72,10 +73,12 @@ class MainActivity : AppCompatActivity() {
         //link navigation controller with the bottom navigation menu
         findViewById<BottomNavigationView>(R.id.bottom_nav).setupWithNavController(navController)
 
+        // Run background service for automatically fetching measurements from each station.
+
         val componentName = ComponentName(this, AirqualityforecastJobService::class.java)
         val jobInfo = JobInfo.Builder(0, componentName)
             .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
-            .setPeriodic(15 * 1000 * 60)
+            .setPeriodic(15 * 1000 * 60) // TODO: Increase time between measurements.
             .build()
 
         jobScheduler.schedule(jobInfo)

@@ -18,6 +18,7 @@ class StationRepository(private val stationModel: StationModel) {
         for (moment in locationModel.data?.time ?: ArrayList()) {
             // Airqualityforecast times are weird, so simply pick either the first or second date & time and consider
             // that to be "now". Additionally, all Airqualityforecast times should be within a Norwegian time-zone.
+
             val middleDate = SimpleDateFormat(
                 "yyyy-MM-dd'T'HH:mm:ss'Z'",
                 Locale.forLanguageTag("no")
@@ -25,6 +26,7 @@ class StationRepository(private val stationModel: StationModel) {
 
             // To find the measurement of the current data & time, one needs to pick times within a range. One potential
             // range is the previous time plus/minus 30 minutes.
+
             var startDate = middleDate.clone() as Date
             startDate.minutes -= 30
 
@@ -32,6 +34,7 @@ class StationRepository(private val stationModel: StationModel) {
             endDate.minutes += 30
 
             // Pick the first measurement within the relevant date & time.
+
             if (date.time > startDate.time && date.time < endDate.time) {
                 return moment
             }

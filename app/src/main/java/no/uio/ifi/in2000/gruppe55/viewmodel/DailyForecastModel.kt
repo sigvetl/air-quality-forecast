@@ -23,12 +23,14 @@ class DailyForecastModel(private val forecastRepository: ForecastRepository = Fo
         val stationMap = HashMap<StationModel, AirQualityTimeDataModel?>(repositoryMap.size)
 
         // Station list can be displayed without AQI values in order to allow quick user interface response times.
+
         for ((station, repository) in repositoryMap) {
             stationMap[station] = null
         }
         mutableStations.postValue(stationMap)
 
         // Lazily update each station's AQI values as they are available.
+
         for ((station, repository) in repositoryMap) {
             // TODO (julianho): Extract the current date & time in the correct time zone.
             val timeDataModel = repository.at(Date())
