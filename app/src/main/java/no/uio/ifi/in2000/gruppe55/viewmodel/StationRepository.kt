@@ -7,8 +7,25 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+// TODO (julianho): Consider turning into interface *or* parametrising on `AirqualityforecastInterface`.
 // TODO: Implement caching of requests to reduce unnecessary network usage.
+
+/**
+ * [StationRepository] represents a simple, idiomatic way to access measurements (specifically, air quality
+ * measurements) from a given station at a given point in time.
+ *
+ * [StationRepository] implements the "Repository" of Android Architecture Components, providing a flexible and
+ * extensible method to separate concerns of data gathering from user interfaces.
+ */
 class StationRepository(private val stationModel: StationModel) {
+    /**
+     * [at] asynchronously extracts air quality measurements from the relevant station at a given point in time.
+     *
+     * If [date] is deeply in the past (e.g. one month ago), there is no guarantee that any value will be returned at
+     * all.
+     *
+     * [at] is suspendable and must therefore be executed in a Kotlin coroutine (e.g. via [launch] or [runBlocking].)
+     */
     suspend fun at(date: Date): AirQualityTimeDataModel? {
         val locationModel = Airqualityforecast.main(
             lat = stationModel.latitude,
