@@ -1,5 +1,7 @@
 package no.uio.ifi.in2000.gruppe55
 
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelStore
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -12,9 +14,14 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.coroutines.launch
+import no.uio.ifi.in2000.gruppe55.viewmodel.DailyForecastModel
 
 class MapFragment : Fragment(), OnMapReadyCallback {
+
+    // List of viewmodels relevant to this fragment.
+
+    private lateinit var viewModelProvider: ViewModelProvider
+    private lateinit var dailyForecastModel: DailyForecastModel
 
     private lateinit var mMap: GoogleMap
 
@@ -26,6 +33,18 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
 
         return rootView
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        // Extract all the relevant viewmodels from the fragment's context.
+
+        viewModelProvider = ViewModelProvider(
+            activity?.viewModelStore ?: ViewModelStore(),
+            ViewModelProvider.NewInstanceFactory()
+        )
+        dailyForecastModel = viewModelProvider.get(DailyForecastModel::class.java)
     }
 
     /**
@@ -41,28 +60,19 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        launch {
-            val stations = Airqualityforecast.stations()
-            //Iterere over objektene og opprette markers med koordinater, navn, verdier etc
-            for (station in stations) {
-                if (station.longitude != null && station.latitude != null && station.name != null) {
-                    val latLng = LatLng(station.latitude, station.longitude)
-                    val stationdata = Airqualityforecast.main(station = station.eoi)
-                    val timeList = stationdata.data?.time
+        // Keep map fragment in sync with measurements from the list of stations.
+
+        dailyForecastModel.stations.observe({ lifecycle }) { stationMap ->
+            mMap.clear()
+
+            for ((station, measurement) in stationMap ?: HashMap()) {
+                if (station.latitude != null && station.longitude != null && station.name != null) {
+                    val position = LatLng(station.latitude, station.longitude)
+                    val value = "Current AQI: ${measurement?.variables?.aqi?.value}"
+
                     activity?.runOnUiThread {
-                        if (timeList != null){
-                            val aqi = "Current AQI: "
-                            for (timestamp in timeList){
-                                if (timestamp.from == "2019-04-09T13:00:00Z"){
-                                    val aqiValue = timestamp.variables?.aqi?.value.toString()
-                                    val value = aqi+aqiValue
-                                    mMap.addMarker(MarkerOptions().position(latLng).title(station.name).snippet(value))
-                                }
-                            }
-
-                        }
+                        mMap.addMarker(MarkerOptions().position(position).title(station.name).snippet(value))
                     }
-
                 }
             }
         }

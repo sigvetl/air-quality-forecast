@@ -23,6 +23,10 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key"/>
 
+        <service
+            android:name=".AirqualityforecastJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE"/>
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
