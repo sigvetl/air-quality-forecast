@@ -1,6 +1,8 @@
 package no.uio.ifi.in2000.gruppe55
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
+import android.support.design.resources.MaterialResources.getDrawable
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +24,7 @@ class ListAdapter(val context: Context, val elements: MutableList<Element>): Rec
         var aqiIcon = itemView.element_aqi
         var expandButton = itemView.element_expand
         var setColor = itemView.element_color
+        var setStar = itemView.element_star
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

@@ -36,18 +36,19 @@ class ListActivity : AppCompatActivity() {
 
         }
 
-
+    /*
     fun moreInfo(view: View){
         val intent = Intent(applicationContext, ListActivity::class.java)
         startActivity(intent)
     }
 
     fun changeStar(view: View){
-        if(view.element_star.drawable.constantState == getDrawable(R.drawable.star_full).constantState){
+        if(view.element_star.drawable.constantState == getDrawable(R.drawable.star_full)?.constantState){
             view.element_star.setImageResource(R.drawable.star_shell)
         }else{
             view.element_star.setImageResource(R.drawable.star_full)
         }
 
     }
+    */
 }
