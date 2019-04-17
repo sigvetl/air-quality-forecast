@@ -5,22 +5,6 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/homeFragment">
 
-    <fragment
-        android:id="@+id/listFragment"
-        android:name="no.uio.ifi.in2000.gruppe55.ListFragment"
-        android:label="List"
-        tools:layout="@layout/fragment_list" />
-    <fragment
-        android:id="@+id/homeFragment"
-        android:name="no.uio.ifi.in2000.gruppe55.BlankFragment"
-        android:label="Blank1"
-        tools:layout="@layout/fragment_blank" />
-    <fragment
-        android:id="@+id/mapFragment"
-        android:name="no.uio.ifi.in2000.gruppe55.MapFragment"
-        android:label="Map"
-        tools:layout="@layout/fragment_map" />
-
     <action
         android:id="@+id/bottom_menu_one"
         app:destination="@id/homeFragment" />
@@ -32,6 +16,39 @@
     <action
         android:id="@+id/bottom_menu_three"
         app:destination="@id/mapFragment" />
+
+    <fragment
+        android:id="@+id/listFragment"
+        android:name="no.uio.ifi.in2000.gruppe55.ListFragment"
+        android:label="List"
+        tools:layout="@layout/fragment_list" />
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="no.uio.ifi.in2000.gruppe55.BlankFragment"
+        android:label="Blank1"
+        tools:layout="@layout/fragment_blank" >
+        <action
+            android:id="@+id/action_homeFragment_to_blankFragment2"
+            app:destination="@id/blankFragment2" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="no.uio.ifi.in2000.gruppe55.MapFragment"
+        android:label="Map"
+        tools:layout="@layout/fragment_map" />
+
+    <fragment
+        android:id="@+id/blankFragment2"
+        android:name="no.uio.ifi.in2000.gruppe55.BlankFragment2"
+        android:label="fragment_blank2"
+        tools:layout="@layout/fragment_blank2" >
+        <argument
+            android:name="newText"
+            app:argType="string"
+            android:defaultValue="I am defaulty" />
+    </fragment>
 
 
 </navigation>

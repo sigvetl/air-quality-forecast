@@ -67,10 +67,10 @@ class MainActivity : AppCompatActivity() {
         globalViewModelStore = viewModelStore
 
         val navController = findNavController(this, R.id.nav_host_fragment)
-        val appBarConfiguration = AppBarConfiguration(setOf(R.id.homeFragment, R.id.listFragment, R.id.mapFragment))
+        //val appBarConfiguration = AppBarConfiguration(setOf(R.id.homeFragment, R.id.listFragment, R.id.mapFragment))
 
         //link navigation controller and application bar with toolbar
-        findViewById<Toolbar>(R.id.toolbar).setupWithNavController(navController, appBarConfiguration)
+        findViewById<Toolbar>(R.id.toolbar).setupWithNavController(navController/*, appBarConfiguration*/)
         //link navigation controller with the bottom navigation menu
         findViewById<BottomNavigationView>(R.id.bottom_nav).setupWithNavController(navController)
 
