@@ -32,6 +32,7 @@ class InfoActivity : AppCompatActivity() {
             for(i in 0..number){
                 if(stationModel.data!!.time!![i].from == stationRef) {
                     val temp: AirQualityVariableDataModel? = stationModel.data.time?.get(i)?.variables
+                    //TODO endre toString til riktig navn
                     sListe.values.add(Value(temp?.aqi.toString(), temp?.aqi?.value, temp?.aqi?.units))
                     sListe.values.add(Value(temp?.aqiNo2.toString(), temp?.aqiNo2?.value, temp?.aqiNo2?.units))
                     sListe.values.add(Value(temp?.aqiO3.toString(), temp?.aqiO3?.value, temp?.aqiO3?.units))

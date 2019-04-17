@@ -5,11 +5,15 @@ import android.arch.lifecycle.ViewModelStore
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_list.*
 import no.uio.ifi.in2000.gruppe55.viewmodel.DailyForecastModel
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class ListFragment : Fragment() {
 
@@ -50,12 +54,42 @@ class ListFragment : Fragment() {
         dailyForecastModel.stations.observe({ this.lifecycle }) { stationMap ->
             eListe.elementer.clear()
 
+            // Group stations under common area (e,g, county.)
+            val areaMap = TreeMap<String, HashMap<StationModel, AirQualityTimeDataModel?>>()
+
+            for ((station, location) in stationMap ?: hashMapOf()) {
+                val area = station.kommune?.name
+
+                if (area != null) {
+                    if (areaMap.containsKey(area)) {
+                        areaMap[area]?.put(station, location)
+                    } else {
+                        areaMap[area] = hashMapOf(Pair(station, location))
+                    }
+                }
+            }
+
             // TODO (julianho): Comparator should handle null gracefully.
             val comparator: Comparator<StationModel> = Comparator { s, t -> s.name!!.compareTo(t.name!!) }
 
-            for ((station, location) in (stationMap ?: hashMapOf()).toSortedMap(comparator)) {
-                val aqi = location?.variables?.aqi?.value
-                eListe.elementer.add(Element(station.name, aqi))
+            for ((area, map) in areaMap) {
+                var totalAqi: Double? = 0.0
+                val stationList = mutableListOf<Element>()
+
+                for ((station, location) in map.toSortedMap(comparator)) {
+                    val aqi = location?.variables?.aqi?.value
+
+                    if (totalAqi != null) {
+                        totalAqi = if (aqi == null) { null } else { totalAqi + aqi }
+                    }
+
+                    stationList.add(Element(eListe.STATION, station.name, aqi))
+                }
+
+                val averageAqi = if (totalAqi == null) { null } else { totalAqi / stationList.size }
+
+                // TODO: Should alone stations be shown under drop-down?
+                eListe.elementer.add(Element(eListe.AREA, area, averageAqi, stationList))
             }
 
             adapter.notifyDataSetChanged()
