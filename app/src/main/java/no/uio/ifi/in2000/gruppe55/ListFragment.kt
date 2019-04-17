@@ -73,17 +73,23 @@ class ListFragment : Fragment() {
             val comparator: Comparator<StationModel> = Comparator { s, t -> s.name!!.compareTo(t.name!!) }
 
             for ((area, map) in areaMap) {
-                var totalAqi = 0.0
+                var totalAqi: Double? = 0.0
                 val stationList = mutableListOf<Element>()
 
                 for ((station, location) in map.toSortedMap(comparator)) {
                     val aqi = location?.variables?.aqi?.value
-                    totalAqi += aqi ?: 0.0
+
+                    if (totalAqi != null) {
+                        totalAqi = if (aqi == null) { null } else { totalAqi + aqi }
+                    }
+
                     stationList.add(Element(eListe.STATION, station.name, aqi))
                 }
 
+                val averageAqi = if (totalAqi == null) { null } else { totalAqi / stationList.size }
+
                 // TODO: Should alone stations be shown under drop-down?
-                eListe.elementer.add(Element(eListe.AREA, area, totalAqi / stationList.size, stationList))
+                eListe.elementer.add(Element(eListe.AREA, area, averageAqi, stationList))
             }
 
             adapter.notifyDataSetChanged()
