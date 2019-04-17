@@ -83,46 +83,47 @@ class ListAdapter(val context: Context?, val elements: MutableList<Element>): Re
                 }
             }
 
-            val aqi = element.aqi ?: -1.0
-
             it.aqiIcon.let{
                 when {
-                    aqi >= 4 -> {
+                    element.aqi == null -> {
+                        it.setImageResource(R.drawable.aqi_1)
+                    }
+                    element.aqi!! >= 4 -> {
                         it.setImageResource(R.drawable.aqi_5)
                     }
-                    aqi >= 3 -> {
+                    element.aqi!! >= 3 -> {
                         it.setImageResource(R.drawable.aqi_4)
                     }
-                    aqi >= 2 -> {
+                    element.aqi!! >= 2 -> {
                         it.setImageResource(R.drawable.aqi_3)
                     }
-                    aqi >= 1 -> {
+                    element.aqi!! >= 1 -> {
                         it.setImageResource(R.drawable.aqi_2)
                     }
-                    aqi >= 0 -> {
+                    element.aqi!! >= 0 -> {
                         it.setImageResource(R.drawable.aqi_1)
                     }
                 }
             }
             it.setColor.let{
                 when {
-                    aqi >= 4 -> {
+                    element.aqi == null -> {
+                        it.setBackgroundColor(Color.parseColor("#bbbbbb"))
+                    }
+                    element.aqi!! >= 4 -> {
                         it.setBackgroundColor(Color.parseColor("#8e3c97"))
                     }
-                    aqi >= 3 -> {
+                    element.aqi!! >= 3 -> {
                         it.setBackgroundColor(Color.parseColor("#ea3e35"))
                     }
-                    aqi >= 2 -> {
+                    element.aqi!! >= 2 -> {
                         it.setBackgroundColor(Color.parseColor("#f68614"))
                     }
-                    aqi >= 1 -> {
+                    element.aqi!! >= 1 -> {
                         it.setBackgroundColor(Color.parseColor("#dfc420"))
                     }
-                    aqi >= 0 -> {
+                    element.aqi!! >= 0 -> {
                         it.setBackgroundColor(Color.parseColor("#0ab03f"))
-                    }
-                    true -> {
-                        it.setBackgroundColor(Color.parseColor("#bbbbbb"))
                     }
                 }
             }
