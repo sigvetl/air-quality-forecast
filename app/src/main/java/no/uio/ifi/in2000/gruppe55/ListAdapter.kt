@@ -1,134 +1,42 @@
 package no.uio.ifi.in2000.gruppe55
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
+import android.support.design.resources.MaterialResources.getDrawable
 import android.support.v7.content.res.AppCompatResources.getDrawable
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.element.view.*
-import android.widget.Toast
+import kotlinx.android.synthetic.main.element_parent.view.*
 
-
-
-
-
-class ListAdapter(val context: Context?, val elements: List<Element>): RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
+class ListAdapter(val context: Context?, val elements: MutableList<Element>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     //Fargepalett:
     //1. Farger: Lilla: #8e3c97, Rød: #ea3e35, Oransje: #f68614, Gul: #dfc420.
     //2. Gråtoner: 5: 333333, 4: 555555, 3: 777777, 2: 999999, 1: bbbbbb.
     //3. Fargeblind-modus: 5: #63230e, 4: #571392, 3: #2f20d4, 2: #2063d4, 1: #20d0d4.
     //Obs, jobb videre med Fargeblind fargene.
-    //Hvis du skal bytte layouten til elementene, husk å bytt xml filen i toppen.
-    val farge = 1
+    val PARENT = 0
+    val CHILD = 1
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun setData(element: Element?, pos: Int) {
-
-            //Setting the text of the card
-            itemView.an_element_text.text = element!!.name
-
-            //Setting the AQI symbol and the color of the card
-
-            if(element.aqi != null){
-                if(farge == 1){
-                    when {
-
-                        element.aqi >= 4 -> {
-                            itemView.an_element_aqi.setImageResource(R.drawable.aqi_5)
-                            itemView.an_element.setCardBackgroundColor(Color.parseColor("#8e3c97"))
-                        }
-                        element.aqi >= 3 -> {
-                            itemView.an_element_aqi.setImageResource(R.drawable.aqi_4)
-                            itemView.an_element.setCardBackgroundColor(Color.parseColor("#ea3e35"))
-                        }
-                        element.aqi >= 2 -> {
-                            itemView.an_element_aqi.setImageResource(R.drawable.aqi_3)
-                            itemView.an_element.setCardBackgroundColor(Color.parseColor("#f68614"))
-                        }
-                        element.aqi >= 1 -> {
-                            itemView.an_element_aqi.setImageResource(R.drawable.aqi_2)
-                            itemView.an_element.setCardBackgroundColor(Color.parseColor("#dfc420"))
-                        }
-                        element.aqi >= 0 -> {
-                            itemView.an_element_aqi.setImageResource(R.drawable.aqi_1)
-                            itemView.an_element.setCardBackgroundColor(Color.parseColor("#0ab03f"))
-                        }
-                    }
-                }
-                if(farge == 2){
-                    when {
-                        element.aqi >= 4 -> {
-                            itemView.an_element_aqi.setImageResource(R.drawable.aqi_5)
-                            itemView.an_element.setCardBackgroundColor(Color.parseColor("#333333"))
-                        }
-                        element.aqi >= 3 -> {
-                            itemView.an_element_aqi.setImageResource(R.drawable.aqi_4)
-                            itemView.an_element.setCardBackgroundColor(Color.parseColor("#555555"))
-                        }
-                        element.aqi >= 2 -> {
-                            itemView.an_element_aqi.setImageResource(R.drawable.aqi_3)
-                            itemView.an_element.setCardBackgroundColor(Color.parseColor("#777777"))
-                        }
-                        element.aqi >= 1 -> {
-                            itemView.an_element_aqi.setImageResource(R.drawable.aqi_2)
-                            itemView.an_element.setCardBackgroundColor(Color.parseColor("#999999"))
-                        }
-                        element.aqi >= 0 -> {
-                            itemView.an_element_aqi.setImageResource(R.drawable.aqi_2)
-                            itemView.an_element.setCardBackgroundColor(Color.parseColor("#bbbbbb"))
-                        }
-                    }
-                }
-                if(farge == 3){
-                    when {
-                        element.aqi >= 4 -> {
-                            itemView.an_element_aqi.setImageResource(R.drawable.aqi_5)
-                            itemView.an_element.setCardBackgroundColor(Color.parseColor("#63230e"))
-                        }
-                        element.aqi >= 3 -> {
-                            itemView.an_element_aqi.setImageResource(R.drawable.aqi_4)
-                            itemView.an_element.setCardBackgroundColor(Color.parseColor("#571392"))
-                        }
-                        element.aqi >= 2 -> {
-                            itemView.an_element_aqi.setImageResource(R.drawable.aqi_3)
-                            itemView.an_element.setCardBackgroundColor(Color.parseColor("#2f20d4"))
-                        }
-                        element.aqi >= 1 -> {
-                            itemView.an_element_aqi.setImageResource(R.drawable.aqi_2)
-                            itemView.an_element.setCardBackgroundColor(Color.parseColor("#2063d4"))
-                        }
-                        element.aqi >= 0 -> {
-                            itemView.an_element_aqi.setImageResource(R.drawable.aqi_2)
-                            itemView.an_element.setCardBackgroundColor(Color.parseColor("#20d0d4"))
-                        }
-                    }
-                }
-            }
-        }
+        var textView = itemView.element_text
+        var aqiIcon = itemView.element_aqi
+        var expandButton = itemView.element_expand
+        var setColor = itemView.element_color
+        var setStar = itemView.element_star
     }
 
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        var view: View? = null
 
-
-    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): MyViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.element, p0, false)
-
-        view.an_element_star.setOnClickListener {
-            if (context != null) {
-                if (view.an_element_star.drawable.constantState ==
-                    getDrawable(context, R.drawable.star_full)?.constantState) {
-                    view.an_element_star.setImageResource(R.drawable.star_shell)
-                } else {
-                    view.an_element_star.setImageResource(R.drawable.star_full)
-                }
-            }
+        when (viewType){
+            PARENT -> view = inflater.inflate(R.layout.element_parent, parent, false)
+            CHILD -> view = inflater.inflate(R.layout.element_child, parent, false)
         }
 
-        view.an_element.setOnClickListener {
-
-        }
-
-        return MyViewHolder(view)
+        return MyViewHolder(view!!)
     }
 
 
@@ -136,9 +44,89 @@ class ListAdapter(val context: Context?, val elements: List<Element>): RecyclerV
         return elements.size
     }
 
-    override fun onBindViewHolder(p0: ListAdapter.MyViewHolder, p1: Int) {
-        val element = elements[p1]
-        p0.setData(element, p1)
+    override fun getItemViewType(position: Int): Int = elements[position].type
 
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+
+        val elementHolder = holder as? MyViewHolder
+        val element = elements[position]
+
+        elementHolder?.let{
+
+            it.expandButton?.let {
+                if(element.children != null){
+                    it.setImageResource(R.drawable.expand_more)
+                    it.setOnClickListener { view ->
+                        val start = elements.indexOf(element) + 1
+                        if(element.children == null){
+                            var count = 0
+                            var nextHeader = elements.indexOf(elements.find{
+                                (count++ >=start) && (it.type == element.type)
+                            })
+                            if(nextHeader == -1) nextHeader = elements.size
+                            element.children = elements.slice(start..nextHeader - 1)
+
+                            val end = element.children!!.size
+                            if(end > 0) elements.removeAll(element.children!!)
+
+                            view.animate().rotation(0.0F).start()
+                            notifyItemRangeRemoved(start, end)
+                        } else {
+                            element.children?.let {
+                                elements.addAll(start, it)
+                                view.animate().rotation(180.0F).start()
+                                notifyItemRangeInserted(start, it.size)
+                                element.children = null
+                            }
+                        }
+                    }
+                }
+            }
+
+            val aqi = element.aqi ?: -1.0
+
+            it.aqiIcon.let{
+                when {
+                    aqi >= 4 -> {
+                        it.setImageResource(R.drawable.aqi_5)
+                    }
+                    aqi >= 3 -> {
+                        it.setImageResource(R.drawable.aqi_4)
+                    }
+                    aqi >= 2 -> {
+                        it.setImageResource(R.drawable.aqi_3)
+                    }
+                    aqi >= 1 -> {
+                        it.setImageResource(R.drawable.aqi_2)
+                    }
+                    aqi >= 0 -> {
+                        it.setImageResource(R.drawable.aqi_1)
+                    }
+                }
+            }
+            it.setColor.let{
+                when {
+                    aqi >= 4 -> {
+                        it.setBackgroundColor(Color.parseColor("#8e3c97"))
+                    }
+                    aqi >= 3 -> {
+                        it.setBackgroundColor(Color.parseColor("#ea3e35"))
+                    }
+                    aqi >= 2 -> {
+                        it.setBackgroundColor(Color.parseColor("#f68614"))
+                    }
+                    aqi >= 1 -> {
+                        it.setBackgroundColor(Color.parseColor("#dfc420"))
+                    }
+                    aqi >= 0 -> {
+                        it.setBackgroundColor(Color.parseColor("#0ab03f"))
+                    }
+                    true -> {
+                        it.setBackgroundColor(Color.parseColor("#bbbbbb"))
+                    }
+                }
+            }
+            it.textView.text = element.name
+        }
     }
 }
