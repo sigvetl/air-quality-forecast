@@ -55,7 +55,7 @@ class ListFragment : Fragment() {
 
             for ((station, location) in (stationMap ?: hashMapOf()).toSortedMap(comparator)) {
                 val aqi = location?.variables?.aqi?.value
-                eListe.elementer.add(Element(station.name, aqi))
+                eListe.elementer.add(Element(eListe.AREA, station.name, aqi))
             }
 
             adapter.notifyDataSetChanged()
