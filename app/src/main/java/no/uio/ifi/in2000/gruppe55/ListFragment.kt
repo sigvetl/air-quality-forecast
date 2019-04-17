@@ -54,14 +54,18 @@ class ListFragment : Fragment() {
         dailyForecastModel.stations.observe({ this.lifecycle }) { stationMap ->
             eListe.elementer.clear()
 
+            // Group stations under common area (e,g, county.)
             val areaMap = TreeMap<String, HashMap<StationModel, AirQualityTimeDataModel?>>()
 
             for ((station, location) in stationMap ?: hashMapOf()) {
-                val area = station.kommune?.name!!
-                if (areaMap.containsKey(area)) {
-                    areaMap[area]?.put(station, location)
-                } else {
-                    areaMap[area] = hashMapOf(Pair(station, location))
+                val area = station.kommune?.name
+
+                if (area != null) {
+                    if (areaMap.containsKey(area)) {
+                        areaMap[area]?.put(station, location)
+                    } else {
+                        areaMap[area] = hashMapOf(Pair(station, location))
+                    }
                 }
             }
 
@@ -78,6 +82,7 @@ class ListFragment : Fragment() {
                     stationList.add(Element(eListe.STATION, station.name, aqi))
                 }
 
+                // TODO: Should alone stations be shown under drop-down?
                 eListe.elementer.add(Element(eListe.AREA, area, totalAqi / stationList.size, stationList))
             }
 
