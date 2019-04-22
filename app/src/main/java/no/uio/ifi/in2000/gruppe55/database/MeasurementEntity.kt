@@ -2,7 +2,7 @@ package no.uio.ifi.in2000.gruppe55.database
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.ForeignKey
-import java.time.OffsetDateTime
+import org.threeten.bp.OffsetDateTime
 
 @Entity(
     tableName = "measurement_table",
