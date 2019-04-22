@@ -11,7 +11,7 @@ import android.content.Context
     version = 1,
     exportSchema = false
 )
-@TypeConverters(TypeConverters::class)
+@TypeConverters(no.uio.ifi.in2000.gruppe55.database.TypeConverters::class)
 abstract class DailyForecastDatabase: RoomDatabase() {
 
     abstract fun measurementDao(): MeasurementDao
