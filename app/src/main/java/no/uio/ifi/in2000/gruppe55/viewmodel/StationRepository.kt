@@ -9,9 +9,6 @@ import no.uio.ifi.in2000.gruppe55.database.MeasurementEntity
 import no.uio.ifi.in2000.gruppe55.database.StationEntity
 import no.uio.ifi.in2000.gruppe55.database.TypeConverters
 import org.threeten.bp.OffsetDateTime
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 // TODO (julianho): Consider turning into interface *or* parametrising on `AirqualityforecastInterface`.
 // TODO: Implement caching of requests to reduce unnecessary network usage.

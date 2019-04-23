@@ -5,7 +5,6 @@ import android.app.job.JobParameters
 import android.app.job.JobScheduler
 import android.app.job.JobService
 import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelStore
 import android.content.ComponentName
 import android.content.Context
 import android.support.v7.app.AppCompatActivity

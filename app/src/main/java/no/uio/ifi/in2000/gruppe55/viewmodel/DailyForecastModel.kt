@@ -7,7 +7,6 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import no.uio.ifi.in2000.gruppe55.AirQualityTimeDataModel
 import no.uio.ifi.in2000.gruppe55.StationModel
-import no.uio.ifi.in2000.gruppe55.database.StationEntity
 import org.threeten.bp.OffsetDateTime
 import java.util.*
 

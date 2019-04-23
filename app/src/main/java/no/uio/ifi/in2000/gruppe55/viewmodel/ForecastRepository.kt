@@ -3,7 +3,6 @@ package no.uio.ifi.in2000.gruppe55.viewmodel
 import android.app.Application
 import no.uio.ifi.in2000.gruppe55.Airqualityforecast
 import no.uio.ifi.in2000.gruppe55.StationModel
-import no.uio.ifi.in2000.gruppe55.database.StationEntity
 
 // TODO (julianho): Consider turning into interface *or* parametrising on `AirqualityforecastInterface`.
 // TODO: Implement caching of requests to reduce unnecessary network usage.
