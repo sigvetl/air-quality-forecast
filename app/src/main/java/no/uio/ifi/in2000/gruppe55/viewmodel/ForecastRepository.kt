@@ -25,9 +25,9 @@ class ForecastRepository(private val application: Application) {
      *
      * [list] is suspendable and must therefore be executed in a Kotlin coroutine (e.g. via [launch] or [runBlocking].)
      */
-    suspend fun list(): HashMap<StationEntity, StationRepository> {
-        val stationList = Airqualityforecast.stations().mapNotNull { model -> model.entity }
-        val stationMap = HashMap<StationEntity, StationRepository>(stationList.size)
+    suspend fun list(): HashMap<StationModel, StationRepository> {
+        val stationList = Airqualityforecast.stations()
+        val stationMap = HashMap<StationModel, StationRepository>(stationList.size)
 
         for (station in stationList) {
             val repository = StationRepository(application, station)

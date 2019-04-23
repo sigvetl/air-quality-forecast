@@ -25,14 +25,14 @@ class DailyForecastModel(application: Application) : AndroidViewModel(applicatio
 
     // TODO (julianho): Observations currently have no way to only pick-up partial updates (such as insertions),
     // possibly impacting performance. If performance becomes a concern, consider how to implement such updates.
-    private val mutableStations: MutableLiveData<HashMap<StationEntity, AirQualityTimeDataModel?>> by lazy {
-        MutableLiveData<HashMap<StationEntity, AirQualityTimeDataModel?>>()
+    private val mutableStations: MutableLiveData<HashMap<StationModel, AirQualityTimeDataModel?>> by lazy {
+        MutableLiveData<HashMap<StationModel, AirQualityTimeDataModel?>>()
     }
 
     /**
      * [stations] is an up-to-date, hourly view mapping each station to its current measurements (if there are any.)
      */
-    val stations: LiveData<HashMap<StationEntity, AirQualityTimeDataModel?>>
+    val stations: LiveData<HashMap<StationModel, AirQualityTimeDataModel?>>
         get() = mutableStations
 
     /**
@@ -41,7 +41,7 @@ class DailyForecastModel(application: Application) : AndroidViewModel(applicatio
      */
     suspend fun loadStations() {
         val repositoryMap = forecastRepository.list()
-        val stationMap = HashMap<StationEntity, AirQualityTimeDataModel?>(repositoryMap.size)
+        val stationMap = HashMap<StationModel, AirQualityTimeDataModel?>(repositoryMap.size)
 
         // Station list can be displayed without AQI values in order to allow quick user interface response times.
 

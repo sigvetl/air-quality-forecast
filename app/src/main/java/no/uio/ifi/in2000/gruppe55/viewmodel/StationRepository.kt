@@ -3,6 +3,7 @@ package no.uio.ifi.in2000.gruppe55.viewmodel
 import android.app.Application
 import no.uio.ifi.in2000.gruppe55.AirQualityTimeDataModel
 import no.uio.ifi.in2000.gruppe55.Airqualityforecast
+import no.uio.ifi.in2000.gruppe55.StationModel
 import no.uio.ifi.in2000.gruppe55.database.StationEntity
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -18,7 +19,7 @@ import java.util.Locale
  * [StationRepository] implements the "Repository" of Android Architecture Components, providing a flexible and
  * extensible method to separate concerns of data gathering from user interfaces.
  */
-class StationRepository(private val application: Application, private val stationEntity: StationEntity) {
+class StationRepository(private val application: Application, private val stationModel: StationModel) {
     /**
      * [at] asynchronously extracts air quality measurements from the relevant station at a given point in time.
      *
@@ -29,8 +30,8 @@ class StationRepository(private val application: Application, private val statio
      */
     suspend fun at(date: Date): AirQualityTimeDataModel? {
         val locationModel = Airqualityforecast.main(
-            lat = stationEntity.latitude,
-            lon = stationEntity.longitude
+            lat = stationModel.latitude,
+            lon = stationModel.longitude
         )
 
         for (moment in locationModel.data?.time ?: ArrayList()) {
