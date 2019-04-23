@@ -86,7 +86,7 @@ class ListAdapter(val context: Context?, val elements: MutableList<Element>): Re
             it.aqiIcon.let{
                 when {
                     element.aqi == null -> {
-                        it.setImageResource(R.drawable.aqi_1)
+                            it.setImageResource(R.drawable.aqi_1)
                     }
                     element.aqi!! >= 4 -> {
                         it.setImageResource(R.drawable.aqi_5)

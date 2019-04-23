@@ -14,6 +14,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.maps.android.SphericalUtil
 import no.uio.ifi.in2000.gruppe55.viewmodel.DailyForecastModel
 
 class MapFragment : Fragment(), OnMapReadyCallback {
@@ -68,20 +69,23 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             for ((station, measurement) in stationMap ?: HashMap()) {
                 if (station.latitude != null && station.longitude != null && station.name != null) {
                     val position = LatLng(station.latitude, station.longitude)
-                    val value = "Current AQI: ${measurement?.variables?.aqi?.value}"
+                    val value = "Current AQI: ${String.format("%.2f",measurement?.variables?.aqi?.value)}"
+                    val currentLocation = LatLng(59.94365597189331, 10.718679747209503);
+                    val distance = SphericalUtil.computeDistanceBetween(currentLocation, position)/1000
+                    val distanceSnippet = "Distance to location: ${String.format("%.2f",distance)} km"
 
                     activity?.runOnUiThread {
-                        mMap.addMarker(MarkerOptions().position(position).title(station.name).snippet(value))
+                        mMap.addMarker(MarkerOptions().position(position).title(station.name).snippet(distanceSnippet))
                     }
                 }
             }
         }
 
         //landssentrert
-        val center = LatLng(64.0, 11.0)
+        val center = LatLng(59.94365597189331, 10.718679747209503)
         //Oslo-sentrert, zoom level 11 +
         //val center2 = LatLng(59.91, 10.75)
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(center , 5.0f))
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(center , 11.0f))
         val uiSettings = mMap.uiSettings
         uiSettings.setZoomControlsEnabled(true)
     }
