@@ -90,7 +90,7 @@ class StationRepository(private val application: Application, private val statio
 
             // Pick the first measurement within the relevant date & time.
 
-            if (middleDate >= startDate && middleDate <= endDate) {
+            if (dateTime >= startDate && dateTime <= endDate) {
                 return moment
             }
         }
