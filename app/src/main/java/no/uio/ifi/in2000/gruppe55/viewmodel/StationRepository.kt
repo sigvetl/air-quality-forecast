@@ -44,6 +44,38 @@ class StationRepository(private val application: Application, private val statio
             lon = stationModel.longitude
         )
 
+        // Add every airquality throughout the day into the database.
+
+        for (moment in locationModel.data?.time ?: arrayListOf()) {
+            val middleDate = TypeConverters.toOffsetDateTime(moment.from) ?: OffsetDateTime.now()
+
+            // Ensure the relevant station is always marked as one. If not, foreign keys requirements can be violated
+            // when communicating with SQLite.
+
+            val station = StationEntity(
+                name = stationModel.name ?: "",
+                kommune = stationModel.kommune?.name ?: "",
+                latitude = stationModel.latitude ?: -1.0,
+                longitude = stationModel.longitude ?: -1.0
+            )
+
+            if (!stationDao.all.contains(station)) {
+                stationDao.insert(station)
+            }
+
+            // Cache the measurement to the associated date and time.
+
+            val measurement = MeasurementEntity(
+                name = station.name,
+                timestamp = middleDate,
+                aqi = moment.variables?.aqi?.value ?: 0.0
+            )
+
+            measurementDao.insert(measurement)
+        }
+
+        // Return the airquality most relevant to the current time.
+
         for (moment in locationModel.data?.time ?: ArrayList()) {
             // Airqualityforecast times are weird, so simply pick either the first or second date & time and consider
             // that to be "now". Additionally, all Airqualityforecast times should be within a Norwegian time-zone.
@@ -59,29 +91,6 @@ class StationRepository(private val application: Application, private val statio
             // Pick the first measurement within the relevant date & time.
 
             if (middleDate >= startDate && middleDate <= endDate) {
-                // Ensure the relevant station is always marked as one.
-
-                val station = StationEntity(
-                    name = stationModel.name ?: "",
-                    kommune = stationModel.kommune?.toString() ?: "",
-                    latitude = stationModel.latitude ?: 0.0,
-                    longitude = stationModel.longitude ?: 0.0
-                )
-
-                if (!stationDao.all.contains(station)) {
-                    stationDao.insert(station)
-                }
-
-                // Cache the measurement to the associated date and time.
-
-                val measurement = MeasurementEntity(
-                    name = station.name,
-                    timestamp = dateTime,
-                    aqi = moment.variables?.aqi?.value ?: 0.0
-                )
-
-                measurementDao.insert(measurement)
-
                 return moment
             }
         }
