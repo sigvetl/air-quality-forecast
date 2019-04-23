@@ -35,6 +35,8 @@ class StationRepository(private val application: Application, private val statio
      * [at] is suspendable and must therefore be executed in a Kotlin coroutine (e.g. via [launch] or [runBlocking].)
      */
     suspend fun at(dateTime: OffsetDateTime): AirQualityTimeDataModel? {
+        // If there already exists a previously-cached measurement, simply reuse that one.
+
         for (measurement in measurementDao.recentTo(stationModel.name ?: "", dateTime)) {
             return measurement.airQualityTimeDataModel
         }
@@ -74,25 +76,10 @@ class StationRepository(private val application: Application, private val statio
             measurementDao.insert(measurement)
         }
 
-        // Return the airquality most relevant to the current time.
+        // Return the first now-cached airquality most relevant to the current time.
 
-        for (moment in locationModel.data?.time ?: ArrayList()) {
-            // Airqualityforecast times are weird, so simply pick either the first or second date & time and consider
-            // that to be "now". Additionally, all Airqualityforecast times should be within a Norwegian time-zone.
-
-            val middleDate = TypeConverters.toOffsetDateTime(moment.from) ?: OffsetDateTime.now()
-
-            // To find the measurement of the current data & time, one needs to pick times within a range. One potential
-            // range is the previous time plus/minus 30 minutes.
-
-            var startDate = middleDate.minusMinutes(30)
-            var endDate = middleDate.plusMinutes(30)
-
-            // Pick the first measurement within the relevant date & time.
-
-            if (dateTime >= startDate && dateTime <= endDate) {
-                return moment
-            }
+        for (measurement in measurementDao.recentTo(stationModel.name ?: "", dateTime)) {
+            return measurement.airQualityTimeDataModel
         }
 
         return null
