@@ -1,5 +1,7 @@
 package no.uio.ifi.in2000.gruppe55.viewmodel
 
+import android.app.Application
+import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
@@ -17,7 +19,9 @@ import java.util.*
  * extensible way to separate all the data & corresponding logic of an interface from the actual code to maintain and
  * display the interface.
  */
-class DailyForecastModel(private val forecastRepository: ForecastRepository = ForecastRepository()) : ViewModel() {
+class DailyForecastModel(application: Application) : AndroidViewModel(application) {
+
+    private val forecastRepository: ForecastRepository = ForecastRepository(application)
 
     // TODO (julianho): Observations currently have no way to only pick-up partial updates (such as insertions),
     // possibly impacting performance. If performance becomes a concern, consider how to implement such updates.

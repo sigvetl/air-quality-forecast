@@ -1,5 +1,6 @@
 package no.uio.ifi.in2000.gruppe55.viewmodel
 
+import android.app.Application
 import no.uio.ifi.in2000.gruppe55.Airqualityforecast
 import no.uio.ifi.in2000.gruppe55.StationModel
 import no.uio.ifi.in2000.gruppe55.database.StationEntity
@@ -17,7 +18,7 @@ import no.uio.ifi.in2000.gruppe55.database.StationEntity
  * [ForecastRepository] implements the "Repository" of Android Architecture Components, providing a flexible and
  * extensible method to separate concerns of data gathering from user interfaces.
  */
-class ForecastRepository {
+class ForecastRepository(private val application: Application) {
     /**
      * [list] asynchronously extracts the current list of [StationModel]s and their corresponding [StationRepository]s.
      * Said repositories can be used to extract actual measurements from the stations in question.
@@ -29,7 +30,7 @@ class ForecastRepository {
         val stationMap = HashMap<StationEntity, StationRepository>(stationList.size)
 
         for (station in stationList) {
-            val repository = StationRepository(station)
+            val repository = StationRepository(application, station)
             stationMap[station] = repository
         }
 
