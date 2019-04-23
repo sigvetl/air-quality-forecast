@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
 
         globalViewModelProvider = ViewModelProvider(
             viewModelStore,
-            ViewModelProvider.NewInstanceFactory()
+            ViewModelProvider.AndroidViewModelFactory(application)
         )
 
         val navController = findNavController(this, R.id.nav_host_fragment)
