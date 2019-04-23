@@ -8,6 +8,7 @@ import android.arch.lifecycle.ViewModel
 import no.uio.ifi.in2000.gruppe55.AirQualityTimeDataModel
 import no.uio.ifi.in2000.gruppe55.StationModel
 import no.uio.ifi.in2000.gruppe55.database.StationEntity
+import org.threeten.bp.OffsetDateTime
 import java.util.*
 
 /**
@@ -54,7 +55,7 @@ class DailyForecastModel(application: Application) : AndroidViewModel(applicatio
 
         for ((station, repository) in repositoryMap) {
             // TODO (julianho): Extract the current date & time in the correct time zone.
-            val timeDataModel = repository.at(Date())
+            val timeDataModel = repository.at(OffsetDateTime.now())
             stationMap[station] = timeDataModel
             mutableStations.postValue(stationMap)
         }

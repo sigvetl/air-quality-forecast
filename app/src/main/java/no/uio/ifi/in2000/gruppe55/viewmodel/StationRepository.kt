@@ -7,6 +7,7 @@ import no.uio.ifi.in2000.gruppe55.StationModel
 import no.uio.ifi.in2000.gruppe55.database.DailyForecastDatabase
 import no.uio.ifi.in2000.gruppe55.database.MeasurementEntity
 import no.uio.ifi.in2000.gruppe55.database.StationEntity
+import no.uio.ifi.in2000.gruppe55.database.TypeConverters
 import org.threeten.bp.OffsetDateTime
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -36,8 +37,8 @@ class StationRepository(private val application: Application, private val statio
      *
      * [at] is suspendable and must therefore be executed in a Kotlin coroutine (e.g. via [launch] or [runBlocking].)
      */
-    suspend fun at(date: Date): AirQualityTimeDataModel? {
-        for (measurement in measurementDao.recentTo(stationModel.name ?: "", OffsetDateTime.now())) {
+    suspend fun at(dateTime: OffsetDateTime): AirQualityTimeDataModel? {
+        for (measurement in measurementDao.recentTo(stationModel.name ?: "", dateTime)) {
             return measurement.airQualityTimeDataModel
         }
 
@@ -50,23 +51,17 @@ class StationRepository(private val application: Application, private val statio
             // Airqualityforecast times are weird, so simply pick either the first or second date & time and consider
             // that to be "now". Additionally, all Airqualityforecast times should be within a Norwegian time-zone.
 
-            val middleDate = SimpleDateFormat(
-                "yyyy-MM-dd'T'HH:mm:ss'Z'",
-                Locale.forLanguageTag("no")
-            ).parse(moment?.from)
+            val middleDate = TypeConverters.toOffsetDateTime(moment.from) ?: OffsetDateTime.now()
 
             // To find the measurement of the current data & time, one needs to pick times within a range. One potential
             // range is the previous time plus/minus 30 minutes.
 
-            var startDate = middleDate.clone() as Date
-            startDate.minutes -= 30
-
-            var endDate = middleDate.clone() as Date
-            endDate.minutes += 30
+            var startDate = middleDate.minusMinutes(30)
+            var endDate = middleDate.plusMinutes(30)
 
             // Pick the first measurement within the relevant date & time.
 
-            if (date.time > startDate.time && date.time < endDate.time) {
+            if (middleDate >= startDate && middleDate <= endDate) {
                 // Ensure the relevant station is always marked as one.
 
                 val station = StationEntity(
@@ -84,7 +79,7 @@ class StationRepository(private val application: Application, private val statio
 
                 val measurement = MeasurementEntity(
                     name = station.name,
-                    timestamp = OffsetDateTime.now(),
+                    timestamp = dateTime,
                     aqi = moment.variables?.aqi?.value ?: 0.0
                 )
 
