@@ -4,7 +4,10 @@ import android.app.Application
 import no.uio.ifi.in2000.gruppe55.AirQualityTimeDataModel
 import no.uio.ifi.in2000.gruppe55.Airqualityforecast
 import no.uio.ifi.in2000.gruppe55.StationModel
+import no.uio.ifi.in2000.gruppe55.database.DailyForecastDatabase
+import no.uio.ifi.in2000.gruppe55.database.MeasurementEntity
 import no.uio.ifi.in2000.gruppe55.database.StationEntity
+import org.threeten.bp.OffsetDateTime
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -20,6 +23,11 @@ import java.util.Locale
  * extensible method to separate concerns of data gathering from user interfaces.
  */
 class StationRepository(private val application: Application, private val stationModel: StationModel) {
+
+    private val dailyForecastDatabase = DailyForecastDatabase.of(application.applicationContext)
+    private val stationDao = dailyForecastDatabase.stationDao()
+    private val measurementDao = dailyForecastDatabase.measurementDao()
+
     /**
      * [at] asynchronously extracts air quality measurements from the relevant station at a given point in time.
      *
@@ -29,6 +37,10 @@ class StationRepository(private val application: Application, private val statio
      * [at] is suspendable and must therefore be executed in a Kotlin coroutine (e.g. via [launch] or [runBlocking].)
      */
     suspend fun at(date: Date): AirQualityTimeDataModel? {
+        for (measurement in measurementDao.recentTo(stationModel.name ?: "", OffsetDateTime.now())) {
+            return measurement.airQualityTimeDataModel
+        }
+
         val locationModel = Airqualityforecast.main(
             lat = stationModel.latitude,
             lon = stationModel.longitude
@@ -55,6 +67,29 @@ class StationRepository(private val application: Application, private val statio
             // Pick the first measurement within the relevant date & time.
 
             if (date.time > startDate.time && date.time < endDate.time) {
+                // Ensure the relevant station is always marked as one.
+
+                val station = StationEntity(
+                    name = stationModel.name ?: "",
+                    kommune = stationModel.kommune?.toString() ?: "",
+                    latitude = stationModel.latitude ?: 0.0,
+                    longitude = stationModel.longitude ?: 0.0
+                )
+
+                if (!stationDao.all.contains(station)) {
+                    stationDao.insert(station)
+                }
+
+                // Cache the measurement to the associated date and time.
+
+                val measurement = MeasurementEntity(
+                    name = station.name,
+                    timestamp = OffsetDateTime.now(),
+                    aqi = moment.variables?.aqi?.value ?: 0.0
+                )
+
+                measurementDao.insert(measurement)
+
                 return moment
             }
         }
