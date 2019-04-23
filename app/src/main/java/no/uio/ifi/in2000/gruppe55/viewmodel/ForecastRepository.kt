@@ -2,6 +2,7 @@ package no.uio.ifi.in2000.gruppe55.viewmodel
 
 import no.uio.ifi.in2000.gruppe55.Airqualityforecast
 import no.uio.ifi.in2000.gruppe55.StationModel
+import no.uio.ifi.in2000.gruppe55.database.StationEntity
 
 // TODO (julianho): Consider turning into interface *or* parametrising on `AirqualityforecastInterface`.
 // TODO: Implement caching of requests to reduce unnecessary network usage.
@@ -23,9 +24,9 @@ class ForecastRepository {
      *
      * [list] is suspendable and must therefore be executed in a Kotlin coroutine (e.g. via [launch] or [runBlocking].)
      */
-    suspend fun list(): HashMap<StationModel, StationRepository> {
-        val stationList = Airqualityforecast.stations()
-        val stationMap = HashMap<StationModel, StationRepository>(stationList.size)
+    suspend fun list(): HashMap<StationEntity, StationRepository> {
+        val stationList = Airqualityforecast.stations().mapNotNull { model -> model.entity }
+        val stationMap = HashMap<StationEntity, StationRepository>(stationList.size)
 
         for (station in stationList) {
             val repository = StationRepository(station)

@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_list.*
+import no.uio.ifi.in2000.gruppe55.database.StationEntity
 import no.uio.ifi.in2000.gruppe55.viewmodel.DailyForecastModel
 import java.util.*
 import kotlin.collections.ArrayList
@@ -55,10 +56,10 @@ class ListFragment : Fragment() {
             eListe.elementer.clear()
 
             // Group stations under common area (e,g, county.)
-            val areaMap = TreeMap<String, HashMap<StationModel, AirQualityTimeDataModel?>>()
+            val areaMap = TreeMap<String, HashMap<StationEntity, AirQualityTimeDataModel?>>()
 
             for ((station, location) in stationMap ?: hashMapOf()) {
-                val area = station.kommune?.name
+                val area = station.kommune
 
                 if (area != null) {
                     if (areaMap.containsKey(area)) {
@@ -70,7 +71,7 @@ class ListFragment : Fragment() {
             }
 
             // TODO (julianho): Comparator should handle null gracefully.
-            val comparator: Comparator<StationModel> = Comparator { s, t -> s.name!!.compareTo(t.name!!) }
+            val comparator: Comparator<StationEntity> = Comparator { s, t -> s.name!!.compareTo(t.name!!) }
 
             for ((area, map) in areaMap) {
                 var totalAqi: Double? = 0.0
