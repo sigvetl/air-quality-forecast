@@ -13,7 +13,7 @@ import com.jjoe64.graphview.series.DataPoint
 class InfoActivity : AppCompatActivity() {
     private lateinit var linearLayoutManager: LinearLayoutManager
     private var stationName = "NO0057A"
-    private var stationRef = "2019-04-16T01:00:00Z"
+    private var stationRef = "2019-04-24T01:00:00Z"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,8 +32,11 @@ class InfoActivity : AppCompatActivity() {
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         my_recycler_view.layoutManager = layoutManager
 
+        val adapter = InfoAdapter(this, this, SListe.values)
+        my_recycler_view.adapter = adapter
+
         launch {
-            val stationModel = Airqualityforecast.met(stationRef, stationName)
+            val stationModel = Airqualityforecast.main(station = stationName)
             var number = stationModel.data?.time?.size
             if(number == null) number = 0
             for(i in 0..number){
@@ -73,13 +76,13 @@ class InfoActivity : AppCompatActivity() {
                     SListe.values.add(Value("pm25NonlocalFraction", "PM2.5", temp?.pm25NonlocalFraction?.value, temp?.pm25NonlocalFraction?.units))
                     SListe.values.add(Value("pm25LocalFractionTrafficNonexhaust", "PM2.5", temp?.pm25LocalFractionTrafficNonexhaust?.value, temp?.pm25LocalFractionTrafficNonexhaust?.units))
                     SListe.values.add(Value("pm25LocalFractionTrafficExhaust", "PM2.5", temp?.pm25LocalFractionTrafficExhaust?.value, temp?.pm25LocalFractionTrafficExhaust?.units))
+                    runOnUiThread {
+                        adapter.notifyDataSetChanged()
+                    }
                 }
                 break
             }
         }
-
-        val adapter = InfoAdapter(this, SListe.values)
-        my_recycler_view.adapter = adapter
 
         this.setGraph()
     }

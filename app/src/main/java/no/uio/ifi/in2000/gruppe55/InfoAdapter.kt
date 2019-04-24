@@ -1,5 +1,6 @@
 package no.uio.ifi.in2000.gruppe55
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.support.design.resources.MaterialResources.getDrawable
@@ -11,7 +12,7 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.element_parent.view.*
 import kotlinx.coroutines.launch
 
-class InfoAdapter(val context: Context?, val values: MutableList<Value>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class InfoAdapter(val context: Context?, val activity: Activity, val values: MutableList<Value>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     //Fargepalett:
     //1. Farger: Lilla: #8e3c97, Rød: #ea3e35, Oransje: #f68614, Gul: #dfc420.
     //2. Gråtoner: 5: 333333, 4: 555555, 3: 777777, 2: 999999, 1: bbbbbb.
@@ -77,47 +78,49 @@ class InfoAdapter(val context: Context?, val values: MutableList<Value>): Recycl
     }
 
     private fun setCard(valueHolder: InfoAdapter.MyViewHolder?, aqis: List<AQIIntervalModel>, value: Value){
-        valueHolder?.let{
-            it.aqiIcon.let{
-                when {
-                    //TODO riktig aqi nummer
-                    value.value != null && value.value >= aqis[3].from!! -> {
-                        it.setImageResource(R.drawable.aqi_5)
-                    }
-                    value.value != null && value.value >= aqis[2].from!! -> {
-                        it.setImageResource(R.drawable.aqi_4)
-                    }
-                    value.value != null && value.value >= aqis[1].from!! -> {
-                        it.setImageResource(R.drawable.aqi_3)
-                    }
-                    value.value != null && value.value >= 0 -> {
-                        it.setImageResource(R.drawable.aqi_2)
-                    }
-                    else -> {
-                        it.setImageResource(R.drawable.aqi_1)
-                    }
-                }
-            }
-            it.setColor.let{
-                when {
-                    value.value != null && value.value >= aqis[3].from!! -> {
-                        it.setBackgroundColor(Color.parseColor("#8e3c97"))
-                    }
-                    value.value != null && value.value >= aqis[2].from!! -> {
-                        it.setBackgroundColor(Color.parseColor("#ea3e35"))
-                    }
-                    value.value != null && value.value >= aqis[1].from!! -> {
-                        it.setBackgroundColor(Color.parseColor("#dfc420"))
-                    }
-                    value.value != null && value.value >= 0 -> {
-                        it.setBackgroundColor(Color.parseColor("#0ab03f"))
-                    }
-                    else -> {
-                        it.setBackgroundColor(Color.parseColor("#bbbbbb"))
+        activity.runOnUiThread {
+            valueHolder?.let {
+                it.aqiIcon.let {
+                    when {
+                        //TODO riktig aqi nummer
+                        value.value != null && value.value >= aqis[3].from!! -> {
+                            it.setImageResource(R.drawable.aqi_5)
+                        }
+                        value.value != null && value.value >= aqis[2].from!! -> {
+                            it.setImageResource(R.drawable.aqi_4)
+                        }
+                        value.value != null && value.value >= aqis[1].from!! -> {
+                            it.setImageResource(R.drawable.aqi_3)
+                        }
+                        value.value != null && value.value >= 0 -> {
+                            it.setImageResource(R.drawable.aqi_2)
+                        }
+                        else -> {
+                            it.setImageResource(R.drawable.aqi_1)
+                        }
                     }
                 }
+                it.setColor.let {
+                    when {
+                        value.value != null && value.value >= aqis[3].from!! -> {
+                            it.setBackgroundColor(Color.parseColor("#8e3c97"))
+                        }
+                        value.value != null && value.value >= aqis[2].from!! -> {
+                            it.setBackgroundColor(Color.parseColor("#ea3e35"))
+                        }
+                        value.value != null && value.value >= aqis[1].from!! -> {
+                            it.setBackgroundColor(Color.parseColor("#dfc420"))
+                        }
+                        value.value != null && value.value >= 0 -> {
+                            it.setBackgroundColor(Color.parseColor("#0ab03f"))
+                        }
+                        else -> {
+                            it.setBackgroundColor(Color.parseColor("#bbbbbb"))
+                        }
+                    }
+                }
+                it.textView.text = value.name
             }
-            it.textView.text = value.name
         }
     }
 }
