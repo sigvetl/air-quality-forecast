@@ -2,12 +2,14 @@ package no.uio.ifi.in2000.gruppe55
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
+import android.os.Bundle
 import android.support.design.resources.MaterialResources.getDrawable
 import android.support.v7.content.res.AppCompatResources.getDrawable
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import kotlinx.android.synthetic.main.element_parent.view.*
 
 class ListAdapter(val context: Context?, val elements: MutableList<Element>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -128,6 +130,17 @@ class ListAdapter(val context: Context?, val elements: MutableList<Element>): Re
                 }
             }
             it.textView.text = element.name
+
+            if(element.children == null){
+                it.setColor.let { view ->
+                    view.setOnClickListener{
+                        val bundle = Bundle().apply{
+                            putString("argument", element.name)
+                        }
+                        view!!.findNavController().navigate(R.id.infoActivity, bundle)
+                    }
+                }
+            }
         }
     }
 }
