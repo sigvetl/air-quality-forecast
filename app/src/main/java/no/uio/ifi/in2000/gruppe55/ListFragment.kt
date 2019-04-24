@@ -2,6 +2,8 @@ package no.uio.ifi.in2000.gruppe55
 
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelStore
+import android.content.Intent
+import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -9,6 +11,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import kotlinx.android.synthetic.*
+import kotlinx.android.synthetic.main.element_parent.*
 import kotlinx.android.synthetic.main.fragment_list.*
 import no.uio.ifi.in2000.gruppe55.viewmodel.DailyForecastModel
 import java.util.*
@@ -36,6 +41,7 @@ class ListFragment : Fragment() {
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         my_recycler_view.layoutManager = layoutManager
+        my_recycler_view.setItemViewCacheSize(50)
 
         val adapter = ListAdapter(context, eListe.elementer)
         my_recycler_view.adapter = adapter

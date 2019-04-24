@@ -1,13 +1,17 @@
 package no.uio.ifi.in2000.gruppe55
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
+import android.os.Bundle
 import android.support.design.resources.MaterialResources.getDrawable
+import android.support.v4.content.ContextCompat.startActivity
 import android.support.v7.content.res.AppCompatResources.getDrawable
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import kotlinx.android.synthetic.main.element_parent.view.*
 
 class ListAdapter(val context: Context?, val elements: MutableList<Element>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -53,18 +57,18 @@ class ListAdapter(val context: Context?, val elements: MutableList<Element>): Re
 
         elementHolder?.let{
 
-            it.expandButton?.let {
+            it.expandButton.let { imageView ->
                 if(element.children != null){
-                    it.setImageResource(R.drawable.expand_more)
-                    it.setOnClickListener { view ->
+                    imageView.setImageResource(R.drawable.expand_more)
+                    imageView.setOnClickListener { view ->
                         val start = elements.indexOf(element) + 1
                         if(element.children == null){
                             var count = 0
-                            var nextHeader = elements.indexOf(elements.find{
-                                (count++ >=start) && (it.type == element.type)
+                            var nextHeader = elements.indexOf(elements.find{ an_element ->
+                                (count++ >=start) && (an_element.type == element.type)
                             })
                             if(nextHeader == -1) nextHeader = elements.size
-                            element.children = elements.slice(start..nextHeader - 1)
+                            element.children = elements.slice(start until nextHeader)
 
                             val end = element.children!!.size
                             if(end > 0) elements.removeAll(element.children!!)
@@ -72,10 +76,10 @@ class ListAdapter(val context: Context?, val elements: MutableList<Element>): Re
                             view.animate().rotation(0.0F).start()
                             notifyItemRangeRemoved(start, end)
                         } else {
-                            element.children?.let {
-                                elements.addAll(start, it)
+                            element.children?.let { list ->
+                                elements.addAll(start, list)
                                 view.animate().rotation(180.0F).start()
-                                notifyItemRangeInserted(start, it.size)
+                                notifyItemRangeInserted(start, list.size)
                                 element.children = null
                             }
                         }
@@ -83,51 +87,57 @@ class ListAdapter(val context: Context?, val elements: MutableList<Element>): Re
                 }
             }
 
-            it.aqiIcon.let{
+            it.aqiIcon.let{ imageView ->
                 when {
                     element.aqi == null -> {
-                        it.setImageResource(R.drawable.aqi_1)
+                        imageView.setImageResource(R.drawable.aqi_loading)
                     }
                     element.aqi!! >= 4 -> {
-                        it.setImageResource(R.drawable.aqi_5)
+                        imageView.setImageResource(R.drawable.aqi_sh)
                     }
                     element.aqi!! >= 3 -> {
-                        it.setImageResource(R.drawable.aqi_4)
+                        imageView.setImageResource(R.drawable.aqi_h)
                     }
                     element.aqi!! >= 2 -> {
-                        it.setImageResource(R.drawable.aqi_3)
+                        imageView.setImageResource(R.drawable.aqi_m)
                     }
                     element.aqi!! >= 1 -> {
-                        it.setImageResource(R.drawable.aqi_2)
-                    }
-                    element.aqi!! >= 0 -> {
-                        it.setImageResource(R.drawable.aqi_1)
+                        imageView.setImageResource(R.drawable.aqi_l)
                     }
                 }
             }
-            it.setColor.let{
+            it.setColor.let{ view ->
                 when {
                     element.aqi == null -> {
-                        it.setBackgroundColor(Color.parseColor("#bbbbbb"))
+                        view.setBackgroundColor(Color.parseColor("#bbbbbb"))
                     }
                     element.aqi!! >= 4 -> {
-                        it.setBackgroundColor(Color.parseColor("#8e3c97"))
+                        view.setBackgroundColor(Color.parseColor("#8e3c97"))
                     }
                     element.aqi!! >= 3 -> {
-                        it.setBackgroundColor(Color.parseColor("#ea3e35"))
+                        view.setBackgroundColor(Color.parseColor("#ea3e35"))
                     }
                     element.aqi!! >= 2 -> {
-                        it.setBackgroundColor(Color.parseColor("#f68614"))
+                        view.setBackgroundColor(Color.parseColor("#dfc420"))
                     }
                     element.aqi!! >= 1 -> {
-                        it.setBackgroundColor(Color.parseColor("#dfc420"))
-                    }
-                    element.aqi!! >= 0 -> {
-                        it.setBackgroundColor(Color.parseColor("#0ab03f"))
+                        view.setBackgroundColor(Color.parseColor("#0ab03f"))
                     }
                 }
             }
             it.textView.text = element.name
+
+
+            if(element.children == null){
+                it.setColor.let { view ->
+                    view.setOnClickListener {
+                        val bundle = Bundle().apply {
+                            putString("argument", element.name)
+                        }
+                        view!!.findNavController().navigate(R.id.bottom_menu_one, bundle)
+                    }
+                }
+            }
         }
     }
 }
