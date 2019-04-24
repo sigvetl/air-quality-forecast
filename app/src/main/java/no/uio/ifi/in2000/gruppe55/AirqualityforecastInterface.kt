@@ -1,9 +1,6 @@
 package no.uio.ifi.in2000.gruppe55
 
 import com.google.gson.annotations.SerializedName
-import no.uio.ifi.in2000.gruppe55.database.MeasurementEntity
-import no.uio.ifi.in2000.gruppe55.database.StationEntity
-import no.uio.ifi.in2000.gruppe55.database.TypeConverters
 import okhttp3.ResponseBody
 
 /**
@@ -191,15 +188,7 @@ data class AirQualityTimeDataModel(
     val reason: AirQualitySourceModel? = null,
     val to: String? = null,
     val variables: AirQualityVariableDataModel? = null
-) {
-    fun getEntity(stationEntity: StationEntity): MeasurementEntity? =
-        TypeConverters.toOffsetDateTime(from)?.let { timestamp ->
-            variables?.aqi?.value?.let { aqi ->
-                MeasurementEntity(stationEntity.name, timestamp, aqi)
-            }
-        }
-}
-
+)
 
 data class AirQualityVariableDataModel(
     @SerializedName("AQI")
@@ -354,15 +343,7 @@ data class StationModel(
     val latitude: Double? = null,
     val longitude: Double? = null,
     val name: String? = null
-) {
-    val entity: StationEntity?
-        get() = StationEntity(
-            name = name!!,
-            kommune = kommune?.name!!,
-            latitude = latitude!!,
-            longitude = longitude!!
-        )
-}
+)
 
 data class VarDataModel(
     val units: String? = null,
