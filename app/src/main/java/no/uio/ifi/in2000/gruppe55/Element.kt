@@ -23,7 +23,7 @@ object eListe{
 
 data class Value (val name: String, val value: Double?, val unit: String?)
 
-object sListe{
+object SListe{
     var values = mutableListOf(
         Value("Stov", 2.0, "1")
     )
