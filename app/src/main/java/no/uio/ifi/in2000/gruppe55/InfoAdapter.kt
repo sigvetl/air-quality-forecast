@@ -45,36 +45,7 @@ class InfoAdapter(val context: Context?, val activity: Activity, val values: Mut
         val valueHolder = holder as? MyViewHolder
         val value = values[position]
 
-        launch{
-            val aqiDesc = Airqualityforecast.aqiDescription()
-            when {
-                value.nameClass == aqiDesc.variables?.o3Concentration?.nameno!! -> {
-                    val aqiValues = aqiDesc.variables.o3Concentration.aqis as List<AQIIntervalModel>
-                    setCard(valueHolder, aqiValues, value)
-                }
-                value.nameClass == aqiDesc.variables?.so2Concentration?.nameno!! -> {
-                    val aqiValues = aqiDesc.variables.so2Concentration.aqis as List<AQIIntervalModel>
-                    setCard(valueHolder, aqiValues, value)
-                }
-                value.nameClass == aqiDesc.variables?.pm25Concentration?.nameno!! ->{
-                    val aqiValues = aqiDesc.variables.pm25Concentration.aqis as List<AQIIntervalModel>
-                    setCard(valueHolder, aqiValues, value)
-                }
-                value.nameClass == aqiDesc.variables?.pm10Concentration?.nameno!! ->{
-                    val aqiValues = aqiDesc.variables.pm10Concentration.aqis as List<AQIIntervalModel>
-                    setCard(valueHolder, aqiValues, value)
-                }
-                value.nameClass == aqiDesc.variables?.no2Concentration?.nameno!! ->{
-                    val aqiValues = aqiDesc.variables.no2Concentration.aqis as List<AQIIntervalModel>
-                    setCard(valueHolder, aqiValues, value)
-                }
-                else -> {
-                    //ERROR
-                }
-            }
-        }
-
-
+        setCard(valueHolder, value.intervalModel, value)
     }
 
     private fun setCard(valueHolder: InfoAdapter.MyViewHolder?, aqis: List<AQIIntervalModel>, value: Value){

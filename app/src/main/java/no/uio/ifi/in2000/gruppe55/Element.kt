@@ -21,13 +21,13 @@ object eListe{
     )
 }
 
-data class Value (val name: String, val nameClass: String, val value: Double?, val unit: String?)
+data class Value (val name: String, val nameClass: String, val value: Double?, val unit: String?, val intervalModel: List<AQIIntervalModel> = listOf())
 
 object SListe{
-    var values = mutableListOf(
-        Value("Stov", "Ozon", 2.0, "1"),
-        Value("tull", "Ozon", 1.0, "1"),
-        Value("her", "PM2.5", 2.0, "1"),
-        Value("sjekk", "PM10", 3.0, "1")
+    var values = mutableListOf<Value>(
+        // Value("Stov", "Ozon", 2.0, "1"),
+        // Value("tull", "Ozon", 1.0, "1"),
+        // Value("her", "PM2.5", 2.0, "1"),
+        // Value("sjekk", "PM10", 3.0, "1")
     )
 }
