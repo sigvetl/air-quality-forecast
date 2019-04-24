@@ -1,0 +1,62 @@
+0000000000000000000000000000000000000000 cf884a75a2ea5dd430a13395ae86da9a0ff0c343 yumiova <yumiova@protonmail.ch> 1553678927 +0100	clone: from git@github.uio.no:IN2000-V19/Gruppe55.git
+cf884a75a2ea5dd430a13395ae86da9a0ff0c343 cf884a75a2ea5dd430a13395ae86da9a0ff0c343 yumiova <yumiova@protonmail.ch> 1553679144 +0100	reset: moving to origin/master
+cf884a75a2ea5dd430a13395ae86da9a0ff0c343 fd02e58282502d05ce4fb72cff7176a415a55eef yumiova <yumiova@protonmail.ch> 1553679170 +0100	checkout: moving from master to interface-api
+fd02e58282502d05ce4fb72cff7176a415a55eef 1e3b699ac3e6e637f9e560ecede7b56067116a34 yumiova <yumiova@protonmail.ch> 1553681093 +0100	checkout: moving from interface-api to jarlebm
+1e3b699ac3e6e637f9e560ecede7b56067116a34 c317fdb22c8e076038aefdb102ad70ff12be1089 yumiova <yumiova@protonmail.ch> 1553684100 +0100	checkout: moving from jarlebm to sigvetl
+c317fdb22c8e076038aefdb102ad70ff12be1089 bd3670046aacd1b7e2ffb921c8138bd02729bb7f yumiova <yumiova@protonmail.ch> 1553684225 +0100	checkout: moving from sigvetl to erisk
+bd3670046aacd1b7e2ffb921c8138bd02729bb7f fd02e58282502d05ce4fb72cff7176a415a55eef yumiova <yumiova@protonmail.ch> 1553684230 +0100	checkout: moving from erisk to interface-api
+fd02e58282502d05ce4fb72cff7176a415a55eef fd02e58282502d05ce4fb72cff7176a415a55eef yumiova <yumiova@protonmail.ch> 1553688598 +0100	checkout: moving from interface-api to interface-api
+fd02e58282502d05ce4fb72cff7176a415a55eef cf884a75a2ea5dd430a13395ae86da9a0ff0c343 julianho <julianho@student.matnat.uio.no> 1553689158 +0100	checkout: moving from interface-api to master
+cf884a75a2ea5dd430a13395ae86da9a0ff0c343 9fd5172eb716f92d786f941943f54f7e6d3bf9f4 julianho <julianho@student.matnat.uio.no> 1553689174 +0100	pull origin master: Fast-forward
+9fd5172eb716f92d786f941943f54f7e6d3bf9f4 fd02e58282502d05ce4fb72cff7176a415a55eef julianho <julianho@student.matnat.uio.no> 1553689472 +0100	checkout: moving from master to interface-api
+fd02e58282502d05ce4fb72cff7176a415a55eef 3f7ed09a0905669b9607ffefd6716986b7237fd0 julianho <julianho@student.matnat.uio.no> 1553690065 +0100	commit: Legger til enkelt dokumentasjon på hvordan å bruke navnførte argumenter.
+3f7ed09a0905669b9607ffefd6716986b7237fd0 9fd5172eb716f92d786f941943f54f7e6d3bf9f4 julianho <julianho@student.matnat.uio.no> 1553691376 +0100	checkout: moving from interface-api to master
+9fd5172eb716f92d786f941943f54f7e6d3bf9f4 1e3b699ac3e6e637f9e560ecede7b56067116a34 julianho <julianho@student.matnat.uio.no> 1553691463 +0100	checkout: moving from master to jarlebm
+1e3b699ac3e6e637f9e560ecede7b56067116a34 9fd5172eb716f92d786f941943f54f7e6d3bf9f4 julianho <julianho@student.matnat.uio.no> 1553691603 +0100	checkout: moving from jarlebm to master
+9fd5172eb716f92d786f941943f54f7e6d3bf9f4 96e704315fafc8ef70a15f2f6d0b66184efffa03 julianho <julianho@student.matnat.uio.no> 1553691612 +0100	pull origin jarlebm: Fast-forward
+96e704315fafc8ef70a15f2f6d0b66184efffa03 1e3b699ac3e6e637f9e560ecede7b56067116a34 julianho <julianho@student.matnat.uio.no> 1553691620 +0100	checkout: moving from master to jarlebm
+1e3b699ac3e6e637f9e560ecede7b56067116a34 96e704315fafc8ef70a15f2f6d0b66184efffa03 julianho <julianho@student.matnat.uio.no> 1553691655 +0100	pull: Fast-forward
+96e704315fafc8ef70a15f2f6d0b66184efffa03 96e704315fafc8ef70a15f2f6d0b66184efffa03 julianho <julianho@student.matnat.uio.no> 1553693595 +0100	checkout: moving from jarlebm to master
+96e704315fafc8ef70a15f2f6d0b66184efffa03 96e704315fafc8ef70a15f2f6d0b66184efffa03 julianho <julianho@student.matnat.uio.no> 1553693607 +0100	checkout: moving from master to jarlebm
+96e704315fafc8ef70a15f2f6d0b66184efffa03 96e704315fafc8ef70a15f2f6d0b66184efffa03 julianho <julianho@student.matnat.uio.no> 1553693618 +0100	checkout: moving from jarlebm to master
+96e704315fafc8ef70a15f2f6d0b66184efffa03 96e704315fafc8ef70a15f2f6d0b66184efffa03 julianho <julianho@student.matnat.uio.no> 1553694365 +0100	checkout: moving from master to master
+96e704315fafc8ef70a15f2f6d0b66184efffa03 9fd5172eb716f92d786f941943f54f7e6d3bf9f4 julianho <julianho@student.matnat.uio.no> 1553694370 +0100	checkout: moving from master to origin/master
+9fd5172eb716f92d786f941943f54f7e6d3bf9f4 96e704315fafc8ef70a15f2f6d0b66184efffa03 julianho <julianho@student.matnat.uio.no> 1553694385 +0100	checkout: moving from 9fd5172eb716f92d786f941943f54f7e6d3bf9f4 to master
+96e704315fafc8ef70a15f2f6d0b66184efffa03 9fd5172eb716f92d786f941943f54f7e6d3bf9f4 julianho <julianho@student.matnat.uio.no> 1553694391 +0100	checkout: moving from master to origin/master
+9fd5172eb716f92d786f941943f54f7e6d3bf9f4 3e2268314f90e6c77203f3dd9eda99d4d48e27ec julianho <julianho@student.matnat.uio.no> 1553695139 +0100	checkout: moving from 9fd5172eb716f92d786f941943f54f7e6d3bf9f4 to sigvetl
+3e2268314f90e6c77203f3dd9eda99d4d48e27ec debf133ec5ab93766052d382d992d8f73d617c69 julianho <julianho@student.matnat.uio.no> 1554970623 +0200	pull origin master: Fast-forward
+debf133ec5ab93766052d382d992d8f73d617c69 96e704315fafc8ef70a15f2f6d0b66184efffa03 julianho <julianho@student.matnat.uio.no> 1554970639 +0200	checkout: moving from sigvetl to master
+96e704315fafc8ef70a15f2f6d0b66184efffa03 debf133ec5ab93766052d382d992d8f73d617c69 julianho <julianho@student.matnat.uio.no> 1554970665 +0200	pull origin master: Fast-forward
+debf133ec5ab93766052d382d992d8f73d617c69 debf133ec5ab93766052d382d992d8f73d617c69 julianho <julianho@student.matnat.uio.no> 1554970712 +0200	checkout: moving from master to convertToFragment
+debf133ec5ab93766052d382d992d8f73d617c69 be6b274e74e24b2e530894c63e6eff0d0deb84de julianho <julianho@student.matnat.uio.no> 1554970723 +0200	pull origin convertToFragment: Fast-forward
+be6b274e74e24b2e530894c63e6eff0d0deb84de debf133ec5ab93766052d382d992d8f73d617c69 julianho <julianho@student.matnat.uio.no> 1554974231 +0200	checkout: moving from convertToFragment to master
+debf133ec5ab93766052d382d992d8f73d617c69 be6b274e74e24b2e530894c63e6eff0d0deb84de julianho <julianho@student.matnat.uio.no> 1554974237 +0200	checkout: moving from master to convertToFragment
+be6b274e74e24b2e530894c63e6eff0d0deb84de debf133ec5ab93766052d382d992d8f73d617c69 julianho <julianho@student.matnat.uio.no> 1554974244 +0200	checkout: moving from convertToFragment to master
+debf133ec5ab93766052d382d992d8f73d617c69 debf133ec5ab93766052d382d992d8f73d617c69 julianho <julianho@student.matnat.uio.no> 1554974258 +0200	checkout: moving from master to view-model
+debf133ec5ab93766052d382d992d8f73d617c69 be6b274e74e24b2e530894c63e6eff0d0deb84de julianho <julianho@student.matnat.uio.no> 1554974450 +0200	checkout: moving from view-model to convertToFragment
+be6b274e74e24b2e530894c63e6eff0d0deb84de debf133ec5ab93766052d382d992d8f73d617c69 julianho <julianho@student.matnat.uio.no> 1554974571 +0200	checkout: moving from convertToFragment to view-model
+debf133ec5ab93766052d382d992d8f73d617c69 debf133ec5ab93766052d382d992d8f73d617c69 yumiova <yumiova@protonmail.ch> 1555360303 +0200	checkout: moving from view-model to master
+debf133ec5ab93766052d382d992d8f73d617c69 5cc1ddc2dba75b40eef8ccc956ad0db4d2eb8480 yumiova <yumiova@protonmail.ch> 1555360374 +0200	pull origin master: Fast-forward
+5cc1ddc2dba75b40eef8ccc956ad0db4d2eb8480 54b366b5e4a6c230830499615b18ead31edf22e2 yumiova <yumiova@protonmail.ch> 1555360433 +0200	checkout: moving from master to view-model
+54b366b5e4a6c230830499615b18ead31edf22e2 5cc1ddc2dba75b40eef8ccc956ad0db4d2eb8480 yumiova <yumiova@protonmail.ch> 1555367310 +0200	checkout: moving from view-model to master
+5cc1ddc2dba75b40eef8ccc956ad0db4d2eb8480 dd56be763fcb668066222061c391afcf4938fb79 yumiova <yumiova@protonmail.ch> 1555367353 +0200	pull origin view-model: Fast-forward
+dd56be763fcb668066222061c391afcf4938fb79 dd56be763fcb668066222061c391afcf4938fb79 yumiova <yumiova@protonmail.ch> 1555367361 +0200	checkout: moving from master to view-model
+dd56be763fcb668066222061c391afcf4938fb79 dd56be763fcb668066222061c391afcf4938fb79 julianho <julianho@student.matnat.uio.no> 1555499193 +0200	checkout: moving from view-model to master
+dd56be763fcb668066222061c391afcf4938fb79 a4c14a251c8e7c3bdaa3c84984db3ac93b54605a julianho <julianho@student.matnat.uio.no> 1555499226 +0200	pull origin master: Fast-forward
+a4c14a251c8e7c3bdaa3c84984db3ac93b54605a a4c14a251c8e7c3bdaa3c84984db3ac93b54605a julianho <julianho@student.matnat.uio.no> 1555499286 +0200	checkout: moving from master to remember-station
+a4c14a251c8e7c3bdaa3c84984db3ac93b54605a a4c14a251c8e7c3bdaa3c84984db3ac93b54605a julianho <julianho@student.matnat.uio.no> 1555501300 +0200	checkout: moving from remember-station to master
+a4c14a251c8e7c3bdaa3c84984db3ac93b54605a a4c14a251c8e7c3bdaa3c84984db3ac93b54605a julianho <julianho@student.matnat.uio.no> 1555501331 +0200	checkout: moving from master to master
+a4c14a251c8e7c3bdaa3c84984db3ac93b54605a a4c14a251c8e7c3bdaa3c84984db3ac93b54605a julianho <julianho@student.matnat.uio.no> 1555501762 +0200	checkout: moving from master to favorite-station
+a4c14a251c8e7c3bdaa3c84984db3ac93b54605a bb16885e418da683e32b4bb6aabec7845867e2b7 julianho <julianho@student.matnat.uio.no> 1555503776 +0200	commit: Implementering av livekoden under forevisning.
+bb16885e418da683e32b4bb6aabec7845867e2b7 a4c14a251c8e7c3bdaa3c84984db3ac93b54605a julianho <julianho@student.matnat.uio.no> 1555503843 +0200	checkout: moving from favorite-station to master
+a4c14a251c8e7c3bdaa3c84984db3ac93b54605a 3fef31ddd032768ccffc4aa85f47127dce73dde5 julianho <julianho@student.matnat.uio.no> 1556094087 +0200	pull origin filesystem-cache: Fast-forward
+3fef31ddd032768ccffc4aa85f47127dce73dde5 3fef31ddd032768ccffc4aa85f47127dce73dde5 julianho <julianho@student.matnat.uio.no> 1556094094 +0200	checkout: moving from master to filesystem-cache
+3fef31ddd032768ccffc4aa85f47127dce73dde5 038ed05c964aa6e2eac11a4dc20fdd0df7ce6596 julianho <julianho@student.matnat.uio.no> 1556095349 +0200	commit: Garanterer at verdier ikke settes mer enn en gang i databasen.
+038ed05c964aa6e2eac11a4dc20fdd0df7ce6596 b47eaa2eccdc6e9c758beda399acaa6574b32102 julianho <julianho@student.matnat.uio.no> 1556096227 +0200	commit: Ble kvitt unødvendig funksjonalitet til AirqualityforecastInterface.
+b47eaa2eccdc6e9c758beda399acaa6574b32102 5a1bf95d88676d18391ee8c4b442d37da4d33d03 julianho <julianho@student.matnat.uio.no> 1556096403 +0200	commit: Stasjoner identifiseres med EOI, ikke navn.
+5a1bf95d88676d18391ee8c4b442d37da4d33d03 9c1f206f15bee71be16a26cb8396e1f40f1d449c julianho <julianho@student.matnat.uio.no> 1556096558 +0200	commit: Ble kvitt unødvendig databasekall.
+9c1f206f15bee71be16a26cb8396e1f40f1d449c 7fde79320a695b30a84c1f936c14851ae117ed33 julianho <julianho@student.matnat.uio.no> 1556098455 +0200	commit: Bruker Instant overalt for logisk håndtering av tid.
+7fde79320a695b30a84c1f936c14851ae117ed33 15145c75c9d4de4bd4bdb4cabd47828337ec9d6f julianho <julianho@student.matnat.uio.no> 1556099225 +0200	commit: Fjerner unødvendig endring av metadata forårsaket av Android Studio.
+15145c75c9d4de4bd4bdb4cabd47828337ec9d6f bbf8e9b13b08e5f8ba808f7d21df7e0980ebcfc8 julianho <julianho@student.matnat.uio.no> 1556099323 +0200	commit (amend): Fjerner unÃ¸dvendig endring av metadata forÃ¥rsaket av Android Studio.
+bbf8e9b13b08e5f8ba808f7d21df7e0980ebcfc8 3fef31ddd032768ccffc4aa85f47127dce73dde5 julianho <julianho@student.matnat.uio.no> 1556106713 +0200	checkout: moving from filesystem-cache to master
+3fef31ddd032768ccffc4aa85f47127dce73dde5 3fef31ddd032768ccffc4aa85f47127dce73dde5 julianho <julianho@student.matnat.uio.no> 1556106760 +0200	reset: moving to HEAD

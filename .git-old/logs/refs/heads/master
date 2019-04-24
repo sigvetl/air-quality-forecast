@@ -1,0 +1,8 @@
+0000000000000000000000000000000000000000 cf884a75a2ea5dd430a13395ae86da9a0ff0c343 yumiova <yumiova@protonmail.ch> 1553678927 +0100	clone: from git@github.uio.no:IN2000-V19/Gruppe55.git
+cf884a75a2ea5dd430a13395ae86da9a0ff0c343 9fd5172eb716f92d786f941943f54f7e6d3bf9f4 julianho <julianho@student.matnat.uio.no> 1553689174 +0100	pull origin master: Fast-forward
+9fd5172eb716f92d786f941943f54f7e6d3bf9f4 96e704315fafc8ef70a15f2f6d0b66184efffa03 julianho <julianho@student.matnat.uio.no> 1553691612 +0100	pull origin jarlebm: Fast-forward
+96e704315fafc8ef70a15f2f6d0b66184efffa03 debf133ec5ab93766052d382d992d8f73d617c69 julianho <julianho@student.matnat.uio.no> 1554970665 +0200	pull origin master: Fast-forward
+debf133ec5ab93766052d382d992d8f73d617c69 5cc1ddc2dba75b40eef8ccc956ad0db4d2eb8480 yumiova <yumiova@protonmail.ch> 1555360374 +0200	pull origin master: Fast-forward
+5cc1ddc2dba75b40eef8ccc956ad0db4d2eb8480 dd56be763fcb668066222061c391afcf4938fb79 yumiova <yumiova@protonmail.ch> 1555367353 +0200	pull origin view-model: Fast-forward
+dd56be763fcb668066222061c391afcf4938fb79 a4c14a251c8e7c3bdaa3c84984db3ac93b54605a julianho <julianho@student.matnat.uio.no> 1555499226 +0200	pull origin master: Fast-forward
+a4c14a251c8e7c3bdaa3c84984db3ac93b54605a 3fef31ddd032768ccffc4aa85f47127dce73dde5 julianho <julianho@student.matnat.uio.no> 1556094087 +0200	pull origin filesystem-cache: Fast-forward
