@@ -1,0 +1,8 @@
+# pack-refs with: peeled fully-peeled sorted 
+bd3670046aacd1b7e2ffb921c8138bd02729bb7f refs/remotes/origin/erisk
+fd02e58282502d05ce4fb72cff7176a415a55eef refs/remotes/origin/interface-api
+bd3670046aacd1b7e2ffb921c8138bd02729bb7f refs/remotes/origin/jarlebm
+cf884a75a2ea5dd430a13395ae86da9a0ff0c343 refs/remotes/origin/master
+1938a86bf18f09748f19da0b2bf1aa41a3d32015 refs/remotes/origin/save-station
+c317fdb22c8e076038aefdb102ad70ff12be1089 refs/remotes/origin/sigvetl
+53b108b8688bf7ace88496499b927d1d548e608c refs/remotes/origin/solvesel
