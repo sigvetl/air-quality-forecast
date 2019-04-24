@@ -4,7 +4,7 @@ import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Delete
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
-import org.threeten.bp.OffsetDateTime
+import org.threeten.bp.Instant
 
 @Dao
 interface MeasurementDao {
@@ -22,7 +22,7 @@ interface MeasurementDao {
                 datetime(timestamp) = datetime(:timestamp)
         """
     )
-    fun has(eoi: String, timestamp: OffsetDateTime): Boolean
+    fun has(eoi: String, timestamp: Instant): Boolean
 
     @Query(
         """
@@ -33,7 +33,7 @@ interface MeasurementDao {
                 datetime(:timestamp) < datetime(timestamp, '+30 minutes')
         """
     )
-    fun recentTo(eoi: String, timestamp: OffsetDateTime): List<MeasurementEntity>
+    fun recentTo(eoi: String, timestamp: Instant): List<MeasurementEntity>
 
     @Insert
     fun insert(measurementEntity: MeasurementEntity)

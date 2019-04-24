@@ -7,8 +7,7 @@ import no.uio.ifi.in2000.gruppe55.StationModel
 import no.uio.ifi.in2000.gruppe55.database.DailyForecastDatabase
 import no.uio.ifi.in2000.gruppe55.database.MeasurementEntity
 import no.uio.ifi.in2000.gruppe55.database.StationEntity
-import no.uio.ifi.in2000.gruppe55.database.TypeConverters
-import org.threeten.bp.OffsetDateTime
+import org.threeten.bp.Instant
 
 // TODO (julianho): Consider turning into interface *or* parametrising on `AirqualityforecastInterface`.
 // TODO: Implement caching of requests to reduce unnecessary network usage.
@@ -34,10 +33,10 @@ class StationRepository(private val application: Application, private val statio
      *
      * [at] is suspendable and must therefore be executed in a Kotlin coroutine (e.g. via [launch] or [runBlocking].)
      */
-    suspend fun at(dateTime: OffsetDateTime): AirQualityTimeDataModel? {
+    suspend fun at(timestamp: Instant): AirQualityTimeDataModel? {
         // If there already exists a previously-cached measurement, simply reuse that one.
 
-        for (measurement in measurementDao.recentTo(stationModel.eoi ?: "", dateTime)) {
+        for (measurement in measurementDao.recentTo(stationModel.eoi ?: "", timestamp)) {
             return measurement.airQualityTimeDataModel
         }
 
@@ -49,7 +48,7 @@ class StationRepository(private val application: Application, private val statio
         // Add every airquality throughout the day into the database.
 
         for (moment in locationModel.data?.time ?: arrayListOf()) {
-            val middleDate = TypeConverters.toOffsetDateTime(moment.from) ?: OffsetDateTime.now()
+            val middleDate = Instant.parse(moment.from) ?: Instant.now()
 
             // Ensure the relevant station is always marked as one. If not, foreign keys requirements can be violated
             // when communicating with SQLite.
@@ -81,7 +80,7 @@ class StationRepository(private val application: Application, private val statio
 
         // Return the first now-cached airquality most relevant to the current time.
 
-        for (measurement in measurementDao.recentTo(stationModel.eoi ?: "", dateTime)) {
+        for (measurement in measurementDao.recentTo(stationModel.eoi ?: "", timestamp)) {
             return measurement.airQualityTimeDataModel
         }
 

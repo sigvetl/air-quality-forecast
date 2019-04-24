@@ -6,7 +6,7 @@ import android.arch.persistence.room.Ignore
 import no.uio.ifi.in2000.gruppe55.AirQualityTimeDataModel
 import no.uio.ifi.in2000.gruppe55.AirQualityVariableDataModel
 import no.uio.ifi.in2000.gruppe55.VarDataModel
-import org.threeten.bp.OffsetDateTime
+import org.threeten.bp.Instant
 
 @Entity(
     tableName = "measurement_table",
@@ -15,14 +15,14 @@ import org.threeten.bp.OffsetDateTime
 )
 data class MeasurementEntity(
     val eoi: String,
-    val timestamp: OffsetDateTime,
+    val timestamp: Instant,
     val aqi: Double
 ) {
     @get:Ignore
     val airQualityTimeDataModel: AirQualityTimeDataModel
         get() = AirQualityTimeDataModel(
-            from = TypeConverters.fromOffsetDateTime(timestamp),
-            to = TypeConverters.fromOffsetDateTime(timestamp),
+            from = timestamp.toString(),
+            to = timestamp.toString(),
             variables = AirQualityVariableDataModel(aqi = VarDataModel(value = aqi))
         )
 }
