@@ -2,6 +2,7 @@ package no.uio.ifi.in2000.gruppe55
 
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelStore
+import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.support.v4.app.Fragment
