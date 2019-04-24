@@ -13,6 +13,19 @@ interface MeasurementDao {
 
     @Query(
         """
+            SELECT
+                name = :name AND
+                datetime(timestamp) = datetime(:timestamp)
+            FROM measurement_table
+            WHERE
+                name = :name AND
+                datetime(timestamp) = datetime(:timestamp)
+        """
+    )
+    fun has(name: String, timestamp: OffsetDateTime): Boolean
+
+    @Query(
+        """
             SELECT * FROM measurement_table
             WHERE
                 name = :name AND

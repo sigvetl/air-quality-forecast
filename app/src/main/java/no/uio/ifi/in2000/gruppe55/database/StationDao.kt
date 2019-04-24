@@ -10,6 +10,9 @@ interface StationDao {
     @get:Query("SELECT * FROM station_table")
     val all: List<StationEntity>
 
+    @Query("SELECT name = :name FROM measurement_table WHERE name = :name")
+    fun has(name: String): Boolean
+
     @Query("SELECT * FROM station_table where name = :name")
     fun findByName(name: String): List<StationEntity>
 

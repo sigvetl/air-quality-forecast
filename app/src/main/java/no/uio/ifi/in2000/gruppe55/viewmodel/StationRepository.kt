@@ -61,7 +61,7 @@ class StationRepository(private val application: Application, private val statio
                 longitude = stationModel.longitude ?: -1.0
             )
 
-            if (!stationDao.all.contains(station)) {
+            if (!stationDao.has(station.name)) {
                 stationDao.insert(station)
             }
 
@@ -73,7 +73,9 @@ class StationRepository(private val application: Application, private val statio
                 aqi = moment.variables?.aqi?.value ?: 0.0
             )
 
-            measurementDao.insert(measurement)
+            if (!measurementDao.has(measurement.name, measurement.timestamp)) {
+                measurementDao.insert(measurement)
+            }
         }
 
         // Return the first now-cached airquality most relevant to the current time.
