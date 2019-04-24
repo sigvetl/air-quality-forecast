@@ -64,12 +64,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // Make sure the global view model store for job services is always up to date.
-        //REMOVE!!!!
-        val intent = Intent(this, InfoActivity::class.java)
-        // To pass any data to next activity
-        //intent.putExtra("keyIdentifier", value)
-        // start your next activity
-        startActivity(intent)
 
 
         globalViewModelStore = viewModelStore

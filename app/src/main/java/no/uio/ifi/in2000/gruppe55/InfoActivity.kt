@@ -15,12 +15,16 @@ class InfoActivity : AppCompatActivity() {
     private var stationName = "NO0057A"
     private var stationRef = "2019-04-16T01:00:00Z"
 
-    //override fun onActivityCreated(savedInstanceState: Bundle?
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_info)
 
+        //REMOVE!!!!
+        //val intent = Intent(this, InfoActivity::class.java)
+        // To pass any data to next activity
+        //intent.putExtra("keyIdentifier", value)
+        // start your next activity
+        //startActivity(intent)
         //stationName = arguments!!.getString("argument")
         linearLayoutManager = LinearLayoutManager(this)
 
