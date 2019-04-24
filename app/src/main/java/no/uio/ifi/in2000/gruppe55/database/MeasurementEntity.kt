@@ -10,10 +10,14 @@ import org.threeten.bp.OffsetDateTime
 
 @Entity(
     tableName = "measurement_table",
-    primaryKeys = ["name", "timestamp"],
-    foreignKeys = [ForeignKey(entity = StationEntity::class, parentColumns = ["name"], childColumns = ["name"])]
+    primaryKeys = ["eoi", "timestamp"],
+    foreignKeys = [ForeignKey(entity = StationEntity::class, parentColumns = ["eoi"], childColumns = ["eoi"])]
 )
-data class MeasurementEntity(val name: String, val timestamp: OffsetDateTime, val aqi: Double) {
+data class MeasurementEntity(
+    val eoi: String,
+    val timestamp: OffsetDateTime,
+    val aqi: Double
+) {
     @get:Ignore
     val airQualityTimeDataModel: AirQualityTimeDataModel
         get() = AirQualityTimeDataModel(

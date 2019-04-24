@@ -14,26 +14,26 @@ interface MeasurementDao {
     @Query(
         """
             SELECT
-                name = :name AND
+                eoi = :eoi AND
                 datetime(timestamp) = datetime(:timestamp)
             FROM measurement_table
             WHERE
-                name = :name AND
+                eoi = :eoi AND
                 datetime(timestamp) = datetime(:timestamp)
         """
     )
-    fun has(name: String, timestamp: OffsetDateTime): Boolean
+    fun has(eoi: String, timestamp: OffsetDateTime): Boolean
 
     @Query(
         """
             SELECT * FROM measurement_table
             WHERE
-                name = :name AND
+                eoi = :eoi AND
                 datetime(:timestamp) > datetime(timestamp, '-30 minutes') AND
                 datetime(:timestamp) < datetime(timestamp, '+30 minutes')
         """
     )
-    fun recentTo(name: String, timestamp: OffsetDateTime): List<MeasurementEntity>
+    fun recentTo(eoi: String, timestamp: OffsetDateTime): List<MeasurementEntity>
 
     @Insert
     fun insert(measurementEntity: MeasurementEntity)

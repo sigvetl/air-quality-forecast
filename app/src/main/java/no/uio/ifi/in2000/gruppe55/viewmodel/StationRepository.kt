@@ -37,7 +37,7 @@ class StationRepository(private val application: Application, private val statio
     suspend fun at(dateTime: OffsetDateTime): AirQualityTimeDataModel? {
         // If there already exists a previously-cached measurement, simply reuse that one.
 
-        for (measurement in measurementDao.recentTo(stationModel.name ?: "", dateTime)) {
+        for (measurement in measurementDao.recentTo(stationModel.eoi ?: "", dateTime)) {
             return measurement.airQualityTimeDataModel
         }
 
@@ -55,32 +55,33 @@ class StationRepository(private val application: Application, private val statio
             // when communicating with SQLite.
 
             val station = StationEntity(
+                eoi = stationModel.eoi ?: "",
                 name = stationModel.name ?: "",
                 kommune = stationModel.kommune?.name ?: "",
                 latitude = stationModel.latitude ?: -1.0,
                 longitude = stationModel.longitude ?: -1.0
             )
 
-            if (!stationDao.has(station.name)) {
+            if (!stationDao.has(station.eoi)) {
                 stationDao.insert(station)
             }
 
             // Cache the measurement to the associated date and time.
 
             val measurement = MeasurementEntity(
-                name = station.name,
+                eoi = station.eoi,
                 timestamp = middleDate,
                 aqi = moment.variables?.aqi?.value ?: 0.0
             )
 
-            if (!measurementDao.has(measurement.name, measurement.timestamp)) {
+            if (!measurementDao.has(measurement.eoi, measurement.timestamp)) {
                 measurementDao.insert(measurement)
             }
         }
 
         // Return the first now-cached airquality most relevant to the current time.
 
-        for (measurement in measurementDao.recentTo(stationModel.name ?: "", dateTime)) {
+        for (measurement in measurementDao.recentTo(stationModel.eoi ?: "", dateTime)) {
             return measurement.airQualityTimeDataModel
         }
 

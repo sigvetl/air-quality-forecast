@@ -9,6 +9,7 @@ import no.uio.ifi.in2000.gruppe55.StationModel
 @Entity(tableName = "station_table")
 data class StationEntity(
     @PrimaryKey
+    val eoi: String,
     val name: String,
     val kommune: String,
     val latitude: Double,
@@ -17,6 +18,7 @@ data class StationEntity(
     @get:Ignore
     val stationModel: StationModel
         get() = StationModel(
+            eoi = eoi,
             name = name,
             kommune = SimpleLocationModel(name = kommune),
             latitude = latitude,
