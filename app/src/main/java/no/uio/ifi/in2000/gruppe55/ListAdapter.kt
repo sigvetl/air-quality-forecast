@@ -90,22 +90,19 @@ class ListAdapter(val context: Context?, val elements: MutableList<Element>): Re
             it.aqiIcon.let{ imageView ->
                 when {
                     element.aqi == null -> {
-                        imageView.setImageResource(R.drawable.loading)
-                    }
-                    element.aqi!! >= 5 -> {
-                        imageView.setImageResource(R.drawable.aqi_5)
+                        imageView.setImageResource(R.drawable.aqi_loading)
                     }
                     element.aqi!! >= 4 -> {
-                        imageView.setImageResource(R.drawable.aqi_4)
+                        imageView.setImageResource(R.drawable.aqi_sh)
                     }
                     element.aqi!! >= 3 -> {
-                        imageView.setImageResource(R.drawable.aqi_3)
+                        imageView.setImageResource(R.drawable.aqi_h)
                     }
                     element.aqi!! >= 2 -> {
-                        imageView.setImageResource(R.drawable.aqi_2)
+                        imageView.setImageResource(R.drawable.aqi_m)
                     }
                     element.aqi!! >= 1 -> {
-                        imageView.setImageResource(R.drawable.aqi_1)
+                        imageView.setImageResource(R.drawable.aqi_l)
                     }
                 }
             }
@@ -114,14 +111,11 @@ class ListAdapter(val context: Context?, val elements: MutableList<Element>): Re
                     element.aqi == null -> {
                         view.setBackgroundColor(Color.parseColor("#bbbbbb"))
                     }
-                    element.aqi!! >= 5 -> {
+                    element.aqi!! >= 4 -> {
                         view.setBackgroundColor(Color.parseColor("#8e3c97"))
                     }
-                    element.aqi!! >= 4 -> {
-                        view.setBackgroundColor(Color.parseColor("#ea3e35"))
-                    }
                     element.aqi!! >= 3 -> {
-                        view.setBackgroundColor(Color.parseColor("#f68614"))
+                        view.setBackgroundColor(Color.parseColor("#ea3e35"))
                     }
                     element.aqi!! >= 2 -> {
                         view.setBackgroundColor(Color.parseColor("#dfc420"))
