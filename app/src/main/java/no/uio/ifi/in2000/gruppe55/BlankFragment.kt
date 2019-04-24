@@ -39,14 +39,18 @@ class BlankFragment : Fragment() {
 
 
         //TODO: Consider using SafeArgs instead of bundle
-        //var bundle = bundleOf("pressedText" to "From blank1 fragment")
-        var bundle = Bundle().apply{
+        var bundle = Bundle().apply {
             putString("pressedText", "From blank1 fragment")
         }
 
         val button = view!!.findViewById<Button>(R.id.button1)
         button.setOnClickListener {
-            view!!.findNavController().navigate(R.id.action_homeFragment_to_blankFragment2, bundle)
+            val fm = fragmentManager
+
+            val dialog = dialogFragment()
+            dialog.show(fm, "Test from blank1")
+
+            //view!!.findNavController().navigate(R.id.action_homeFragment_to_blankFragment2, bundle)
         }
     }
 
