@@ -20,6 +20,7 @@ import androidx.navigation.Navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import no.uio.ifi.in2000.gruppe55.viewmodel.DailyForecastModel
 
@@ -101,6 +102,8 @@ class BadAirqualityAlertJobService : JobService() {
 
     override fun onStartJob(params: JobParameters?): Boolean {
         updateJob = launch {
+            delay(10000) // Temporary solution to get notifications right away.
+
             for ((stationModel, measurementModel) in dailyForecastModel.stations.value ?: hashMapOf()) {
                 if (measurementModel != null && exceedsLimit(measurementModel)) {
                     notify(stationModel, measurementModel)
