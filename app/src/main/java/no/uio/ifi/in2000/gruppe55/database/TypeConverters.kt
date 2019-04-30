@@ -21,4 +21,10 @@ object TypeConverters {
             return formatter.parse(it, OffsetDateTime::from)
         }
     }
+
+    @JvmStatic
+    @TypeConverter
+    fun toEoi(favoriteEntity: FavoriteEntity?): String? {
+        return favoriteEntity?.name
+    }
 }
