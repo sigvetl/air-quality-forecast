@@ -31,6 +31,12 @@
         <action
             android:id="@+id/action_homeFragment_to_blankFragment2"
             app:destination="@id/blankFragment2" />
+        <action
+            android:id="@+id/action_homeFragment_to_dialogFragment"
+            app:destination="@id/dialogFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_dialogFragment2"
+            app:destination="@id/dialogFragment2" />
     </fragment>
 
     <fragment
@@ -50,5 +56,12 @@
             android:defaultValue="I am defaulty" />
     </fragment>
 
+
+    <infoDialog android:id="@+id/dialogFragment"/>
+    <fragment
+        android:id="@+id/dialogFragment2"
+        android:name="no.uio.ifi.in2000.gruppe55.dialogFragment"
+        android:label="fragment_dialog"
+        tools:layout="@layout/fragment_dialog" />
 
 </navigation>

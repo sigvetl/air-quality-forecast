@@ -15,8 +15,10 @@ import android.support.v7.widget.Toolbar
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import no.uio.ifi.in2000.gruppe55.destinations.InfoDialogNavigator
 import no.uio.ifi.in2000.gruppe55.viewmodel.DailyForecastModel
 
 // TODO (julianho): Ugly hack to pass viewmodel store into the continuous job service. Consider whether there is a way
@@ -73,6 +75,12 @@ class MainActivity : AppCompatActivity() {
         findViewById<Toolbar>(R.id.toolbar).setupWithNavController(navController/*, appBarConfiguration*/)
         //link navigation controller with the bottom navigation menu
         findViewById<BottomNavigationView>(R.id.bottom_nav).setupWithNavController(navController)
+
+        //Add the custom destination type to the navigation component
+        /*val destination = InfoDialogNavigator(nav_host_fragment.childFragmentManager)
+        navController.navigatorProvider.addNavigator(destination)
+        val graph = navController.navInflater.inflate(R.navigation.nav_graph)
+        navController.graph = graph*/
 
         // Run background service for automatically fetching measurements from each station.
 
