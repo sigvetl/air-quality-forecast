@@ -7,12 +7,14 @@ import android.arch.persistence.room.TypeConverters
 import android.content.Context
 
 @Database(
-    entities = [MeasurementEntity::class, StationEntity::class],
+    entities = [FavoriteEntity::class, MeasurementEntity::class, StationEntity::class],
     version = 1,
     exportSchema = false
 )
 @TypeConverters(no.uio.ifi.in2000.gruppe55.database.TypeConverters::class)
 abstract class DailyForecastDatabase: RoomDatabase() {
+
+    abstract fun favoriteDao(): FavoriteDao
 
     abstract fun measurementDao(): MeasurementDao
 
