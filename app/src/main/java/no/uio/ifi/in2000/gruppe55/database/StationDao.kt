@@ -1,9 +1,6 @@
 package no.uio.ifi.in2000.gruppe55.database
 
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Delete
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.Query
+import android.arch.persistence.room.*
 
 @Dao
 interface StationDao {
@@ -13,7 +10,7 @@ interface StationDao {
     @Query("SELECT * FROM station_table where name = :name")
     fun findByName(name: String): List<StationEntity>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(stationEntity: StationEntity)
 
     @Delete
