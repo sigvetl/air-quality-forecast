@@ -27,6 +27,10 @@
             android:name=".AirqualityforecastJobService"
             android:permission="android.permission.BIND_JOB_SERVICE"/>
 
+        <service
+            android:name=".BadAirqualityAlertJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
