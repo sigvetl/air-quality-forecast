@@ -1,8 +1,0 @@
-0000000000000000000000000000000000000000 3fef31ddd032768ccffc4aa85f47127dce73dde5 julianho <julianho@student.matnat.uio.no> 1556094094 +0200	branch: Created from refs/remotes/origin/filesystem-cache
-3fef31ddd032768ccffc4aa85f47127dce73dde5 038ed05c964aa6e2eac11a4dc20fdd0df7ce6596 julianho <julianho@student.matnat.uio.no> 1556095349 +0200	commit: Garanterer at verdier ikke settes mer enn en gang i databasen.
-038ed05c964aa6e2eac11a4dc20fdd0df7ce6596 b47eaa2eccdc6e9c758beda399acaa6574b32102 julianho <julianho@student.matnat.uio.no> 1556096227 +0200	commit: Ble kvitt unødvendig funksjonalitet til AirqualityforecastInterface.
-b47eaa2eccdc6e9c758beda399acaa6574b32102 5a1bf95d88676d18391ee8c4b442d37da4d33d03 julianho <julianho@student.matnat.uio.no> 1556096403 +0200	commit: Stasjoner identifiseres med EOI, ikke navn.
-5a1bf95d88676d18391ee8c4b442d37da4d33d03 9c1f206f15bee71be16a26cb8396e1f40f1d449c julianho <julianho@student.matnat.uio.no> 1556096558 +0200	commit: Ble kvitt unødvendig databasekall.
-9c1f206f15bee71be16a26cb8396e1f40f1d449c 7fde79320a695b30a84c1f936c14851ae117ed33 julianho <julianho@student.matnat.uio.no> 1556098455 +0200	commit: Bruker Instant overalt for logisk håndtering av tid.
-7fde79320a695b30a84c1f936c14851ae117ed33 15145c75c9d4de4bd4bdb4cabd47828337ec9d6f julianho <julianho@student.matnat.uio.no> 1556099225 +0200	commit: Fjerner unødvendig endring av metadata forårsaket av Android Studio.
-15145c75c9d4de4bd4bdb4cabd47828337ec9d6f bbf8e9b13b08e5f8ba808f7d21df7e0980ebcfc8 julianho <julianho@student.matnat.uio.no> 1556099323 +0200	commit (amend): Fjerner unÃ¸dvendig endring av metadata forÃ¥rsaket av Android Studio.
