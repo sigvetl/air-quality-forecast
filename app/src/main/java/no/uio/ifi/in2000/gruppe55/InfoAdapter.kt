@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.support.design.resources.MaterialResources.getDrawable
+import android.support.v4.app.FragmentActivity
 import android.support.v7.content.res.AppCompatResources.getDrawable
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -12,7 +13,7 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.element_parent.view.*
 import kotlinx.coroutines.launch
 
-class InfoAdapter(val context: Context?, val activity: Activity, val values: MutableList<Value>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class InfoAdapter(val context: Context?, val activity: FragmentActivity?, val values: MutableList<Value>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     //Fargepalett:
     //1. Farger: Lilla: #8e3c97, Rød: #ea3e35, Oransje: #f68614, Gul: #dfc420.
     //2. Gråtoner: 5: 333333, 4: 555555, 3: 777777, 2: 999999, 1: bbbbbb.
@@ -49,7 +50,8 @@ class InfoAdapter(val context: Context?, val activity: Activity, val values: Mut
     }
 
     private fun setCard(valueHolder: InfoAdapter.MyViewHolder?, aqis: List<AQIIntervalModel>, value: Value){
-        activity.runOnUiThread {
+
+        activity!!.runOnUiThread {
             valueHolder?.let {
                 it.aqiIcon.let {
                     when {
