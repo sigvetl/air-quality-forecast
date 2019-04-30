@@ -29,14 +29,8 @@
         android:label="Blank1"
         tools:layout="@layout/fragment_blank" >
         <action
-            android:id="@+id/action_homeFragment_to_blankFragment2"
-            app:destination="@id/blankFragment2" />
-        <action
             android:id="@+id/action_homeFragment_to_dialogFragment"
             app:destination="@id/dialogFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_dialogFragment2"
-            app:destination="@id/dialogFragment2" />
     </fragment>
 
     <fragment
@@ -45,24 +39,7 @@
         android:label="Map"
         tools:layout="@layout/fragment_map" />
 
-    <fragment
-        android:id="@+id/blankFragment2"
-        android:name="no.uio.ifi.in2000.gruppe55.BlankFragment2"
-        android:label="fragment_blank2"
-        tools:layout="@layout/fragment_blank2" >
-        <argument
-            android:name="newText"
-            app:argType="string"
-            android:defaultValue="I am defaulty" />
-    </fragment>
-
 
     <infoDialog android:id="@+id/dialogFragment"/>
-
-    <fragment
-        android:id="@+id/dialogFragment2"
-        android:name="no.uio.ifi.in2000.gruppe55.dialogFragment"
-        android:label="fragment_dialog"
-        tools:layout="@layout/fragment_dialog" />
 
 </navigation>
