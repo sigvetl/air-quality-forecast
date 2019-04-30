@@ -89,6 +89,8 @@ class BadAirqualityAlertJobService : JobService() {
         id
     }
 
+    private var notificationCount: Int = 0 // Ensure each notification is unique.
+
     private var updateJob: Job? = null
 
     override fun onCreate() {
@@ -99,17 +101,11 @@ class BadAirqualityAlertJobService : JobService() {
 
     override fun onStartJob(params: JobParameters?): Boolean {
         updateJob = launch {
-            val notification = NotificationCompat.Builder(applicationContext, channelId)
-                .setSmallIcon(R.drawable.aqi_h)
-                .setContentTitle("Dårlig luftkvalitet")
-                .setContentText("Dårlig luftkvalitet")
-                .build()
-
-            // Notification manager needs to be told of the notification and what ID to give it. By reusing the ID, it
-            // is possible to later change the contents of the aforementioned ID. Alternatively, if no changes need to
-            // be made, consider simply incrementing a mutable ID counter.
-
-            notificationManager.notify(0, notification)
+            for ((stationModel, measurementModel) in dailyForecastModel.stations.value ?: hashMapOf()) {
+                if (measurementModel != null && exceedsLimit(measurementModel)) {
+                    notify(stationModel, measurementModel)
+                }
+            }
 
             jobFinished(params, false)
         }
@@ -120,6 +116,28 @@ class BadAirqualityAlertJobService : JobService() {
     override fun onStopJob(params: JobParameters?): Boolean {
         updateJob?.cancel()
         return false
+    }
+
+    private fun exceedsLimit(measurementModel: AirQualityTimeDataModel): Boolean {
+        val threshold = 2.0
+
+        return (measurementModel.variables?.aqi?.value ?: 0.0) >= threshold
+    }
+
+    private fun notify(stationModel: StationModel, measurementModel: AirQualityTimeDataModel) {
+        val notification = NotificationCompat.Builder(applicationContext, channelId)
+            .setSmallIcon(R.drawable.aqi_h)
+            .setContentTitle("${stationModel.name} har dårlig luftkvalitet")
+            .setContentText("${stationModel.name} har luftkvalitetsverdi på ${measurementModel.variables?.aqi?.value}")
+            .build()
+
+        // Notification manager needs to be told of the notification and what ID to give it. By reusing the ID, it
+        // is possible to later change the contents of the aforementioned ID. Alternatively, if no changes need to
+        // be made, consider simply incrementing a mutable ID counter.
+
+        notificationManager.notify(notificationCount, notification)
+
+        ++notificationCount
     }
 }
 
