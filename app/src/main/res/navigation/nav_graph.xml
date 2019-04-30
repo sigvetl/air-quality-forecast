@@ -14,7 +14,12 @@
         android:id="@+id/homeFragment"
         android:name="no.uio.ifi.in2000.gruppe55.BlankFragment"
         android:label="Blank1"
-        tools:layout="@layout/fragment_blank" />
+        tools:layout="@layout/fragment_blank" >
+        <argument
+            android:name="defau"
+            app:argType="string"
+            android:defaultValue="Hello World" />
+    </fragment>
     <fragment
         android:id="@+id/mapFragment"
         android:name="no.uio.ifi.in2000.gruppe55.MapFragment"
