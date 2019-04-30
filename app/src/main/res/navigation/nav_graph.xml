@@ -40,6 +40,11 @@
         tools:layout="@layout/fragment_map" />
 
 
-    <infoDialog android:id="@+id/dialogFragment"/>
+    <infoDialog android:id="@+id/dialogFragment">
+        <argument
+            android:name="name"
+            app:argType="string"
+            android:defaultValue="Default1" />
+    </infoDialog>
 
 </navigation>
