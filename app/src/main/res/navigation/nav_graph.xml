@@ -58,6 +58,7 @@
 
 
     <infoDialog android:id="@+id/dialogFragment"/>
+
     <fragment
         android:id="@+id/dialogFragment2"
         android:name="no.uio.ifi.in2000.gruppe55.dialogFragment"

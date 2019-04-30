@@ -45,9 +45,9 @@ class BlankFragment : Fragment() {
 
         val button = view!!.findViewById<Button>(R.id.button1)
         button.setOnClickListener {
-            //view!!.findNavController().navigate(R.id.action_homeFragment_to_dialogFragment2)
+            view!!.findNavController().navigate(R.id.action_homeFragment_to_dialogFragment)
 
-            view!!.findNavController().navigate(R.id.action_homeFragment_to_blankFragment2, bundle)
+            //view!!.findNavController().navigate(R.id.action_homeFragment_to_blankFragment2, bundle)
         }
     }
 

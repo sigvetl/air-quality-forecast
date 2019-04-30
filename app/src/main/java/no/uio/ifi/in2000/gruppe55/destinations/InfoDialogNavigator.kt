@@ -17,10 +17,9 @@ class InfoDialogNavigator (private val manager: FragmentManager):
         navOptions: NavOptions?,
         navigatorExtras: Extras?
     ): NavDestination? {
-        /*val dialog = dialogFragment()
+        val dialog = dialogFragment()
         dialog.show(manager, "InfoDialog")
-        return createDestination()*/
-        return null
+        return null //popup not added to backstack
     }
 
 

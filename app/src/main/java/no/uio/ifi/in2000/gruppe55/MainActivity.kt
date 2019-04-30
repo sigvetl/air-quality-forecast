@@ -69,18 +69,18 @@ class MainActivity : AppCompatActivity() {
         globalViewModelStore = viewModelStore
 
         val navController = findNavController(this, R.id.nav_host_fragment)
-        //val appBarConfiguration = AppBarConfiguration(setOf(R.id.homeFragment, R.id.listFragment, R.id.mapFragment))
+
+        //Add the custom destination type to the navigation component
+        val destination = InfoDialogNavigator(nav_host_fragment.childFragmentManager)
+        navController.navigatorProvider.addNavigator(destination)
+        val graph = navController.navInflater.inflate(R.navigation.nav_graph)
+        navController.graph = graph
 
         //link navigation controller and application bar with toolbar
+        //val appBarConfiguration = AppBarConfiguration(setOf(R.id.homeFragment, R.id.listFragment, R.id.mapFragment))
         findViewById<Toolbar>(R.id.toolbar).setupWithNavController(navController/*, appBarConfiguration*/)
         //link navigation controller with the bottom navigation menu
         findViewById<BottomNavigationView>(R.id.bottom_nav).setupWithNavController(navController)
-
-        //Add the custom destination type to the navigation component
-        /*val destination = InfoDialogNavigator(nav_host_fragment.childFragmentManager)
-        navController.navigatorProvider.addNavigator(destination)
-        val graph = navController.navInflater.inflate(R.navigation.nav_graph)
-        navController.graph = graph*/
 
         // Run background service for automatically fetching measurements from each station.
 
