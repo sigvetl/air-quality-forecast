@@ -53,6 +53,12 @@ class ListAdapter(val context: Context?, val elements: MutableList<Element>): Re
 
         elementHolder?.let{
 
+            it.setStar?.let { imageView ->
+                val icon = if (element.favorite) { R.drawable.star_full } else { R.drawable.star_shell }
+
+                imageView.setImageResource(icon)
+            }
+
             it.expandButton?.let {
                 if(element.children != null){
                     it.setImageResource(R.drawable.expand_more)
