@@ -90,8 +90,6 @@ class BadAirqualityAlertJobService : JobService() {
         id
     }
 
-    private var notificationCount: Int = 0 // Ensure each notification is unique.
-
     private var updateJob: Job? = null
 
     override fun onCreate() {
@@ -135,12 +133,9 @@ class BadAirqualityAlertJobService : JobService() {
             .build()
 
         // Notification manager needs to be told of the notification and what ID to give it. By reusing the ID, it
-        // is possible to later change the contents of the aforementioned ID. Alternatively, if no changes need to
-        // be made, consider simply incrementing a mutable ID counter.
+        // is possible to later change the contents of the aforementioned ID.
 
-        notificationManager.notify(notificationCount, notification)
-
-        ++notificationCount
+        notificationManager.notify(stationModel.hashCode(), notification)
     }
 }
 
