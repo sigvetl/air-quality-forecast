@@ -1,6 +1,6 @@
 package no.uio.ifi.in2000.gruppe55
 
-data class Element (val type: Int, val name: String?, var aqi: Double?, var children: List<Element>? = null, var saved: Boolean = false)
+data class Element (val type: Int, val name: String?, var aqi: Double?, var children: List<Element>? = null, var favorite: Boolean = false, var saved: Boolean = false)
 
 object eListe{
     val AREA = 0
