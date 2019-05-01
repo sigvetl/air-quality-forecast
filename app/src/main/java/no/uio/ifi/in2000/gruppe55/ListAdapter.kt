@@ -9,8 +9,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.element_parent.view.*
+import no.uio.ifi.in2000.gruppe55.viewmodel.FavoriteStationModel
 
-class ListAdapter(val context: Context?, val elements: MutableList<Element>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ListAdapter(
+    val context: Context?,
+    val elements: MutableList<Element>,
+    val favoriteStationModel: FavoriteStationModel
+): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     //Fargepalett:
     //1. Farger: Lilla: #8e3c97, Rød: #ea3e35, Oransje: #f68614, Gul: #dfc420.
     //2. Gråtoner: 5: 333333, 4: 555555, 3: 777777, 2: 999999, 1: bbbbbb.
@@ -59,9 +64,11 @@ class ListAdapter(val context: Context?, val elements: MutableList<Element>): Re
                 imageView.setImageResource(icon)
 
                 imageView.setOnClickListener {
-                    element.favorite = !element.favorite
-
-                    notifyItemChanged(position)
+                    if (!element.favorite) {
+                        favoriteStationModel.favorite(element.name!!)
+                    } else {
+                        favoriteStationModel.defavorite(element.name!!)
+                    }
                 }
             }
 
