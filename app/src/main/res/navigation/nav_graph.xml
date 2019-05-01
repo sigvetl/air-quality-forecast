@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/listFragment">
+    app:startDestination="@id/homeFragment">
 
     <action
         android:id="@+id/bottom_menu_one"
@@ -23,7 +23,7 @@
         android:label="List"
         tools:layout="@layout/fragment_list" >
         <action
-            android:id="@+id/action_listFragment_to_infoFragment2"
+            android:id="@+id/action_listFragment_to_infoFragment"
             app:destination="@id/infoFragment" />
     </fragment>
 
@@ -46,16 +46,28 @@
         tools:layout="@layout/fragment_map" />
 
     <fragment
-        android:id="@+id/infoFragment"
+        android:id="@+id/infoFragment2"
         android:name="no.uio.ifi.in2000.gruppe55.InfoFragment"
-        android:label="InfoFragment" >
-        <argument android:name="stationId"
+        android:label="InfoFragment2">
+        <argument
+            android:name="stationId"
             app:argType="string" />
-        <argument android:name="stationName"
+        <argument
+            android:name="stationName"
             app:argType="string" />
     </fragment>
 
     <infoDialog
-        android:id="@id/infoFragment" />
+        android:id="@+id/infoFragment"
+        android:label="infoFragment">
+        <argument
+            android:name="stationId"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="stationName"
+            app:argType="string"
+            app:nullable="true" />
+    </infoDialog>
 
 </navigation>

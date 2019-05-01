@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager
 import androidx.navigation.NavDestination
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
-import no.uio.ifi.in2000.gruppe55.dialogFragment
+import no.uio.ifi.in2000.gruppe55.InfoFragment
 
 @Navigator.Name("infoDialog") //tag used in graph
 class InfoDialogNavigator (private val manager: FragmentManager):
@@ -18,11 +18,11 @@ class InfoDialogNavigator (private val manager: FragmentManager):
         navigatorExtras: Extras?
     ): NavDestination? {
         //TODO: Consider if should/possible support FragmentDialogs in general instead of special case and args
-        val arg1 = args?.getString("text1")
-        val arg2 = args?.getString("text2")
+        val arg1 = args?.getString("stationId")
+        val arg2 = args?.getString("stationName")
 
-        val dialog = dialogFragment.newInstance(arg1, arg2)
-        dialog.show(manager, "InfoDialog")
+        val dialog = InfoFragment.newInstance(arg1, arg2)
+        dialog.show(manager, "InfoFragmentDialog")
         return null     //Don't add to backstack
     }
 

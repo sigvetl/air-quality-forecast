@@ -1,7 +1,7 @@
 package no.uio.ifi.in2000.gruppe55
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import android.support.v4.app.DialogFragment
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,23 +16,23 @@ import no.uio.ifi.in2000.gruppe55.R.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+private const val ARG_PARAM1 = "stationName"
+private const val ARG_PARAM2 = "stationId"
 
-class InfoFragment: Fragment(){
+class InfoFragment: DialogFragment(){
     private lateinit var linearLayoutManager: LinearLayoutManager
     //private var stationName = "NO0057A"
     //private var stationRef = "2019-05-01T01:00:00Z"
     //TODO: Rename and change types of parameters
-    private var text1: String? = null
-    private var text2: String? = null
+    private var id: String? = null
+    private var name: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            text1 = it.getString(ARG_PARAM1)
-            text2 = it.getString(ARG_PARAM2)
+            id = it.getString(ARG_PARAM1)
+            name = it.getString(ARG_PARAM2)
         }
     }
 
@@ -44,7 +44,7 @@ class InfoFragment: Fragment(){
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val stationName = arguments!!.getString("argument")
+        val stationId = id
 
         //val intent = Intent(this, InfoActivity::class.java)
         // To pass any data to next activity
@@ -66,7 +66,7 @@ class InfoFragment: Fragment(){
         launch {
             val description = Airqualityforecast.aqiDescription()
             val refTimes = Airqualityforecast.reftimes()
-            val stationModel = Airqualityforecast.main(station = stationName)
+            val stationModel = Airqualityforecast.main(station = stationId)
             var number = stationModel.data?.time?.size
             var stationRef = refTimes.reftimes!![0]
             if(number == null) number = 0
@@ -331,7 +331,19 @@ class InfoFragment: Fragment(){
             DataPoint(8.0, tempList[8]!!),
             DataPoint(9.0, tempList[9]!!),
             DataPoint(10.0 ,tempList[10]!!),
-            DataPoint(11.0, tempList[11]!!)
+            DataPoint(11.0 , tempList[11]!!),
+            DataPoint(12.0, tempList[12]!!),
+            DataPoint(13.0, tempList[13]!!),
+            DataPoint(14.0, tempList[14]!!),
+            DataPoint(15.0, tempList[15]!!),
+            DataPoint(16.0, tempList[16]!!),
+            DataPoint(17.0, tempList[17]!!),
+            DataPoint(18.0, tempList[18]!!),
+            DataPoint(19.0, tempList[19]!!),
+            DataPoint(20.0, tempList[20]!!),
+            DataPoint(21.0 ,tempList[21]!!),
+            DataPoint(22.0 ,tempList[22]!!),
+            DataPoint(23.0, tempList[23]!!)
         ))
         graph.gridLabelRenderer.numHorizontalLabels = 12
         graph.addSeries(series)
@@ -343,17 +355,17 @@ class InfoFragment: Fragment(){
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
-         * @param text1 Parameter 1.
-         * @param text2 Parameter 2.
+         * @param id Parameter 1.
+         * @param name Parameter 2.
          * @return A new instance of fragment dialogFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(text1: String?, text2: String?) =
-            dialogFragment().apply {
+        fun newInstance(id: String?, name: String?) =
+            InfoFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, text1)
-                    putString(ARG_PARAM2, text2)
+                    putString(ARG_PARAM1, id)
+                    putString(ARG_PARAM2, name)
                 }
             }
     }

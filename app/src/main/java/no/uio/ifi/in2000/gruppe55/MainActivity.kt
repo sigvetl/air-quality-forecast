@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
         navController.graph = graph
 
         //link navigation controller and application bar with toolbar
-        //val appBarConfiguration = AppBarConfiguration(setOf(R.id.homeFragment, R.id.listFragment, R.id.mapFragment))
+        val appBarConfiguration = AppBarConfiguration(setOf(R.id.homeFragment, R.id.listFragment, R.id.mapFragment))
         findViewById<Toolbar>(R.id.toolbar).setupWithNavController(navController/*, appBarConfiguration*/)
         //link navigation controller with the bottom navigation menu
         findViewById<BottomNavigationView>(R.id.bottom_nav).setupWithNavController(navController)
