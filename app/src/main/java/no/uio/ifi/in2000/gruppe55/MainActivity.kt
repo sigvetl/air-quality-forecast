@@ -173,6 +173,10 @@ class MainActivity : AppCompatActivity() {
         //link navigation controller with the bottom navigation menu
         findViewById<BottomNavigationView>(R.id.bottom_nav).setupWithNavController(navController)
 
+        // For some reason, observing a LiveData that stems from SQL seems to be necessary to extract its value.
+
+        globalViewModelProvider[FavoriteStationModel::class.java].favorites.observe({ lifecycle }) { }
+
         // Run background service for showing notifications on relevant stations.
 
         val alertName = ComponentName(this, BadAirqualityAlertJobService::class.java)
