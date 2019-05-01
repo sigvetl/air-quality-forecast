@@ -17,6 +17,7 @@ class InfoDialogNavigator (private val manager: FragmentManager):
         navOptions: NavOptions?,
         navigatorExtras: Extras?
     ): NavDestination? {
+        //TODO: Consider if should/possible support FragmentDialogs in general instead of special case and args
         val arg1 = args?.getString("text1")
         val arg2 = args?.getString("text2")
 
