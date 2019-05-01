@@ -30,12 +30,8 @@ class FavoriteStationModel(application: Application) : AndroidViewModel(applicat
      * actual reified data structures.
      */
     val favorites: LiveData<HashSet<String>> by lazy {
-        Transformations.map(favoriteDao.all) { entityList ->
-            val set = hashSetOf<String>()
-            for (favoriteEntity in entityList) {
-                set.add(favoriteEntity.name)
-            }
-            set
+        Transformations.map(favoriteDao.all) {
+            stationList -> HashSet(stationList.map { stationModel -> stationModel.name })
         }
     }
 
