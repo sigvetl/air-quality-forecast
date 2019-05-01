@@ -2,6 +2,8 @@ package no.uio.ifi.in2000.gruppe55
 
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelStore
+import android.content.Intent
+import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -9,6 +11,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import kotlinx.android.synthetic.*
+import kotlinx.android.synthetic.main.element_parent.*
 import kotlinx.android.synthetic.main.fragment_list.*
 import no.uio.ifi.in2000.gruppe55.viewmodel.DailyForecastModel
 import java.util.*
@@ -36,6 +41,7 @@ class ListFragment : Fragment() {
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         my_recycler_view.layoutManager = layoutManager
+        my_recycler_view.setItemViewCacheSize(50)
 
         val adapter = ListAdapter(context, eListe.elementer)
         my_recycler_view.adapter = adapter
@@ -83,13 +89,14 @@ class ListFragment : Fragment() {
                         totalAqi = if (aqi == null) { null } else { totalAqi + aqi }
                     }
 
-                    stationList.add(Element(eListe.STATION, station.name, aqi))
+                    stationList.add(Element(eListe.STATION, station.name, station.eoi, aqi))
                 }
 
                 val averageAqi = if (totalAqi == null) { null } else { totalAqi / stationList.size }
 
                 // TODO: Should alone stations be shown under drop-down?
-                eListe.elementer.add(Element(eListe.AREA, area, averageAqi, stationList))
+                //TODO: Legg til sationId
+                eListe.elementer.add(Element(eListe.AREA, area, "", averageAqi, stationList))
             }
 
             adapter.notifyDataSetChanged()

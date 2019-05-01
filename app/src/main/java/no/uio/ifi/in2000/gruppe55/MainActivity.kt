@@ -8,6 +8,7 @@ import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelStore
 import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
@@ -63,6 +64,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // Make sure the global view model store for job services is always up to date.
+
 
         globalViewModelStore = viewModelStore
 
