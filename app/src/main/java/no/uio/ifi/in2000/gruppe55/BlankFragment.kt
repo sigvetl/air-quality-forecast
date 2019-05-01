@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.navigation.findNavController
+import android.widget.TextView
+import kotlinx.android.synthetic.main.fragment_blank.*
 
 
 /**
@@ -28,7 +30,6 @@ class BlankFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_blank, container, false)
     }
 
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
@@ -43,6 +44,8 @@ class BlankFragment : Fragment() {
         button.setOnClickListener {
             view!!.findNavController().navigate(R.id.action_homeFragment_to_dialogFragment, testBundle)
         }
-    }
 
+        val tv = view!!.findViewById<TextView>(R.id.blank_text)
+        tv.text = arguments!!.getString("argument")
+    }
 }

@@ -74,7 +74,7 @@ object Airqualityforecast : AirqualityforecastInterface {
         return service.metDescription().await()
     }
 
-    override suspend fun reftimes(): List<RefTimeModel> {
+    override suspend fun reftimes(): RefTimeModel {
         return service.reftimes().await()
     }
 
@@ -131,7 +131,7 @@ interface AirqualityforecastService {
     fun metDescription(): Deferred<MeteoDescriptionModel>
 
     @GET("weatherapi/airqualityforecast/0.1/reftimes")
-    fun reftimes(): Deferred<List<RefTimeModel>>
+    fun reftimes(): Deferred<RefTimeModel>
 
     @GET("weatherapi/airqualityforecast/0.1/stations")
     fun stations(): Deferred<List<StationModel>>
