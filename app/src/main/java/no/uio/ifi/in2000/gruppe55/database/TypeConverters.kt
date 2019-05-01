@@ -1,24 +1,21 @@
 package no.uio.ifi.in2000.gruppe55.database
 
 import android.arch.persistence.room.TypeConverter
-import org.threeten.bp.OffsetDateTime
-import org.threeten.bp.format.DateTimeFormatter
+import org.threeten.bp.Instant
 
 object TypeConverters {
 
-    private val formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
-
     @JvmStatic
     @TypeConverter
-    fun fromOffsetDateTime(offsetDateTime: OffsetDateTime?): String? {
-        return offsetDateTime?.format(formatter)
+    fun fromInstant(instant: Instant?): String? {
+        return instant.toString()
     }
 
     @JvmStatic
     @TypeConverter
-    fun toOffsetDateTime(string: String?): OffsetDateTime? {
+    fun toInstant(string: String?): Instant? {
         return string?.let {
-            return formatter.parse(it, OffsetDateTime::from)
+            return Instant.parse(it)
         }
     }
 

@@ -7,8 +7,8 @@ interface StationDao {
     @get:Query("SELECT * FROM station_table")
     val all: List<StationEntity>
 
-    @Query("SELECT * FROM station_table where name = :name")
-    fun findByName(name: String): List<StationEntity>
+    @Query("SELECT eoi = :eoi FROM station_table WHERE eoi = :eoi")
+    fun has(eoi: String): Boolean
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(stationEntity: StationEntity)

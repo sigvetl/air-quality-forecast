@@ -2,18 +2,18 @@
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:padding="12dp"
+        android:padding="6dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 >
 
     <android.support.v7.widget.CardView
-            android:id="@+id/element_parent"
+            android:id="@+id/element_child"
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="160dp"
+            android:layout_height="80dp"
             android:layout_gravity="center"
-            card_view:cardCornerRadius="8dp"
+            card_view:cardCornerRadius="4dp"
             app:cardBackgroundColor="#bbbbbb">
 
         <View
@@ -21,46 +21,42 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
         />
+
         <TextView
                 android:id="@+id/element_text"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_marginBottom="45dp"
-                android:paddingLeft="160dp"
-                android:paddingRight="10dp"
+                android:layout_height="52dp"
+                android:layout_marginBottom="14dp"
+                android:paddingLeft="100dp"
+                android:paddingRight="35dp"
                 android:autoSizeTextType="uniform"
                 android:layout_gravity="bottom"
                 android:gravity="center_vertical"
                 android:textColor="#fff"
                 android:shadowColor="#111111"
-                android:shadowDx="6"
-                android:shadowDy="6"
+                android:shadowDx="4"
+                android:shadowDy="4"
                 android:shadowRadius="3"
         />
         <ImageView
                 android:id="@+id/element_aqi"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_marginTop="20dp"
+                android:src="@drawable/aqi_1"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginLeft="20dp"
-
-        />
-        <ImageView
-                android:id="@+id/element_expand"
-                android:layout_gravity="bottom|center"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
         />
         <ImageView
                 android:id="@+id/element_star"
-                android:src="@drawable/star_shell"
                 android:layout_gravity="end"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:alpha="0"
         />
 
     </android.support.v7.widget.CardView>
+
 
 </LinearLayout>
