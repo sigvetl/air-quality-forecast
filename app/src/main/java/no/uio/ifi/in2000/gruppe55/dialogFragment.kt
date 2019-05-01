@@ -51,8 +51,8 @@ class dialogFragment : DialogFragment() {
         val t2 = view!!.findViewById<TextView>(R.id.textView_dialog2)
         val b1 = view!!.findViewById<Button>(R.id.button_dismiss)
 
-        t1.text = ARG_PARAM1
-        t2.text = ARG_PARAM2
+        t1.text = text1
+        t2.text = text2
 
         b1.setOnClickListener {
             dismiss()

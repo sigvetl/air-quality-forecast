@@ -32,19 +32,16 @@ class BlankFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        val button = view!!.findViewById<Button>(R.id.button1)
 
         //TODO: Consider using SafeArgs instead of bundle
         val testBundle = Bundle().apply {
-            putString("Hello", "World")
+            putString("text1", "Hello")
+            putString("text2", "World")
         }
 
-        val button = view!!.findViewById<Button>(R.id.button1)
         button.setOnClickListener {
-
-
             view!!.findNavController().navigate(R.id.action_homeFragment_to_dialogFragment, testBundle)
-
-            //view!!.findNavController().navigate(R.id.action_homeFragment_to_blankFragment2, bundle)
         }
     }
 
