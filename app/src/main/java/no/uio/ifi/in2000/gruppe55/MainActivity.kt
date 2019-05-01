@@ -7,7 +7,6 @@ import android.app.job.JobParameters
 import android.app.job.JobScheduler
 import android.app.job.JobService
 import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelStore
 import android.content.ComponentName
 import android.content.Context
 import android.os.Build
@@ -24,24 +23,19 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import no.uio.ifi.in2000.gruppe55.viewmodel.DailyForecastModel
 
-// TODO (julianho): Ugly hack to pass viewmodel store into the continuous job service. Consider whether there is a way
-// to get access to some underlying store from services directly.
-private lateinit var globalViewModelStore: ViewModelStore
+// TODO (julianho): Ugly hack to pass viewmodel provider into the continuous job service. Consider whether there is a
+// way to get access to some underlying provider from services directly.
+private lateinit var globalViewModelProvider: ViewModelProvider
 
 class AirqualityforecastJobService : JobService() {
 
     // List of viewmodels relevant to this job.
 
-    private lateinit var viewModelProvider: ViewModelProvider
-    private lateinit var dailyForecastModel: DailyForecastModel
+    private val dailyForecastModel: DailyForecastModel by lazy {
+        globalViewModelProvider.get(DailyForecastModel::class.java)
+    }
 
     private var fetchJob: Job? = null
-
-    override fun onCreate() {
-        viewModelProvider = ViewModelProvider(globalViewModelStore, ViewModelProvider.NewInstanceFactory())
-        dailyForecastModel = viewModelProvider.get(DailyForecastModel::class.java)
-        super.onCreate()
-    }
 
     override fun onStartJob(params: JobParameters?): Boolean {
         fetchJob = launch {
@@ -94,8 +88,7 @@ class BadAirqualityAlertJobService : JobService() {
 
     override fun onCreate() {
         super.onCreate()
-        viewModelProvider = ViewModelProvider(globalViewModelStore, ViewModelProvider.NewInstanceFactory())
-        dailyForecastModel = viewModelProvider.get(DailyForecastModel::class.java)
+        dailyForecastModel = globalViewModelProvider.get(DailyForecastModel::class.java)
     }
 
     override fun onStartJob(params: JobParameters?): Boolean {
@@ -151,7 +144,10 @@ class MainActivity : AppCompatActivity() {
 
         // Make sure the global view model store for job services is always up to date.
 
-        globalViewModelStore = viewModelStore
+        globalViewModelProvider = ViewModelProvider(
+            viewModelStore,
+            ViewModelProvider.AndroidViewModelFactory(application)
+        )
 
         val navController = findNavController(this, R.id.nav_host_fragment)
         val appBarConfiguration = AppBarConfiguration(setOf(R.id.homeFragment, R.id.listFragment, R.id.mapFragment))

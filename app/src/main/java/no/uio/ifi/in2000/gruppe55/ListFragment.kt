@@ -16,8 +16,8 @@ import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.element_parent.*
 import kotlinx.android.synthetic.main.fragment_list.*
 import no.uio.ifi.in2000.gruppe55.viewmodel.DailyForecastModel
+import no.uio.ifi.in2000.gruppe55.viewmodel.FavoriteStationModel
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 class ListFragment : Fragment() {
@@ -26,6 +26,7 @@ class ListFragment : Fragment() {
 
     private lateinit var viewModelProvider: ViewModelProvider
     private lateinit var dailyForecastModel: DailyForecastModel
+    private lateinit var favoriteStationModel: FavoriteStationModel
 
     private lateinit var linearLayoutManager: LinearLayoutManager
 
@@ -36,6 +37,16 @@ class ListFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        // Extract all the relevant viewmodels from the fragment's context.
+
+        // TODO: Consider *when* in the Fragment's lifecycle that view models should be extracted.
+        viewModelProvider = ViewModelProvider(
+            activity?.viewModelStore ?: ViewModelStore(),
+            ViewModelProvider.AndroidViewModelFactory(activity!!.application)
+        )
+        dailyForecastModel = viewModelProvider.get(DailyForecastModel::class.java)
+        favoriteStationModel = viewModelProvider.get(FavoriteStationModel::class.java)
+
         linearLayoutManager = LinearLayoutManager(context)
 
         val layoutManager = LinearLayoutManager(context)
@@ -43,17 +54,8 @@ class ListFragment : Fragment() {
         my_recycler_view.layoutManager = layoutManager
         my_recycler_view.setItemViewCacheSize(50)
 
-        val adapter = ListAdapter(context, eListe.elementer)
+        val adapter = ListAdapter(context, eListe.elementer, favoriteStationModel)
         my_recycler_view.adapter = adapter
-
-        // Extract all the relevant viewmodels from the fragment's context.
-
-        // TODO: Consider *when* in the Fragment's lifecycle that view models should be extracted.
-        viewModelProvider = ViewModelProvider(
-            activity?.viewModelStore ?: ViewModelStore(),
-            ViewModelProvider.NewInstanceFactory()
-        )
-        dailyForecastModel = viewModelProvider.get(DailyForecastModel::class.java)
 
         // Keep list adapter view in sync with measurements from the list of stations.
 
@@ -96,6 +98,16 @@ class ListFragment : Fragment() {
 
                 // TODO: Should alone stations be shown under drop-down?
                 eListe.elementer.add(Element(eListe.AREA, area, averageAqi, stationList))
+            }
+
+            adapter.notifyDataSetChanged()
+        }
+
+        // Keep list adapter view in sync with set of favorites.
+
+        favoriteStationModel.favorites.observe({ lifecycle }) { favoriteSet ->
+            for (element in eListe.elementer) {
+                element.favorite = (favoriteSet ?: hashSetOf()).contains(element.name!!)
             }
 
             adapter.notifyDataSetChanged()

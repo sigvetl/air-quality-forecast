@@ -1,10 +1,13 @@
 package no.uio.ifi.in2000.gruppe55.viewmodel
 
+import android.app.Application
+import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import no.uio.ifi.in2000.gruppe55.AirQualityTimeDataModel
 import no.uio.ifi.in2000.gruppe55.StationModel
+import org.threeten.bp.OffsetDateTime
 import java.util.*
 
 /**
@@ -16,7 +19,9 @@ import java.util.*
  * extensible way to separate all the data & corresponding logic of an interface from the actual code to maintain and
  * display the interface.
  */
-class DailyForecastModel(private val forecastRepository: ForecastRepository = ForecastRepository()) : ViewModel() {
+class DailyForecastModel(application: Application) : AndroidViewModel(application) {
+
+    private val forecastRepository: ForecastRepository = ForecastRepository(application)
 
     // TODO (julianho): Observations currently have no way to only pick-up partial updates (such as insertions),
     // possibly impacting performance. If performance becomes a concern, consider how to implement such updates.
@@ -49,7 +54,7 @@ class DailyForecastModel(private val forecastRepository: ForecastRepository = Fo
 
         for ((station, repository) in repositoryMap) {
             // TODO (julianho): Extract the current date & time in the correct time zone.
-            val timeDataModel = repository.at(Date())
+            val timeDataModel = repository.at(OffsetDateTime.now())
             stationMap[station] = timeDataModel
             mutableStations.postValue(stationMap)
         }

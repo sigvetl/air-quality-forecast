@@ -13,8 +13,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import kotlinx.android.synthetic.main.element_parent.view.*
+import kotlinx.coroutines.launch
+import no.uio.ifi.in2000.gruppe55.viewmodel.FavoriteStationModel
 
-class ListAdapter(val context: Context?, val elements: MutableList<Element>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ListAdapter(
+    val context: Context?,
+    val elements: MutableList<Element>,
+    val favoriteStationModel: FavoriteStationModel
+): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     //Fargepalett:
     //1. Farger: Lilla: #8e3c97, Rød: #ea3e35, Oransje: #f68614, Gul: #dfc420.
     //2. Gråtoner: 5: 333333, 4: 555555, 3: 777777, 2: 999999, 1: bbbbbb.
@@ -57,7 +63,23 @@ class ListAdapter(val context: Context?, val elements: MutableList<Element>): Re
 
         elementHolder?.let{
 
-            it.expandButton.let { imageView ->
+            it.setStar?.let { imageView ->
+                val icon = if (element.favorite) { R.drawable.star_full } else { R.drawable.star_shell }
+
+                imageView.setImageResource(icon)
+
+                imageView.setOnClickListener {
+                    launch {
+                        if (!element.favorite) {
+                            favoriteStationModel.favorite(element.name!!)
+                        } else {
+                            favoriteStationModel.defavorite(element.name!!)
+                        }
+                    }
+                }
+            }
+
+            it.expandButton?.let { imageView ->
                 if(element.children != null){
                     imageView.setImageResource(R.drawable.expand_more)
                     imageView.setOnClickListener { view ->

@@ -1,11 +1,14 @@
 package no.uio.ifi.in2000.gruppe55.viewmodel
 
+import android.app.Application
 import no.uio.ifi.in2000.gruppe55.AirQualityTimeDataModel
 import no.uio.ifi.in2000.gruppe55.Airqualityforecast
 import no.uio.ifi.in2000.gruppe55.StationModel
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import no.uio.ifi.in2000.gruppe55.database.DailyForecastDatabase
+import no.uio.ifi.in2000.gruppe55.database.MeasurementEntity
+import no.uio.ifi.in2000.gruppe55.database.StationEntity
+import no.uio.ifi.in2000.gruppe55.database.TypeConverters
+import org.threeten.bp.OffsetDateTime
 
 // TODO (julianho): Consider turning into interface *or* parametrising on `AirqualityforecastInterface`.
 // TODO: Implement caching of requests to reduce unnecessary network usage.
@@ -17,7 +20,12 @@ import java.util.Locale
  * [StationRepository] implements the "Repository" of Android Architecture Components, providing a flexible and
  * extensible method to separate concerns of data gathering from user interfaces.
  */
-class StationRepository(private val stationModel: StationModel) {
+class StationRepository(private val application: Application, private val stationModel: StationModel) {
+
+    private val dailyForecastDatabase = DailyForecastDatabase.of(application.applicationContext)
+    private val stationDao = dailyForecastDatabase.stationDao()
+    private val measurementDao = dailyForecastDatabase.measurementDao()
+
     /**
      * [at] asynchronously extracts air quality measurements from the relevant station at a given point in time.
      *
@@ -26,35 +34,52 @@ class StationRepository(private val stationModel: StationModel) {
      *
      * [at] is suspendable and must therefore be executed in a Kotlin coroutine (e.g. via [launch] or [runBlocking].)
      */
-    suspend fun at(date: Date): AirQualityTimeDataModel? {
+    suspend fun at(dateTime: OffsetDateTime): AirQualityTimeDataModel? {
+        // If there already exists a previously-cached measurement, simply reuse that one.
+
+        for (measurement in measurementDao.recentTo(stationModel.name ?: "", dateTime)) {
+            return measurement.airQualityTimeDataModel
+        }
+
         val locationModel = Airqualityforecast.main(
             lat = stationModel.latitude,
             lon = stationModel.longitude
         )
 
-        for (moment in locationModel.data?.time ?: ArrayList()) {
-            // Airqualityforecast times are weird, so simply pick either the first or second date & time and consider
-            // that to be "now". Additionally, all Airqualityforecast times should be within a Norwegian time-zone.
+        // Add every airquality throughout the day into the database.
 
-            val middleDate = SimpleDateFormat(
-                "yyyy-MM-dd'T'HH:mm:ss'Z'",
-                Locale.forLanguageTag("no")
-            ).parse(moment?.from)
+        for (moment in locationModel.data?.time ?: arrayListOf()) {
+            val middleDate = TypeConverters.toOffsetDateTime(moment.from) ?: OffsetDateTime.now()
 
-            // To find the measurement of the current data & time, one needs to pick times within a range. One potential
-            // range is the previous time plus/minus 30 minutes.
+            // Ensure the relevant station is always marked as one. If not, foreign keys requirements can be violated
+            // when communicating with SQLite.
 
-            var startDate = middleDate.clone() as Date
-            startDate.minutes -= 30
+            val station = StationEntity(
+                name = stationModel.name ?: "",
+                kommune = stationModel.kommune?.name ?: "",
+                latitude = stationModel.latitude ?: -1.0,
+                longitude = stationModel.longitude ?: -1.0
+            )
 
-            var endDate = middleDate.clone() as Date
-            endDate.minutes += 30
-
-            // Pick the first measurement within the relevant date & time.
-
-            if (date.time > startDate.time && date.time < endDate.time) {
-                return moment
+            if (!stationDao.all.contains(station)) {
+                stationDao.insert(station)
             }
+
+            // Cache the measurement to the associated date and time.
+
+            val measurement = MeasurementEntity(
+                name = station.name,
+                timestamp = middleDate,
+                aqi = moment.variables?.aqi?.value ?: 0.0
+            )
+
+            measurementDao.insert(measurement)
+        }
+
+        // Return the first now-cached airquality most relevant to the current time.
+
+        for (measurement in measurementDao.recentTo(stationModel.name ?: "", dateTime)) {
+            return measurement.airQualityTimeDataModel
         }
 
         return null
