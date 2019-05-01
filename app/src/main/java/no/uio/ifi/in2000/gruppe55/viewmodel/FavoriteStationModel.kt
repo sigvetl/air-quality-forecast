@@ -29,7 +29,7 @@ class FavoriteStationModel(application: Application) : AndroidViewModel(applicat
      * [favorites] is a set of area names that are currently favorited. Consider converting the station names into
      * actual reified data structures.
      */
-    val favorites: LiveData<HashSet<String>> =
+    val favorites: LiveData<HashSet<String>> by lazy {
         Transformations.map(favoriteDao.all) { entityList ->
             val set = hashSetOf<String>()
             for (favoriteEntity in entityList) {
@@ -37,6 +37,7 @@ class FavoriteStationModel(application: Application) : AndroidViewModel(applicat
             }
             set
         }
+    }
 
     /**
      * [favorite] marks the area with the given name [string] as favorited.
