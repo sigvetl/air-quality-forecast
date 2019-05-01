@@ -17,10 +17,12 @@ class InfoDialogNavigator (private val manager: FragmentManager):
         navOptions: NavOptions?,
         navigatorExtras: Extras?
     ): NavDestination? {
-        val dialog = dialogFragment.newInstance("This is first arg", "This is second arg")
+        val arg1 = args?.getString("text1")
+        val arg2 = args?.getString("text2")
+
+        val dialog = dialogFragment.newInstance(arg1, arg2)
         dialog.show(manager, "InfoDialog")
-        //Don't add to backstack
-        return null
+        return null     //Don't add to backstack
     }
 
 

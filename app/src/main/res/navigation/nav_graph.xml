@@ -42,9 +42,11 @@
 
     <infoDialog android:id="@+id/dialogFragment">
         <argument
-            android:name="name"
-            app:argType="string"
-            android:defaultValue="Default1" />
+            android:name="text1"
+            app:argType="string" />
+        <argument
+            android:name="text2"
+            app:argType="string" />
     </infoDialog>
 
 </navigation>

@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -22,14 +24,14 @@ private const val ARG_PARAM2 = "param2"
  */
 class dialogFragment : DialogFragment() {
     // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var text1: String? = null
+    private var text2: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            text1 = it.getString(ARG_PARAM1)
+            text2 = it.getString(ARG_PARAM2)
         }
     }
 
@@ -45,11 +47,16 @@ class dialogFragment : DialogFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        /*var b1 = view!!.findViewById<Button>(R.id.button_dismiss)
+        val t1 = view!!.findViewById<TextView>(R.id.textView_dialog)
+        val t2 = view!!.findViewById<TextView>(R.id.textView_dialog2)
+        val b1 = view!!.findViewById<Button>(R.id.button_dismiss)
+
+        t1.text = ARG_PARAM1
+        t2.text = ARG_PARAM2
 
         b1.setOnClickListener {
             dismiss()
-        }*/
+        }
     }
 
     companion object {
@@ -57,17 +64,17 @@ class dialogFragment : DialogFragment() {
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
+         * @param text1 Parameter 1.
+         * @param text2 Parameter 2.
          * @return A new instance of fragment dialogFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(text1: String?, text2: String?) =
             dialogFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putString(ARG_PARAM1, text1)
+                    putString(ARG_PARAM2, text2)
                 }
             }
     }
