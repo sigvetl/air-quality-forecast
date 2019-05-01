@@ -10,6 +10,7 @@ import android.arch.lifecycle.ViewModelProvider
 import android.content.ComponentName
 import android.content.Context
 import android.os.Build
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView

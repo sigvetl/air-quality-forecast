@@ -2,18 +2,26 @@ package no.uio.ifi.in2000.gruppe55
 
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelStore
+import android.content.Context
+import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
+import com.google.maps.android.SphericalUtil
 import no.uio.ifi.in2000.gruppe55.viewmodel.DailyForecastModel
 
 class MapFragment : Fragment(), OnMapReadyCallback {
@@ -57,8 +65,36 @@ class MapFragment : Fragment(), OnMapReadyCallback {
      * installed Google Play services and returned to the app.
      */
 
+    internal inner class CustomInfoWindowAdapter : GoogleMap.InfoWindowAdapter {
+        // These are both view groups containing an ImageView with id "badge" and two
+        // TextViews with id "title" and "snippet"
+
+
+        override fun getInfoWindow(marker: Marker): View? {
+                return null
+            }
+
+        override fun getInfoContents(marker: Marker): View? {
+            val contents: View = layoutInflater.inflate(R.layout.marker_layout, null)
+
+            val title = contents.findViewById<TextView>(R.id.title)
+            val distance = contents.findViewById<TextView>(R.id.snippet)
+
+            title.text = marker.title
+
+            val infoWindowData : InfoWindowData = marker.tag as InfoWindowData
+
+            distance.text = infoWindowData.snippet
+
+            return contents
+        }
+
+    }
+
+
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        mMap.setInfoWindowAdapter(CustomInfoWindowAdapter())
 
         // Keep map fragment in sync with measurements from the list of stations.
 
@@ -68,21 +104,44 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             for ((station, measurement) in stationMap ?: HashMap()) {
                 if (station.latitude != null && station.longitude != null && station.name != null) {
                     val position = LatLng(station.latitude, station.longitude)
-                    val value = "Current AQI: ${measurement?.variables?.aqi?.value}"
+                    val value = "Current AQI: ${String.format("%.2f",measurement?.variables?.aqi?.value)}"
+                    val currentLocation = LatLng(59.94365597189331, 10.718679747209503)
+                    val distance = "Distance to location: ${String.format("%.2f",SphericalUtil.computeDistanceBetween(currentLocation, position)/1000)} km"
+                    var markerColor = 0f
+                    if (measurement?.variables?.aqi?.value!! >=4){
+                        markerColor = BitmapDescriptorFactory.HUE_VIOLET
+                    }
+                    else if (measurement?.variables?.aqi?.value!! >=3){
+                        markerColor = BitmapDescriptorFactory.HUE_RED
+                    }
+                    else if (measurement?.variables?.aqi?.value!! >=2){
+                        markerColor = BitmapDescriptorFactory.HUE_ORANGE
+                    }
+                    else if (measurement?.variables?.aqi?.value!! >=1){
+                        markerColor = BitmapDescriptorFactory.HUE_YELLOW
+                    }
+                    else if (measurement?.variables?.aqi?.value!! >=0){
+                        markerColor = BitmapDescriptorFactory.HUE_GREEN
+                    }
+
+
 
                     activity?.runOnUiThread {
-                        mMap.addMarker(MarkerOptions().position(position).title(station.name).snippet(value))
+                        val extraSnippet = InfoWindowData(distance + "\n" + value)
+                        val m  = mMap.addMarker(MarkerOptions().position(position).title(station.name))
+                        m.setIcon(BitmapDescriptorFactory.defaultMarker(markerColor))
+                        m.tag = extraSnippet
+                        m.showInfoWindow()
                     }
                 }
             }
         }
 
-        //landssentrert
-        val center = LatLng(64.0, 11.0)
-        //Oslo-sentrert, zoom level 11 +
-        //val center2 = LatLng(59.91, 10.75)
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(center , 5.0f))
+
+        //LatLng fra Forskningsparken
+        val center = LatLng(59.94365597189331, 10.718679747209503)
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(center, 11.0f))
         val uiSettings = mMap.uiSettings
-        uiSettings.setZoomControlsEnabled(true)
+        uiSettings.isZoomControlsEnabled = true
     }
 }

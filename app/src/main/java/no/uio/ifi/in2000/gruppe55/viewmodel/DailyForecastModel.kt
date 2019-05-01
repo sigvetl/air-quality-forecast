@@ -9,7 +9,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import no.uio.ifi.in2000.gruppe55.AirQualityTimeDataModel
 import no.uio.ifi.in2000.gruppe55.StationModel
-import org.threeten.bp.OffsetDateTime
+import org.threeten.bp.Instant
 import java.util.*
 
 /**
@@ -56,7 +56,7 @@ class DailyForecastModel(application: Application) : AndroidViewModel(applicatio
 
         for ((station, repository) in repositoryMap) {
             launch(coroutineContext) {
-                val timeDataModel = repository.at(OffsetDateTime.now())
+                val timeDataModel = repository.at(Instant.now())
                 stationMap[station] = timeDataModel
                 mutableStations.postValue(stationMap)
             }
