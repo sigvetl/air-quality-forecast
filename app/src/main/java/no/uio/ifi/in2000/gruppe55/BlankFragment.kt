@@ -6,20 +6,21 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.navigation.findNavController
 import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_blank.*
 
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
  *
  */
 class BlankFragment : Fragment() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,6 +32,18 @@ class BlankFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        val button = view!!.findViewById<Button>(R.id.button1)
+
+        //TODO: Consider using SafeArgs instead of bundle
+        val testBundle = Bundle().apply {
+            putString("text1", "Hello")
+            putString("text2", "World")
+        }
+
+        button.setOnClickListener {
+            //view!!.findNavController().navigate(R.id.action_homeFragment_to_dialogFragment, testBundle)
+        }
 
         val tv = view!!.findViewById<TextView>(R.id.blank_text)
         tv.text = arguments!!.getString("argument")

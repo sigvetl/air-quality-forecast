@@ -131,9 +131,10 @@ class ListAdapter(val context: Context?, val elements: MutableList<Element>): Re
                 it.setColor.let { view ->
                     view.setOnClickListener {
                         val bundle = Bundle().apply {
-                            putString("argument", element.stationId)
+                            putString("stationId", element.stationId)
+                            putString("stationName", element.name)
                         }
-                        view!!.findNavController().navigate(R.id.to_infoFragment, bundle)
+                        view!!.findNavController().navigate(R.id.action_listFragment_to_infoFragment, bundle)
                     }
                 }
             }

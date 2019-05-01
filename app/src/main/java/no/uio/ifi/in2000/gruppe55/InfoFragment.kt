@@ -1,7 +1,7 @@
 package no.uio.ifi.in2000.gruppe55
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import android.support.v4.app.DialogFragment
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,10 +14,27 @@ import kotlinx.android.synthetic.main.activity_info.*
 import kotlinx.coroutines.launch
 import no.uio.ifi.in2000.gruppe55.R.*
 
-class InfoFragment: Fragment(){
+// TODO: Rename parameter arguments, choose names that match
+// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+private const val ARG_PARAM1 = "stationName"
+private const val ARG_PARAM2 = "stationId"
+
+class InfoFragment: DialogFragment(){
     private lateinit var linearLayoutManager: LinearLayoutManager
     //private var stationName = "NO0057A"
     //private var stationRef = "2019-05-01T01:00:00Z"
+    //TODO: Rename and change types of parameters
+    private var id: String? = null
+    private var name: String? = null
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            id = it.getString(ARG_PARAM1)
+            name = it.getString(ARG_PARAM2)
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(layout.activity_info, container, false)
@@ -27,7 +44,7 @@ class InfoFragment: Fragment(){
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val stationName = arguments!!.getString("argument")
+        val stationId = id
 
         //val intent = Intent(this, InfoActivity::class.java)
         // To pass any data to next activity
@@ -49,7 +66,7 @@ class InfoFragment: Fragment(){
         launch {
             val description = Airqualityforecast.aqiDescription()
             val refTimes = Airqualityforecast.reftimes()
-            val stationModel = Airqualityforecast.main(station = stationName)
+            val stationModel = Airqualityforecast.main(station = stationId)
             var number = stationModel.data?.time?.size
             var stationRef = refTimes.reftimes!![0]
             if(number == null) number = 0
@@ -314,10 +331,42 @@ class InfoFragment: Fragment(){
             DataPoint(8.0, tempList[8]!!),
             DataPoint(9.0, tempList[9]!!),
             DataPoint(10.0 ,tempList[10]!!),
-            DataPoint(11.0, tempList[11]!!)
+            DataPoint(11.0 , tempList[11]!!),
+            DataPoint(12.0, tempList[12]!!),
+            DataPoint(13.0, tempList[13]!!),
+            DataPoint(14.0, tempList[14]!!),
+            DataPoint(15.0, tempList[15]!!),
+            DataPoint(16.0, tempList[16]!!),
+            DataPoint(17.0, tempList[17]!!),
+            DataPoint(18.0, tempList[18]!!),
+            DataPoint(19.0, tempList[19]!!),
+            DataPoint(20.0, tempList[20]!!),
+            DataPoint(21.0 ,tempList[21]!!),
+            DataPoint(22.0 ,tempList[22]!!),
+            DataPoint(23.0, tempList[23]!!)
         ))
         graph.gridLabelRenderer.numHorizontalLabels = 12
         graph.addSeries(series)
 
+    }
+
+    companion object {
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         *
+         * @param id Parameter 1.
+         * @param name Parameter 2.
+         * @return A new instance of fragment dialogFragment.
+         */
+        // TODO: Rename and change types and number of parameters
+        @JvmStatic
+        fun newInstance(id: String?, name: String?) =
+            InfoFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_PARAM1, id)
+                    putString(ARG_PARAM2, name)
+                }
+            }
     }
 }
