@@ -89,13 +89,14 @@ class ListFragment : Fragment() {
                         totalAqi = if (aqi == null) { null } else { totalAqi + aqi }
                     }
 
-                    stationList.add(Element(eListe.STATION, station.name, aqi))
+                    stationList.add(Element(eListe.STATION, station.name, station.eoi, aqi))
                 }
 
                 val averageAqi = if (totalAqi == null) { null } else { totalAqi / stationList.size }
 
                 // TODO: Should alone stations be shown under drop-down?
-                eListe.elementer.add(Element(eListe.AREA, area, averageAqi, stationList))
+                //TODO: Legg til sationId
+                eListe.elementer.add(Element(eListe.AREA, area, "", averageAqi, stationList))
             }
 
             adapter.notifyDataSetChanged()

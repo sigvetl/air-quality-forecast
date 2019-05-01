@@ -37,6 +37,13 @@
     <action
         android:id="@+id/bottom_menu_three"
         app:destination="@id/mapFragment" />
+    <fragment
+        android:id="@+id/infoFragment"
+        android:name="no.uio.ifi.in2000.gruppe55.InfoFragment"
+        android:label="InfoFragment" />
+    <action
+        android:id="@+id/to_infoFragment"
+        app:destination="@id/infoFragment" />
 
 
 </navigation>

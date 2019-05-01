@@ -127,14 +127,13 @@ class ListAdapter(val context: Context?, val elements: MutableList<Element>): Re
             }
             it.textView.text = element.name
 
-
             if(element.children == null){
                 it.setColor.let { view ->
                     view.setOnClickListener {
                         val bundle = Bundle().apply {
-                            putString("argument", element.name)
+                            putString("argument", element.stationId)
                         }
-                        view!!.findNavController().navigate(R.id.bottom_menu_one, bundle)
+                        view!!.findNavController().navigate(R.id.to_infoFragment, bundle)
                     }
                 }
             }
