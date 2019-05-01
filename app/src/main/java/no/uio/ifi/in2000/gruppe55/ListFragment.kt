@@ -52,6 +52,7 @@ class ListFragment : Fragment() {
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         my_recycler_view.layoutManager = layoutManager
+        my_recycler_view.setItemViewCacheSize(50)
 
         val adapter = ListAdapter(context, eListe.elementer, favoriteStationModel)
         my_recycler_view.adapter = adapter

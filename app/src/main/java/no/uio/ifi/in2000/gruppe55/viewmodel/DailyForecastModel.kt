@@ -5,6 +5,8 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import no.uio.ifi.in2000.gruppe55.AirQualityTimeDataModel
 import no.uio.ifi.in2000.gruppe55.StationModel
 import org.threeten.bp.Instant
@@ -39,7 +41,7 @@ class DailyForecastModel(application: Application) : AndroidViewModel(applicatio
      * [loadStations] *may* update the [DailyForecastModel]'s internal measurements & list of stations and thereby
      * updating all views that depend on it through [stations].
      */
-    suspend fun loadStations() {
+    suspend fun loadStations() = coroutineScope {
         val repositoryMap = forecastRepository.list()
         val stationMap = HashMap<StationModel, AirQualityTimeDataModel?>(repositoryMap.size)
 
@@ -53,10 +55,11 @@ class DailyForecastModel(application: Application) : AndroidViewModel(applicatio
         // Lazily update each station's AQI values as they are available.
 
         for ((station, repository) in repositoryMap) {
-            // TODO (julianho): Extract the current date & time in the correct time zone.
-            val timeDataModel = repository.at(Instant.now())
-            stationMap[station] = timeDataModel
-            mutableStations.postValue(stationMap)
+            launch(coroutineContext) {
+                val timeDataModel = repository.at(Instant.now())
+                stationMap[station] = timeDataModel
+                mutableStations.postValue(stationMap)
+            }
         }
     }
 }
