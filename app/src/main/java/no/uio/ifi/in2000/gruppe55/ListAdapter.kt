@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.element_parent.view.*
+import kotlinx.coroutines.launch
 import no.uio.ifi.in2000.gruppe55.viewmodel.FavoriteStationModel
 
 class ListAdapter(
@@ -64,10 +65,12 @@ class ListAdapter(
                 imageView.setImageResource(icon)
 
                 imageView.setOnClickListener {
-                    if (!element.favorite) {
-                        favoriteStationModel.favorite(element.name!!)
-                    } else {
-                        favoriteStationModel.defavorite(element.name!!)
+                    launch {
+                        if (!element.favorite) {
+                            favoriteStationModel.favorite(element.name!!)
+                        } else {
+                            favoriteStationModel.defavorite(element.name!!)
+                        }
                     }
                 }
             }
