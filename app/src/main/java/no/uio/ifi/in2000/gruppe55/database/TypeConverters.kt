@@ -18,4 +18,10 @@ object TypeConverters {
             return Instant.parse(it)
         }
     }
+
+    @JvmStatic
+    @TypeConverter
+    fun toEoi(favoriteEntity: FavoriteEntity?): String? {
+        return favoriteEntity?.name
+    }
 }
