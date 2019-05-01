@@ -3,7 +3,10 @@ package no.uio.ifi.in2000.gruppe55.viewmodel
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.Transformations
+import no.uio.ifi.in2000.gruppe55.database.DailyForecastDatabase
+import no.uio.ifi.in2000.gruppe55.database.FavoriteDao
+import no.uio.ifi.in2000.gruppe55.database.FavoriteEntity
 
 /**
  * [FavoriteStationModel] implements the "View Model" of Android Architecture Components, providing a flexible and
@@ -12,10 +15,14 @@ import android.arch.lifecycle.MutableLiveData
  */
 class FavoriteStationModel(application: Application) : AndroidViewModel(application) {
 
-    // TODO (julianho): Observations currently have no way to only pick-up partial updates (such as insertions),
-    // possibly impacting performance. If performance becomes a concern, consider how to implement such updates.
-    private val mutableFavorites: MutableLiveData<HashSet<String>> by lazy {
-        MutableLiveData<HashSet<String>>()
+    // List of databases relevant to this view model.
+
+    private val dailyForecastDatabase: DailyForecastDatabase by lazy {
+        DailyForecastDatabase.of(application)
+    }
+
+    private val favoriteDao: FavoriteDao by lazy {
+        dailyForecastDatabase.favoriteDao()
     }
 
     /**
@@ -23,23 +30,25 @@ class FavoriteStationModel(application: Application) : AndroidViewModel(applicat
      * actual reified data structures.
      */
     val favorites: LiveData<HashSet<String>>
-        get() = mutableFavorites
+        get() = Transformations.map(favoriteDao.all) { entityList ->
+            val set = hashSetOf<String>()
+            for (favoriteEntity in entityList) {
+                set.add(favoriteEntity.name)
+            }
+            set
+        }
 
     /**
      * [favorite] marks the area with the given name [string] as favorited.
      */
     fun favorite(string: String) {
-        val hashSet = mutableFavorites.value ?: hashSetOf()
-        hashSet.add(string)
-        mutableFavorites.postValue(hashSet)
+        favoriteDao.add(FavoriteEntity(string))
     }
 
     /**
      * [defavorite] marks the area with the given name [string] as not favorited.
      */
     fun defavorite(string: String) {
-        val hashSet = mutableFavorites.value ?: hashSetOf()
-        hashSet.remove(string)
-        mutableFavorites.postValue(hashSet)
+        favoriteDao.remove(FavoriteEntity(string))
     }
 }
