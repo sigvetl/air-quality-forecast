@@ -22,6 +22,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import no.uio.ifi.in2000.gruppe55.viewmodel.DailyForecastModel
+import no.uio.ifi.in2000.gruppe55.viewmodel.FavoriteStationModel
 
 // TODO (julianho): Ugly hack to pass viewmodel provider into the continuous job service. Consider whether there is a
 // way to get access to some underlying provider from services directly.
@@ -63,6 +64,7 @@ class BadAirqualityAlertJobService : JobService() {
 
     private lateinit var viewModelProvider: ViewModelProvider
     private lateinit var dailyForecastModel: DailyForecastModel
+    private lateinit var favoriteStationModel: FavoriteStationModel
 
     // List of metadata relevant to sending notifications over channels
 
@@ -88,14 +90,25 @@ class BadAirqualityAlertJobService : JobService() {
 
     override fun onCreate() {
         super.onCreate()
+
         dailyForecastModel = globalViewModelProvider.get(DailyForecastModel::class.java)
+        favoriteStationModel = globalViewModelProvider.get(FavoriteStationModel::class.java)
     }
 
     override fun onStartJob(params: JobParameters?): Boolean {
         updateJob = launch {
             delay(10000) // Temporary solution to get notifications right away.
 
-            for ((stationModel, measurementModel) in dailyForecastModel.stations.value ?: hashMapOf()) {
+            val stationMap = dailyForecastModel.stations.value ?: hashMapOf()
+            val favoriteSet = favoriteStationModel.favorites.value ?: hashSetOf()
+
+            // Only notify about stations that are in marked areas.
+
+            val constrainedMap = stationMap.filterKeys { stationModel ->
+                favoriteSet.contains(stationModel.kommune?.name)
+            }
+
+            for ((stationModel, measurementModel) in constrainedMap) {
                 if (measurementModel != null && exceedsLimit(measurementModel)) {
                     notify(stationModel, measurementModel)
                 }
