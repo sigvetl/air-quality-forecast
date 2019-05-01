@@ -99,6 +99,9 @@ class BadAirqualityAlertJobService : JobService() {
         updateJob = launch {
             delay(10000) // Temporary solution to get notifications right away.
 
+            // TODO (julianho): Fix bug where favorite stations are only listed if explicitly enumerated beforehand
+            // through e.g. viewing the list fragment.
+
             val stationMap = dailyForecastModel.stations.value ?: hashMapOf()
             val favoriteSet = favoriteStationModel.favorites.value ?: hashSetOf()
 
