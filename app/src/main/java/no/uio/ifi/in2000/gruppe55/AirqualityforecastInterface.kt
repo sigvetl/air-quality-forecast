@@ -87,7 +87,7 @@ interface AirqualityforecastInterface {
      * [reftimes] represents the route
      * [/reftimes](https://in2000-apiproxy.ifi.uio.no/weatherapi/airqualityforecast/0.1/documentation#%2Freftimes).
      */
-    suspend fun reftimes(): List<RefTimeModel>
+    suspend fun reftimes(): RefTimeModel
 
     /**
      * [stations] represents the route

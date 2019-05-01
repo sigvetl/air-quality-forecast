@@ -30,7 +30,7 @@ class InfoAdapter(val context: Context?, val activity: FragmentActivity?, val va
         val inflater = LayoutInflater.from(parent.context)
         var view: View? = null
 
-        view = inflater.inflate(R.layout.element_child, parent, false)
+        view = inflater.inflate(R.layout.element_info, parent, false)
         return MyViewHolder(view!!)
     }
 
