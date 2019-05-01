@@ -42,7 +42,7 @@ class BlankFragment : Fragment() {
         }
 
         button.setOnClickListener {
-            view!!.findNavController().navigate(R.id.action_homeFragment_to_dialogFragment, testBundle)
+            //view!!.findNavController().navigate(R.id.action_homeFragment_to_dialogFragment, testBundle)
         }
 
         val tv = view!!.findViewById<TextView>(R.id.blank_text)

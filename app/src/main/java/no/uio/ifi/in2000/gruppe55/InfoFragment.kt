@@ -14,10 +14,27 @@ import kotlinx.android.synthetic.main.activity_info.*
 import kotlinx.coroutines.launch
 import no.uio.ifi.in2000.gruppe55.R.*
 
+// TODO: Rename parameter arguments, choose names that match
+// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+private const val ARG_PARAM1 = "param1"
+private const val ARG_PARAM2 = "param2"
+
 class InfoFragment: Fragment(){
     private lateinit var linearLayoutManager: LinearLayoutManager
     //private var stationName = "NO0057A"
     //private var stationRef = "2019-05-01T01:00:00Z"
+    //TODO: Rename and change types of parameters
+    private var text1: String? = null
+    private var text2: String? = null
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            text1 = it.getString(ARG_PARAM1)
+            text2 = it.getString(ARG_PARAM2)
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(layout.activity_info, container, false)
@@ -319,5 +336,25 @@ class InfoFragment: Fragment(){
         graph.gridLabelRenderer.numHorizontalLabels = 12
         graph.addSeries(series)
 
+    }
+
+    companion object {
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         *
+         * @param text1 Parameter 1.
+         * @param text2 Parameter 2.
+         * @return A new instance of fragment dialogFragment.
+         */
+        // TODO: Rename and change types and number of parameters
+        @JvmStatic
+        fun newInstance(text1: String?, text2: String?) =
+            dialogFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_PARAM1, text1)
+                    putString(ARG_PARAM2, text2)
+                }
+            }
     }
 }
