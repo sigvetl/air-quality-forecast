@@ -96,6 +96,19 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         mMap = googleMap
         mMap.setInfoWindowAdapter(CustomInfoWindowAdapter())
 
+        //LatLng fra Forskningsparken
+        val center = LatLng(59.94365597189331, 10.718679747209503)
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(center, 11.0f))
+        val uiSettings = mMap.uiSettings
+        uiSettings.isZoomControlsEnabled = true
+
+        //color
+        val green = 130f
+        val yellow = 2.05497e-38f
+        val orange = 5.848787e-39f
+        val red = 2.15118e-38f
+
+
         // Keep map fragment in sync with measurements from the list of stations.
 
         dailyForecastModel.stations.observe({ lifecycle }) { stationMap ->
@@ -109,22 +122,17 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     val distance = "Distance to location: ${String.format("%.2f",SphericalUtil.computeDistanceBetween(currentLocation, position)/1000)} km"
                     var markerColor = 0f
                     if (measurement?.variables?.aqi?.value!! >=4){
-                        markerColor = BitmapDescriptorFactory.HUE_VIOLET
-                    }
-                    else if (measurement?.variables?.aqi?.value!! >=3){
                         markerColor = BitmapDescriptorFactory.HUE_RED
                     }
-                    else if (measurement?.variables?.aqi?.value!! >=2){
+                    else if (measurement?.variables?.aqi?.value!! >=3){
                         markerColor = BitmapDescriptorFactory.HUE_ORANGE
                     }
-                    else if (measurement?.variables?.aqi?.value!! >=1){
+                    else if (measurement?.variables?.aqi?.value!! >=2){
                         markerColor = BitmapDescriptorFactory.HUE_YELLOW
                     }
-                    else if (measurement?.variables?.aqi?.value!! >=0){
+                    else if (measurement?.variables?.aqi?.value!! >=1){
                         markerColor = BitmapDescriptorFactory.HUE_GREEN
                     }
-
-
 
                     activity?.runOnUiThread {
                         val extraSnippet = InfoWindowData(distance + "\n" + value)
@@ -136,12 +144,5 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 }
             }
         }
-
-
-        //LatLng fra Forskningsparken
-        val center = LatLng(59.94365597189331, 10.718679747209503)
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(center, 11.0f))
-        val uiSettings = mMap.uiSettings
-        uiSettings.isZoomControlsEnabled = true
     }
 }
