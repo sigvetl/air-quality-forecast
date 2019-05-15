@@ -15,10 +15,12 @@ import android.view.animation.Animation
 import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.element_parent.*
 import kotlinx.android.synthetic.main.fragment_list.*
+import kotlinx.coroutines.launch
 import no.uio.ifi.in2000.gruppe55.viewmodel.DailyForecastModel
 import no.uio.ifi.in2000.gruppe55.viewmodel.FavoriteStationModel
 import java.util.*
 import kotlin.collections.HashMap
+import kotlin.coroutines.coroutineContext
 
 class ListFragment : Fragment() {
 
@@ -99,6 +101,14 @@ class ListFragment : Fragment() {
                 // TODO: Should alone stations be shown under drop-down?
                 //TODO: Legg til sationId
                 eListe.elementer.add(Element(eListe.AREA, area, "", averageAqi, stationList))
+            }
+
+            launch {
+                // Update the database when the list of elements has been added.
+                // Necessary to synchronise observations that depend on the element list.
+                // We're all going to hell for this.
+
+                favoriteStationModel.favorite("")
             }
 
             adapter.notifyDataSetChanged()
