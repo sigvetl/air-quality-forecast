@@ -17,7 +17,16 @@
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:src="@drawable/lk_logo_circle_w"/>
+
+    </android.support.v7.widget.Toolbar>
 
     <fragment
         android:id="@+id/nav_host_fragment"
