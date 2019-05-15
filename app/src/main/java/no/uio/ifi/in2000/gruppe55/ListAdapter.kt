@@ -151,6 +151,9 @@ class ListAdapter(
 
             if(element.children == null){
                 it.setColor.let { view ->
+
+
+
                     view.setOnClickListener {
                         val bundle = Bundle().apply {
                             putString("stationId", element.stationId)

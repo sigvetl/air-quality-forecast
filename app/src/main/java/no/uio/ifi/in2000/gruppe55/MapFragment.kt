@@ -15,6 +15,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
+import androidx.navigation.findNavController
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -55,16 +57,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         dailyForecastModel = viewModelProvider.get(DailyForecastModel::class.java)
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
-
     internal inner class CustomInfoWindowAdapter : GoogleMap.InfoWindowAdapter {
         // These are both view groups containing an ImageView with id "badge" and two
         // TextViews with id "title" and "snippet"
@@ -101,12 +93,15 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(center, 11.0f))
         val uiSettings = mMap.uiSettings
         uiSettings.isZoomControlsEnabled = true
+        val eoiMap : HashMap<String, String> = HashMap()
 
         //color
-        val green = 130f
-        val yellow = 2.05497e-38f
-        val orange = 5.848787e-39f
-        val red = 2.15118e-38f
+        val green = 139.15662f
+        val yellow = 51.518326f
+        val red = 2.9834254f
+        val violet = 294.06592f
+        val colorString = "#8e3c97"
+        //https://gist.github.com/marlonlom/87eca210cd4ef7ad62da
 
 
         // Keep map fragment in sync with measurements from the list of stations.
@@ -120,12 +115,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     val value = "Current AQI: ${String.format("%.2f",measurement?.variables?.aqi?.value)}"
                     val currentLocation = LatLng(59.94365597189331, 10.718679747209503)
                     val distance = "Distance to location: ${String.format("%.2f",SphericalUtil.computeDistanceBetween(currentLocation, position)/1000)} km"
+                    val stationEoi = station.eoi
+                    eoiMap[station.name] = station.eoi!!
                     var markerColor = 0f
                     if (measurement?.variables?.aqi?.value!! >=4){
-                        markerColor = BitmapDescriptorFactory.HUE_RED
+                        markerColor = BitmapDescriptorFactory.HUE_VIOLET
                     }
                     else if (measurement?.variables?.aqi?.value!! >=3){
-                        markerColor = BitmapDescriptorFactory.HUE_ORANGE
+                        markerColor = BitmapDescriptorFactory.HUE_RED
                     }
                     else if (measurement?.variables?.aqi?.value!! >=2){
                         markerColor = BitmapDescriptorFactory.HUE_YELLOW
@@ -143,6 +140,20 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     }
                 }
             }
+        }
+        mMap.setOnInfoWindowClickListener{
+            val title = it.title
+            eoiMap.forEach{
+                k, v ->
+                if (k == title){
+                        /*val bundle = Bundle().apply {
+                            putString("stationId", v)
+                            putString("stationName", k)
+                        }
+                        view!!.findNavController().navigate(R.id.action_listFragment_to_infoFragment, bundle)*/
+                }
+            }
+            println("Clicked")
         }
     }
 }
