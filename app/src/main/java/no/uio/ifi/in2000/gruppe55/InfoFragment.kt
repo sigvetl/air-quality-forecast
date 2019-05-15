@@ -67,6 +67,7 @@ class InfoFragment : DialogFragment() {
 
 
         launch {
+            SListe.values.clear()
             val description = Airqualityforecast.aqiDescription()
             val refTimes = Airqualityforecast.reftimes()
             val stationModel = Airqualityforecast.main(station = stationId)
