@@ -345,7 +345,7 @@ class InfoFragment: DialogFragment(){
             DataPoint(22.0 ,tempList[22]!!),
             DataPoint(23.0, tempList[23]!!)
         ))
-        graph.gridLabelRenderer.numHorizontalLabels = 12
+        graph.gridLabelRenderer.numHorizontalLabels = 24
         graph.addSeries(series)
 
     }
