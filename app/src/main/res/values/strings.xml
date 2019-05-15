@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">gruppe55</string>
+    <string name="app_name">Luftkvalitet</string>
     <string name="title_activity_kart">Kart</string>
     <string name="menu_item_home">Home</string>
     <string name="menu_item_list">List</string>
