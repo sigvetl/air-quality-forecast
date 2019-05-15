@@ -146,14 +146,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             eoiMap.forEach{
                 k, v ->
                 if (k == title){
-                        /*val bundle = Bundle().apply {
-                            putString("stationId", v)
-                            putString("stationName", k)
-                        }
-                        view!!.findNavController().navigate(R.id.action_listFragment_to_infoFragment, bundle)*/
+
+                    val bundle = Bundle().apply {
+                        putString("stationId", v)
+                        putString("stationName", k)
+                    }
+                    view!!.findNavController().navigate(R.id.action_mapFragment_to_infoFragment, bundle)
                 }
             }
-            println("Clicked")
         }
     }
 }
