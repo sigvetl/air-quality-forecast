@@ -404,34 +404,33 @@ class InfoFragment : DialogFragment() {
 
         val series = LineGraphSeries<DataPoint>(
             arrayOf<DataPoint>(
-
-                DataPoint(0.0, tempList[0]!!),
-                DataPoint(1.0, tempList[1]!!),
-                DataPoint(2.0, tempList[2]!!),
-                DataPoint(3.0, tempList[3]!!),
-                DataPoint(4.0, tempList[4]!!),
-                DataPoint(5.0, tempList[5]!!),
-                DataPoint(6.0, tempList[6]!!),
-                DataPoint(7.0, tempList[7]!!),
-                DataPoint(8.0, tempList[8]!!),
-                DataPoint(9.0, tempList[9]!!),
-                DataPoint(10.0, tempList[10]!!),
-                DataPoint(11.0, tempList[11]!!),
-                DataPoint(12.0, tempList[12]!!),
-                DataPoint(13.0, tempList[13]!!),
-                DataPoint(14.0, tempList[14]!!),
-                DataPoint(15.0, tempList[15]!!),
-                DataPoint(16.0, tempList[16]!!),
-                DataPoint(17.0, tempList[17]!!),
-                DataPoint(18.0, tempList[18]!!),
-                DataPoint(19.0, tempList[19]!!),
-                DataPoint(20.0, tempList[20]!!),
-                DataPoint(21.0, tempList[21]!!),
-                DataPoint(22.0, tempList[22]!!),
-                DataPoint(23.0, tempList[23]!!)
-            )
-        )
-        graph.gridLabelRenderer.numHorizontalLabels = 12
+                
+            DataPoint(0.0 , tempList[0]!!),
+            DataPoint(1.0, tempList[1]!!),
+            DataPoint(2.0, tempList[2]!!),
+            DataPoint(3.0, tempList[3]!!),
+            DataPoint(4.0, tempList[4]!!),
+            DataPoint(5.0, tempList[5]!!),
+            DataPoint(6.0, tempList[6]!!),
+            DataPoint(7.0, tempList[7]!!),
+            DataPoint(8.0, tempList[8]!!),
+            DataPoint(9.0, tempList[9]!!),
+            DataPoint(10.0 ,tempList[10]!!),
+            DataPoint(11.0 , tempList[11]!!),
+            DataPoint(12.0, tempList[12]!!),
+            DataPoint(13.0, tempList[13]!!),
+            DataPoint(14.0, tempList[14]!!),
+            DataPoint(15.0, tempList[15]!!),
+            DataPoint(16.0, tempList[16]!!),
+            DataPoint(17.0, tempList[17]!!),
+            DataPoint(18.0, tempList[18]!!),
+            DataPoint(19.0, tempList[19]!!),
+            DataPoint(20.0, tempList[20]!!),
+            DataPoint(21.0 ,tempList[21]!!),
+            DataPoint(22.0 ,tempList[22]!!),
+            DataPoint(23.0, tempList[23]!!)
+        ))
+        graph.gridLabelRenderer.numHorizontalLabels = 24
         graph.addSeries(series)
 
     }
