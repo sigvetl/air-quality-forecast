@@ -15,6 +15,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
+import androidx.navigation.findNavController
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -55,20 +57,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         dailyForecastModel = viewModelProvider.get(DailyForecastModel::class.java)
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
-
     internal inner class CustomInfoWindowAdapter : GoogleMap.InfoWindowAdapter {
-        // These are both view groups containing an ImageView with id "badge" and two
-        // TextViews with id "title" and "snippet"
-
 
         override fun getInfoWindow(marker: Marker): View? {
                 return null
@@ -96,6 +85,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         mMap = googleMap
         mMap.setInfoWindowAdapter(CustomInfoWindowAdapter())
 
+        //LatLng fra Forskningsparken
+        val center = LatLng(59.94365597189331, 10.718679747209503)
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(center, 11.0f))
+        val uiSettings = mMap.uiSettings
+        uiSettings.isZoomControlsEnabled = true
+        val eoiMap : HashMap<String, String> = HashMap()
+
+
         // Keep map fragment in sync with measurements from the list of stations.
 
         dailyForecastModel.stations.observe({ lifecycle }) { stationMap ->
@@ -107,6 +104,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     val value = "Current AQI: ${String.format("%.2f",measurement?.variables?.aqi?.value)}"
                     val currentLocation = LatLng(59.94365597189331, 10.718679747209503)
                     val distance = "Distance to location: ${String.format("%.2f",SphericalUtil.computeDistanceBetween(currentLocation, position)/1000)} km"
+                    eoiMap[station.name] = station.eoi!!
+                    //Set marker to AQI-status
                     var markerColor = 0f
                     if (measurement?.variables?.aqi?.value!! >=4){
                         markerColor = BitmapDescriptorFactory.HUE_VIOLET
@@ -115,18 +114,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                         markerColor = BitmapDescriptorFactory.HUE_RED
                     }
                     else if (measurement?.variables?.aqi?.value!! >=2){
-                        markerColor = BitmapDescriptorFactory.HUE_ORANGE
-                    }
-                    else if (measurement?.variables?.aqi?.value!! >=1){
                         markerColor = BitmapDescriptorFactory.HUE_YELLOW
                     }
-                    else if (measurement?.variables?.aqi?.value!! >=0){
+                    else if (measurement?.variables?.aqi?.value!! >=1){
                         markerColor = BitmapDescriptorFactory.HUE_GREEN
                     }
 
-
-
                     activity?.runOnUiThread {
+                        //Initialize markers
                         val extraSnippet = InfoWindowData(distance + "\n" + value)
                         val m  = mMap.addMarker(MarkerOptions().position(position).title(station.name))
                         m.setIcon(BitmapDescriptorFactory.defaultMarker(markerColor))
@@ -136,12 +131,20 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 }
             }
         }
+        //Connect mapFragment to infoFragment
+        mMap.setOnInfoWindowClickListener{
+            val title = it.title
+            eoiMap.forEach{
+                k, v ->
+                if (k == title){
 
-
-        //LatLng fra Forskningsparken
-        val center = LatLng(59.94365597189331, 10.718679747209503)
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(center, 11.0f))
-        val uiSettings = mMap.uiSettings
-        uiSettings.isZoomControlsEnabled = true
+                    val bundle = Bundle().apply {
+                        putString("stationId", v)
+                        putString("stationName", k)
+                    }
+                    view!!.findNavController().navigate(R.id.action_mapFragment_to_infoFragment, bundle)
+                }
+            }
+        }
     }
 }
