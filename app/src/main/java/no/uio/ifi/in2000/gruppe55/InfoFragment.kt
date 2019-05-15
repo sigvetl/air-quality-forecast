@@ -182,15 +182,6 @@ class InfoFragment : DialogFragment() {
                     )
                     SListe.values.add(
                         Value(
-                            "no2LocalFractionTrafficNonexhaust",
-                            "NO2",
-                            temp?.no2LocalFractionTrafficNonexhaust?.value,
-                            temp?.no2LocalFractionTrafficNonexhaust?.units,
-                            description.variables?.no2Concentration?.aqis!!
-                        )
-                    )
-                    SListe.values.add(
-                        Value(
                             "no2NonlocalFraction",
                             "NO2",
                             temp?.no2NonlocalFraction?.value,
@@ -204,51 +195,6 @@ class InfoFragment : DialogFragment() {
                             "Ozon",
                             temp?.o3Concentration?.value,
                             temp?.o3Concentration?.units,
-                            description.variables?.o3Concentration?.aqis!!
-                        )
-                    )
-                    SListe.values.add(
-                        Value(
-                            "o3LocalFractionHeating",
-                            "Ozon",
-                            temp?.o3LocalFractionHeating?.value,
-                            temp?.o3LocalFractionHeating?.units,
-                            description.variables?.o3Concentration?.aqis!!
-                        )
-                    )
-                    SListe.values.add(
-                        Value(
-                            "o3LocalFractionIndustry",
-                            "Ozon",
-                            temp?.o3LocalFractionIndustry?.value,
-                            temp?.o3LocalFractionIndustry?.units,
-                            description.variables?.o3Concentration?.aqis!!
-                        )
-                    )
-                    SListe.values.add(
-                        Value(
-                            "o3LocalFractionShipping",
-                            "Ozon",
-                            temp?.o3LocalFractionShipping?.value,
-                            temp?.o3LocalFractionShipping?.units,
-                            description.variables?.o3Concentration?.aqis!!
-                        )
-                    )
-                    SListe.values.add(
-                        Value(
-                            "o3LocalFractionTrafficExhaust",
-                            "Ozon",
-                            temp?.o3LocalFractionTrafficExhaust?.value,
-                            temp?.o3LocalFractionTrafficExhaust?.units,
-                            description.variables?.o3Concentration?.aqis!!
-                        )
-                    )
-                    SListe.values.add(
-                        Value(
-                            "o3LocalFractionTrafficNonexhaust",
-                            "Ozon",
-                            temp?.o3LocalFractionTrafficNonexhaust?.value,
-                            temp?.o3LocalFractionTrafficNonexhaust?.units,
                             description.variables?.o3Concentration?.aqis!!
                         )
                     )
